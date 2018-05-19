@@ -4,6 +4,9 @@
 #include "..\Common\DirectXHelper.h"
 #include <ppltasks.h>
 #include <synchapi.h>
+#include "imgui.h"
+#include "imgui_impl_dx12.h"
+
 
 using namespace WidgetLayout;
 
@@ -41,6 +44,16 @@ Sample3DSceneRenderer::~Sample3DSceneRenderer()
 
 
 const UINT NUMBER_OF_INDICES = 6;
+
+
+
+
+
+
+
+
+
+
 
 void Sample3DSceneRenderer::CreateDeviceDependentResources()
 {
@@ -287,6 +300,17 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 
 		// Wait for the command list to finish executing; the vertex/index buffers need to be uploaded to the GPU before the upload resources go out of scope.
 		m_deviceResources->WaitForGpu();
+
+
+		// imgui
+		D3D12_DESCRIPTOR_HEAP_DESC desc = {};
+		desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+		desc.NumDescriptors = 1;
+		desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+		m_deviceResources->GetD3DDevice()->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&g_pd3dSrvDescHeap));
+
+		ImGui_ImplDX12_Init(NULL, DX::c_frameCount, m_deviceResources->GetD3DDevice(), g_pd3dSrvDescHeap.Get()->GetCPUDescriptorHandleForHeapStart(), g_pd3dSrvDescHeap.Get()->GetGPUDescriptorHandleForHeapStart());
+
 	});
 
 	createAssetsTask.then([this]() {
@@ -463,10 +487,29 @@ bool Sample3DSceneRenderer::Render()
 		m_commandList->IASetIndexBuffer(&m_indexBufferView);
 		m_commandList->DrawIndexedInstanced(NUMBER_OF_INDICES, 1, 0, 0, 0);
 
+
+		// ImGui
+		Size outputSize = m_deviceResources->GetOutputSize();
+		ImGui_ImplDX12_NewFrame(m_commandList.Get(), int(outputSize.Width), int(outputSize.Height));
+
+		// 1. Show a simple window
+		// Tip: if we don't call ImGui::Begin()/ImGui::End() the widgets appears in a window automatically called "Debug"
+		{
+			ImGui::SetNextWindowSize(ImVec2(400, 150), ImGuiSetCond_FirstUseEver);
+			ImGui::Begin("London control");
+			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+			ImGui::Text("%i x %i", int(outputSize.Width), int(outputSize.Height));
+			ImGui::End();
+
+			//ImVec4 clear_col = ImColor(114, 144, 154);
+			//ImGui::ColorEdit3("clear color", (float*)&clear_col);
+		}
+
+		m_commandList.Get()->SetDescriptorHeaps(1, g_pd3dSrvDescHeap.GetAddressOf());
+		ImGui::Render();
+
 		// Indicate that the render target will now be used to present when the command list is done executing.
-		CD3DX12_RESOURCE_BARRIER presentResourceBarrier =
-			CD3DX12_RESOURCE_BARRIER::Transition(m_deviceResources->GetRenderTarget(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
-		m_commandList->ResourceBarrier(1, &presentResourceBarrier);
+		m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_deviceResources->GetRenderTarget(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT));
 	}
 	PIXEndEvent(m_commandList.Get());
 

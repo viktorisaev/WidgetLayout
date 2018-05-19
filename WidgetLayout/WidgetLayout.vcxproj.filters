@@ -62,5 +62,54 @@
     <Image Include="Assets\Wide310x150Logo.scale-200.png">
       <Filter>Assets</Filter>
     </Image>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{777cd28f-0ccf-41b7-a625-16b3711f198b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="App.cpp" />
+    <ClCompile Include="WidgetLayoutMain.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Imgui\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\imgui_impl_dx12.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="App.h" />
+    <ClInclude Include="WidgetLayoutMain.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Imgui\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imgui_impl_dx12.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\stb_rect_pack.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\stb_textedit.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\stb_truetype.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="WidgetLayout_TemporaryKey.pfx" />
   </ItemGroup>
 </Project>
