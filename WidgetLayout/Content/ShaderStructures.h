@@ -18,6 +18,7 @@ namespace WidgetLayout
 	struct VertexPositionColor
 	{
 		DirectX::XMFLOAT3 pos;
+		DirectX::XMFLOAT3 size;
 		DirectX::XMFLOAT3 color;
 	};
 }

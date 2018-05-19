@@ -56,19 +56,19 @@ const UINT NUMBER_OF_INDICES = 6;
 const float SCREEN_WIDTH = 2.0f;
 const float SCREEN_HEIGHT = 2.0f;
 
-const float X = 0.01f * SCREEN_WIDTH - 1.0f;
-const float Y = 1.0f - 0.01f * SCREEN_HEIGHT;
-const float SX = 0.8f * SCREEN_WIDTH;
+const float X = 0.5f * SCREEN_WIDTH - 1.0f;
+const float Y = 1.0f - 0.5f * SCREEN_HEIGHT;
+const float SX = 0.2f * SCREEN_WIDTH;
 const float SY = 0.2f * SCREEN_HEIGHT;
 
 
 // Cube vertices. Each vertex has a position and a color.
 VertexPositionColor cubeVertices[] =
 {
-	{ XMFLOAT3(X, Y - SY,  0.0f), XMFLOAT3(0.3f, 0.3f, 0.3f) },	// bottom left
-	{ XMFLOAT3(X,  Y,  0.0f), XMFLOAT3(1.0f, 1.0f, 1.0f) },	// top left
-	{ XMFLOAT3(X + SX, Y - SY,  0.0f), XMFLOAT3(0.3f, 0.3f, 0.3f) },	// bottom right
-	{ XMFLOAT3(X + SX,  Y,  0.0f), XMFLOAT3(1.0f, 1.0f, 1.0f) },	// top right
+	{ XMFLOAT3(X, Y,  0.0f),				XMFLOAT3(SX, SY, 0.0f),			XMFLOAT3(0.0f, 0.0f, 1.0f) },	// bottom left
+	{ XMFLOAT3(X,  Y,  0.0f),				XMFLOAT3(0.3f, 0.1f, 0.0f),		XMFLOAT3(0.0f, 1.0f, 1.0f) },	// top left
+	{ XMFLOAT3(-1, 1,  0.0f),				XMFLOAT3(1.0f, 1.0f, 0.0f),		XMFLOAT3(1.0f, 0.0f, 1.0f) },	// bottom right
+	{ XMFLOAT3(X + SX,  Y,  0.0f),			XMFLOAT3(0.8f, 0.6f, 0.0f),		XMFLOAT3(1.0f, 1.0f, 0.0f) },	// top right
 };
 
 
@@ -129,7 +129,8 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		static const D3D12_INPUT_ELEMENT_DESC inputLayout[] =
 		{
 			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
-			{ "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+			{ "COLOR", 1, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+			{ "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 24, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
 		};
 
 		D3D12_GRAPHICS_PIPELINE_STATE_DESC state = {};
@@ -142,11 +143,12 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		state.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
 		state.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
 		state.SampleMask = UINT_MAX;
-		state.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+		state.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
 		state.NumRenderTargets = 1;
 		state.RTVFormats[0] = m_deviceResources->GetBackBufferFormat();
 		state.DSVFormat = m_deviceResources->GetDepthBufferFormat();
 		state.SampleDesc.Count = 1;
+		state.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 
 		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateGraphicsPipelineState(&state, IID_PPV_ARGS(&m_pipelineState)));
 
@@ -222,48 +224,48 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		// Load mesh indices. Each trio of indices represents a triangle to be rendered on the screen.
 		// For example: 0,2,1 means that the vertices with indexes 0, 2 and 1 from the vertex buffer compose the
 		// first triangle of this mesh.
-		unsigned short cubeIndices[NUMBER_OF_INDICES] =
-		{
-			0, 1, 3, // +z
-			0, 3, 2,
-		};
+		//unsigned short cubeIndices[NUMBER_OF_INDICES] =
+		//{
+		//	0, 1, 3, // +z
+		//	0, 3, 2,
+		//};
 
-		const UINT indexBufferSize = sizeof(cubeIndices);
+		//const UINT indexBufferSize = sizeof(cubeIndices);
 
-		// Create the index buffer resource in the GPU's default heap and copy index data into it using the upload heap.
-		// The upload resource must not be released until after the GPU has finished using it.
-		Microsoft::WRL::ComPtr<ID3D12Resource> indexBufferUpload;
+		//// Create the index buffer resource in the GPU's default heap and copy index data into it using the upload heap.
+		//// The upload resource must not be released until after the GPU has finished using it.
+		//Microsoft::WRL::ComPtr<ID3D12Resource> indexBufferUpload;
 
-		CD3DX12_RESOURCE_DESC indexBufferDesc = CD3DX12_RESOURCE_DESC::Buffer(indexBufferSize);
-		DX::ThrowIfFailed(d3dDevice->CreateCommittedResource(
-			&defaultHeapProperties,
-			D3D12_HEAP_FLAG_NONE,
-			&indexBufferDesc,
-			D3D12_RESOURCE_STATE_COPY_DEST,
-			nullptr,
-			IID_PPV_ARGS(&m_indexBuffer)));
+		//CD3DX12_RESOURCE_DESC indexBufferDesc = CD3DX12_RESOURCE_DESC::Buffer(indexBufferSize);
+		//DX::ThrowIfFailed(d3dDevice->CreateCommittedResource(
+		//	&defaultHeapProperties,
+		//	D3D12_HEAP_FLAG_NONE,
+		//	&indexBufferDesc,
+		//	D3D12_RESOURCE_STATE_COPY_DEST,
+		//	nullptr,
+		//	IID_PPV_ARGS(&m_indexBuffer)));
 
-		DX::ThrowIfFailed(d3dDevice->CreateCommittedResource(
-			&uploadHeapProperties,
-			D3D12_HEAP_FLAG_NONE,
-			&indexBufferDesc,
-			D3D12_RESOURCE_STATE_GENERIC_READ,
-			nullptr,
-			IID_PPV_ARGS(&indexBufferUpload)));
+		//DX::ThrowIfFailed(d3dDevice->CreateCommittedResource(
+		//	&uploadHeapProperties,
+		//	D3D12_HEAP_FLAG_NONE,
+		//	&indexBufferDesc,
+		//	D3D12_RESOURCE_STATE_GENERIC_READ,
+		//	nullptr,
+		//	IID_PPV_ARGS(&indexBufferUpload)));
 
-		NAME_D3D12_OBJECT(m_indexBuffer);
+		//NAME_D3D12_OBJECT(m_indexBuffer);
 
-		// Upload the index buffer to the GPU.
-		{
-			D3D12_SUBRESOURCE_DATA indexData = {};
-			indexData.pData = reinterpret_cast<BYTE*>(cubeIndices);
-			indexData.RowPitch = indexBufferSize;
-			indexData.SlicePitch = indexData.RowPitch;
+		//// Upload the index buffer to the GPU.
+		//{
+		//	D3D12_SUBRESOURCE_DATA indexData = {};
+		//	indexData.pData = reinterpret_cast<BYTE*>(cubeIndices);
+		//	indexData.RowPitch = indexBufferSize;
+		//	indexData.SlicePitch = indexData.RowPitch;
 
-			UpdateSubresources(m_commandList.Get(), m_indexBuffer.Get(), indexBufferUpload.Get(), 0, 0, 1, &indexData);
+		//	UpdateSubresources(m_commandList.Get(), m_indexBuffer.Get(), indexBufferUpload.Get(), 0, 0, 1, &indexData);
 
-			m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_indexBuffer.Get(), D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_INDEX_BUFFER));
-		}
+		//	m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_indexBuffer.Get(), D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_INDEX_BUFFER));
+		//}
 
 		// Create a descriptor heap for the constant buffers.
 		{
@@ -317,9 +319,9 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 
 
 		// Create index buffer view.
-		m_indexBufferView.BufferLocation = m_indexBuffer->GetGPUVirtualAddress();
-		m_indexBufferView.SizeInBytes = sizeof(cubeIndices);
-		m_indexBufferView.Format = DXGI_FORMAT_R16_UINT;
+		//m_indexBufferView.BufferLocation = m_indexBuffer->GetGPUVirtualAddress();
+		//m_indexBufferView.SizeInBytes = sizeof(cubeIndices);
+		//m_indexBufferView.Format = DXGI_FORMAT_R16_UINT;
 
 		// Wait for the command list to finish executing; the vertex/index buffers need to be uploaded to the GPU before the upload resources go out of scope.
 		m_deviceResources->WaitForGpu();
@@ -405,7 +407,7 @@ void Sample3DSceneRenderer::Update(DX::StepTimer const& timer)
 		{
 			VertexPositionColor v = cubeVertices[i];
 
-			float d = sinf(m_angle) * 0.1f;
+			float d = sinf(m_angle + i) * 0.1f;
 
 			XMFLOAT3 npos = XMFLOAT3(v.pos.x + d, v.pos.y - d, v.pos.z);
 			v.pos = npos;
@@ -522,10 +524,11 @@ bool Sample3DSceneRenderer::Render()
 
 		m_commandList->OMSetRenderTargets(1, &renderTargetView, false, &depthStencilView);
 
-		m_commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		m_commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 		m_commandList->IASetVertexBuffers(0, 1, &m_vertexBufferView);
-		m_commandList->IASetIndexBuffer(&m_indexBufferView);
-		m_commandList->DrawIndexedInstanced(NUMBER_OF_INDICES, 1, 0, 0, 0);
+//		m_commandList->IASetIndexBuffer(&m_indexBufferView);
+//		m_commandList->DrawIndexedInstanced(NUMBER_OF_INDICES, 1, 0, 0, 0);
+		m_commandList->DrawInstanced(_countof(cubeVertices),1,0,0);
 
 
 		// ImGui

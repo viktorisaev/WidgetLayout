@@ -11,9 +11,9 @@ cbuffer ModelViewProjectionConstantBuffer : register(b0)
 
 
 
-VertexToGeometryShaderData main(VertexShaderInput input)
+VertexToGeometry main(VertexShaderInput input)
 {
-	VertexToGeometryShaderData output;
+	VertexToGeometry output;
 	float4 pos = float4(input.pos, 1.0f);
 
 	// Transform the vertex position into projected space.
@@ -21,6 +21,8 @@ VertexToGeometryShaderData main(VertexShaderInput input)
 //	pos = mul(pos, view);
 //	pos = mul(pos, projection);
 	output.pos = pos;
+
+	output.size = input.size;
 
 	// Pass the color through without modification.
 	output.color = input.color;

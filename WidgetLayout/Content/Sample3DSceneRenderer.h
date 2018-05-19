@@ -52,7 +52,7 @@ namespace WidgetLayout
 		std::vector<byte>									m_geometryShader;
 
 		D3D12_VERTEX_BUFFER_VIEW							m_vertexBufferView;
-		D3D12_INDEX_BUFFER_VIEW								m_indexBufferView;
+//		D3D12_INDEX_BUFFER_VIEW								m_indexBufferView;
 
 		// Variables used with the rendering loop.
 		bool	m_loadingComplete;

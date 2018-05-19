@@ -5,20 +5,22 @@
 struct VertexShaderInput
 {
 	float3 pos : POSITION;
+	float3 size : COLOR1;
 	float3 color : COLOR0;
 //	uint cloudIndex : COLOR1;
 };
 
 // Per-pixel color data passed through the pixel shader.
-struct VertexToGeometryShaderData
+struct VertexToGeometry
 {
 	float4 pos : SV_POSITION;
+	float3 size : COLOR1;
 	float3 color : COLOR0;
-//	uint cloudIndex : COLOR1;
+	//	uint cloudIndex : COLOR1;
 };
 
 // Per-pixel color data passed through the pixel shader.
-struct GeometryToPixelShaderData
+struct GeometryToPixel
 {
 	float4 pos : SV_POSITION;
 	float3 color : COLOR0;

@@ -10,26 +10,28 @@
 //	return resultPosition;
 //}
 
-#if 0
+#if 1
 
 [maxvertexcount(4)]	// maximun number of output vertices
-void main(point VertexToGeometryShaderData input[1], inout TriangleStream<GeometryToPixelShaderData> outputStream)		// point=single point as input, TriangleStream=triangle(s) as output
+void main(point VertexToGeometry input[1], inout TriangleStream<GeometryToPixel> outputStream)		// point=single point as input, TriangleStream=triangle(s) as output
 {
-	GeometryToPixelShaderData output = (GeometryToPixelShaderData)0;
+	GeometryToPixel output = (GeometryToPixel)0;
 
 	float4 pos = input[0].pos;
+	float sx = input[0].size.x;
+	float sy = -input[0].size.y;
 
-	float4 p1 = pos + float4(-0.3f, -0.3f, 0.0f, 0.0f);
-	float4 p2 = pos + float4( 0.3f, -0.3f, 0.0f, 0.0f);
-	float4 p3 = pos + float4(-0.3f,  0.3f, 0.0f, 0.0f);
-	float4 p4 = pos + float4( 0.3f,  0.3f, 0.0f, 0.0f);
+	float4 p1 = pos;
+	float4 p2 = pos + float4( sx,	0.0f,	0.0f, 0.0f);
+	float4 p3 = pos + float4( 0.0f, sy,		0.0f, 0.0f);
+	float4 p4 = pos + float4( sx,	sy,		0.0f, 0.0f);
 
 
-	float2 cloudsUV[3] = {
-		float2(0.0f, 0.3f),
-		float2(0.3f, 0.69f),
-		float2(0.69f, 1.0f),
-	};
+	//float2 cloudsUV[3] = {
+	//	float2(0.0f, 0.3f),
+	//	float2(0.3f, 0.69f),
+	//	float2(0.69f, 1.0f),
+	//};
 
 
 
@@ -37,30 +39,26 @@ void main(point VertexToGeometryShaderData input[1], inout TriangleStream<Geomet
 
 	float t;
 	
-	t = clamp(1.0f - p1.zzz * 1.6f, 0.0f, 1.0f);
-	output.color = float3(t,t,t);
+	output.color = input[0].color;
 //	p1 = AppyViewProject(p1);
 	output.pos = p1;
 //	output.uv = float2(cloudsUV[cloudIndex].y, 1.0f);
 	outputStream.Append(output);
 
-	t = clamp(1.0f - p2.zzz* 1.6f, 0.0f, 1.0f);
-	output.color = float3(t, t, t);
-//	p2 = AppyViewProject(p2);
+	output.color = input[0].color;
+	//	p2 = AppyViewProject(p2);
 	output.pos = p2;
 //	output.uv = float2(cloudsUV[cloudIndex].x, 1.0f);
 	outputStream.Append(output);
 
-	t = clamp(1.0f - p3.zzz* 1.6f, 0.0f, 1.0f);
-	output.color = float3(t, t, t);
-//	p3 = AppyViewProject(p3);
+	output.color = input[0].color;
+	//	p3 = AppyViewProject(p3);
 	output.pos = p3;
 //	output.uv = float2(cloudsUV[cloudIndex].y, 0.0f);
 	outputStream.Append(output);
 
-	t = clamp(1.0f - p4.zzz* 1.6f, 0.0f, 1.0f);
-	output.color = float3(t, t, t);
-//	p4 = AppyViewProject(p4);
+	output.color = input[0].color;
+	//	p4 = AppyViewProject(p4);
 	output.pos = p4;
 //	output.uv = float2(cloudsUV[cloudIndex].x, 0.0f);
 	outputStream.Append(output);
@@ -72,7 +70,7 @@ void main(point VertexToGeometryShaderData input[1], inout TriangleStream<Geomet
 
 
 
-#if 1
+#if 0
 // invariant triangle geometry shader
 [maxvertexcount(3)]
 void main(triangle VertexToGeometryShaderData input[3], inout TriangleStream<GeometryToPixelShaderData> outputStream)
