@@ -134,7 +134,7 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		{
 			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
 			{ "COLOR", 1, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
-			{ "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 24, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+			{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 24, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
 		};
 
 		D3D12_GRAPHICS_PIPELINE_STATE_DESC state = {};
@@ -146,6 +146,7 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		state.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
 		state.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
 		state.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
+		state.DepthStencilState.DepthEnable = false;											// DISABLE DEPTH TEST!!!
 		state.SampleMask = UINT_MAX;
 		state.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
 		state.NumRenderTargets = 1;
@@ -153,6 +154,17 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		state.DSVFormat = m_deviceResources->GetDepthBufferFormat();
 		state.SampleDesc.Count = 1;
 		state.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+
+		state.BlendState.AlphaToCoverageEnable = false;
+		state.BlendState.IndependentBlendEnable = false;
+		state.BlendState.RenderTarget[0].BlendEnable = true;
+		state.BlendState.RenderTarget[0].SrcBlend = D3D12_BLEND_SRC_ALPHA;
+		state.BlendState.RenderTarget[0].DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+		state.BlendState.RenderTarget[0].BlendOp = D3D12_BLEND_OP_ADD;
+		state.BlendState.RenderTarget[0].SrcBlendAlpha = D3D12_BLEND_ONE;
+		state.BlendState.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_ZERO;
+		state.BlendState.RenderTarget[0].BlendOpAlpha = D3D12_BLEND_OP_ADD;
+		state.BlendState.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
 
 		DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateGraphicsPipelineState(&state, IID_PPV_ARGS(&m_pipelineState)));
 
@@ -606,9 +618,9 @@ void Sample3DSceneRenderer::AddWidgetToList(const Widget& widget)
 	{
 		XMFLOAT2 pos = PixelToScreen(widget.GetPosition());
 		XMFLOAT2 size = PixelToScreen(widget.GetSize());
-		XMFLOAT3 color = widget.GetColor();
+		XMFLOAT4 color = widget.GetColor();
 
-		VertexPositionColor v{ XMFLOAT3(-(SCREEN_HEIGHT / 2) + pos.x, (SCREEN_HEIGHT / 2) - pos.y, 0.0f), XMFLOAT3(size.x, size.y, 0.0f), XMFLOAT3(color.x, color.y, color.z)};
+		VertexPositionColor v{ XMFLOAT3(-(SCREEN_HEIGHT / 2) + pos.x, (SCREEN_HEIGHT / 2) - pos.y, 0.0f), XMFLOAT3(size.x, size.y, 0.0f), XMFLOAT4(color.x, color.y, color.z, color.w)};
 
 		cubeVertices[m_WidgetCount] = v;
 		m_WidgetCount += 1;

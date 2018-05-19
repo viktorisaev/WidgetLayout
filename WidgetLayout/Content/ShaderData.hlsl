@@ -6,7 +6,7 @@ struct VertexShaderInput
 {
 	float3 pos : POSITION;
 	float3 size : COLOR1;
-	float3 color : COLOR0;
+	float4 color : COLOR0;
 //	uint cloudIndex : COLOR1;
 };
 
@@ -15,7 +15,7 @@ struct VertexToGeometry
 {
 	float4 pos : SV_POSITION;
 	float3 size : COLOR1;
-	float3 color : COLOR0;
+	float4 color : COLOR0;
 	//	uint cloudIndex : COLOR1;
 };
 
@@ -23,6 +23,6 @@ struct VertexToGeometry
 struct GeometryToPixel
 {
 	float4 pos : SV_POSITION;
-	float3 color : COLOR0;
+	float4 color : COLOR0;
 //	float2 uv : TEXTURE0;
 };

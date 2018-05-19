@@ -22,7 +22,7 @@ DirectX::XMINT2 Widget::GetSize() const
 
 
 
-DirectX::XMFLOAT3 Widget::GetColor() const
+DirectX::XMFLOAT4 Widget::GetColor() const
 {
 	return m_Color;
 }

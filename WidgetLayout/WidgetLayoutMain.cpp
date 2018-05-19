@@ -23,8 +23,9 @@ WidgetLayoutMain::WidgetLayoutMain()
 	*/
 
 
-	m_Widgets[0] = Widget(DirectX::XMINT2(30, 30), DirectX::XMINT2(500, 200), DirectX::XMFLOAT3(0.0f, 0.0f, 1.0f));
-	m_Widgets[1] = Widget(DirectX::XMINT2(400,50), DirectX::XMINT2(300,150), DirectX::XMFLOAT3(0.0f, 1.0f, 1.0f));
+	m_Widgets[0] = Widget(DirectX::XMINT2(30, 30), DirectX::XMINT2(500, 200), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.6f));
+	m_Widgets[1] = Widget(DirectX::XMINT2(30, 30), DirectX::XMINT2(500, 200), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 0.6f));
+	m_Widgets[2] = Widget(DirectX::XMINT2(400, 50), DirectX::XMINT2(300, 150), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 0.9f));
 }
 
 
@@ -64,7 +65,7 @@ void WidgetLayoutMain::Update()
 	{
 		float d = sinf(m_timer.GetTotalSeconds()) * 20;
 
-		m_Widgets[0] = Widget(DirectX::XMINT2(30, 30), DirectX::XMINT2(500+d, 200+d), DirectX::XMFLOAT3(0.0f, 0.0f, 1.0f));
+		m_Widgets[0] = Widget(DirectX::XMINT2(30, 30), DirectX::XMINT2(500+d, 200+d), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.6f));
 
 	}
 

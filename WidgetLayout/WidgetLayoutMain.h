@@ -32,7 +32,7 @@ namespace WidgetLayout
 		DX::StepTimer m_timer;
 
 
-		Widget m_Widgets[2];
+		Widget m_Widgets[3];
 
 	};
 }

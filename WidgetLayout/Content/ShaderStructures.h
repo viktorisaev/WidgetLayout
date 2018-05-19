@@ -19,6 +19,6 @@ namespace WidgetLayout
 	{
 		DirectX::XMFLOAT3 pos;
 		DirectX::XMFLOAT3 size;
-		DirectX::XMFLOAT3 color;
+		DirectX::XMFLOAT4 color;
 	};
 }
