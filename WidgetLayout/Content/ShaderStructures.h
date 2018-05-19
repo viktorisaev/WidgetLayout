@@ -10,6 +10,10 @@ namespace WidgetLayout
 //		DirectX::XMFLOAT4X4 projection;
 	};
 
+
+
+
+
 	// Used to send per-vertex data to the vertex shader.
 	struct VertexPositionColor
 	{
