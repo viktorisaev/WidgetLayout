@@ -23,7 +23,7 @@ Platform::String^ TrackingKey = "Tracking";
 // Loads vertex and pixel shaders from files and instantiates the cube geometry.
 Sample3DSceneRenderer::Sample3DSceneRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources) :
 	m_loadingComplete(false),
-	m_radiansPerSecond(XM_PIDIV4),	// rotate 45 degrees per second
+	m_radiansPerSecond(XM_PI),	// rotate 45 degrees per second
 	m_angle(0),
 	m_tracking(false),
 	m_mappedConstantBuffer(nullptr),
@@ -50,6 +50,26 @@ const UINT NUMBER_OF_INDICES = 6;
 
 
 
+
+
+
+const float SCREEN_WIDTH = 2.0f;
+const float SCREEN_HEIGHT = 2.0f;
+
+const float X = 0.01f * SCREEN_WIDTH - 1.0f;
+const float Y = 1.0f - 0.01f * SCREEN_HEIGHT;
+const float SX = 0.8f * SCREEN_WIDTH;
+const float SY = 0.2f * SCREEN_HEIGHT;
+
+
+// Cube vertices. Each vertex has a position and a color.
+VertexPositionColor cubeVertices[] =
+{
+	{ XMFLOAT3(X, Y - SY,  0.0f), XMFLOAT3(0.3f, 0.3f, 0.3f) },	// bottom left
+	{ XMFLOAT3(X,  Y,  0.0f), XMFLOAT3(1.0f, 1.0f, 1.0f) },	// top left
+	{ XMFLOAT3(X + SX, Y - SY,  0.0f), XMFLOAT3(0.3f, 0.3f, 0.3f) },	// bottom right
+	{ XMFLOAT3(X + SX,  Y,  0.0f), XMFLOAT3(1.0f, 1.0f, 1.0f) },	// top right
+};
 
 
 
@@ -97,6 +117,12 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		m_geometryShader = fileData;
 	});
 
+
+
+
+
+
+
 	// Create the pipeline state once the shaders are loaded.
 	auto createPipelineStateTask = (createPSTask && createVSTask && createGSTask).then([this]() {
 
@@ -138,23 +164,12 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		DX::ThrowIfFailed(d3dDevice->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, m_deviceResources->GetCommandAllocator(), m_pipelineState.Get(), IID_PPV_ARGS(&m_commandList)));
         NAME_D3D12_OBJECT(m_commandList);
 
-		const float SCREEN_WIDTH = 2.0f;
-		const float SCREEN_HEIGHT = 2.0f;
 
-		const float X = 0.01f * SCREEN_WIDTH - 1.0f;
-		const float Y = 1.0f - 0.01f * SCREEN_HEIGHT;
-		const float SX = 0.8f * SCREEN_WIDTH;
-		const float SY = 0.2f * SCREEN_HEIGHT;
+		CD3DX12_HEAP_PROPERTIES defaultHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
+		CD3DX12_HEAP_PROPERTIES uploadHeapProperties(D3D12_HEAP_TYPE_UPLOAD);
 
 
-		// Cube vertices. Each vertex has a position and a color.
-		VertexPositionColor cubeVertices[] =
-		{
-			{ XMFLOAT3(X, Y - SY,  0.0f), XMFLOAT3(0.3f, 0.3f, 0.3f) },	// bottom left
-			{ XMFLOAT3(X,  Y,  0.0f), XMFLOAT3(1.0f, 1.0f, 1.0f) },	// top left
-			{ XMFLOAT3(X+SX, Y-SY,  0.0f), XMFLOAT3(0.3f, 0.3f, 0.3f) },	// bottom right
-			{ XMFLOAT3(X+SX,  Y,  0.0f), XMFLOAT3(1.0f, 1.0f, 1.0f) },	// top right
-		};
+
 
 		const UINT vertexBufferSize = sizeof(cubeVertices);
 
@@ -162,39 +177,46 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		// The upload resource must not be released until after the GPU has finished using it.
 		Microsoft::WRL::ComPtr<ID3D12Resource> vertexBufferUpload;
 
-		CD3DX12_HEAP_PROPERTIES defaultHeapProperties(D3D12_HEAP_TYPE_DEFAULT);
 		CD3DX12_RESOURCE_DESC vertexBufferDesc = CD3DX12_RESOURCE_DESC::Buffer(vertexBufferSize);
-		DX::ThrowIfFailed(d3dDevice->CreateCommittedResource(
-			&defaultHeapProperties,
-			D3D12_HEAP_FLAG_NONE,
-			&vertexBufferDesc,
-			D3D12_RESOURCE_STATE_COPY_DEST,
-			nullptr,
-			IID_PPV_ARGS(&m_vertexBuffer)));
+		//DX::ThrowIfFailed(d3dDevice->CreateCommittedResource(
+		//	&defaultHeapProperties,
+		//	D3D12_HEAP_FLAG_NONE,
+		//	&vertexBufferDesc,
+		//	D3D12_RESOURCE_STATE_COPY_DEST,
+		//	nullptr,
+		//	IID_PPV_ARGS(&m_vertexBuffer)));
 
-		CD3DX12_HEAP_PROPERTIES uploadHeapProperties(D3D12_HEAP_TYPE_UPLOAD);
 		DX::ThrowIfFailed(d3dDevice->CreateCommittedResource(
 			&uploadHeapProperties,
 			D3D12_HEAP_FLAG_NONE,
 			&vertexBufferDesc,
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
-			IID_PPV_ARGS(&vertexBufferUpload)));
-
+			IID_PPV_ARGS(&m_vertexBuffer)
+//			IID_PPV_ARGS(&vertexBufferUpload)
+		));
         NAME_D3D12_OBJECT(m_vertexBuffer);
 
 		// Upload the vertex buffer to the GPU.
 		{
-			D3D12_SUBRESOURCE_DATA vertexData = {};
-			vertexData.pData = reinterpret_cast<BYTE*>(cubeVertices);
-			vertexData.RowPitch = vertexBufferSize;
-			vertexData.SlicePitch = vertexData.RowPitch;
+			// map
+			CD3DX12_RANGE readRange(0, 0);
+			m_vertexBuffer->Map(0, &readRange, &((void*)m_Vertices));
 
-			UpdateSubresources(m_commandList.Get(), m_vertexBuffer.Get(), vertexBufferUpload.Get(), 0, 0, 1, &vertexData);
+			// copy
+			memcpy(m_Vertices, cubeVertices, sizeof(cubeVertices));
 
-			CD3DX12_RESOURCE_BARRIER vertexBufferResourceBarrier =
-				CD3DX12_RESOURCE_BARRIER::Transition(m_vertexBuffer.Get(), D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER);
-			m_commandList->ResourceBarrier(1, &vertexBufferResourceBarrier);
+			// Create vertex buffer view
+			m_vertexBufferView.BufferLocation = m_vertexBuffer->GetGPUVirtualAddress();
+			m_vertexBufferView.StrideInBytes = sizeof(VertexPositionColor);
+			m_vertexBufferView.SizeInBytes = sizeof(cubeVertices);
+
+			//D3D12_SUBRESOURCE_DATA vertexData = {};
+			//vertexData.pData = reinterpret_cast<BYTE*>(cubeVertices);
+			//vertexData.RowPitch = vertexBufferSize;
+			//vertexData.SlicePitch = vertexData.RowPitch;
+			//UpdateSubresources(m_commandList.Get(), m_vertexBuffer.Get(), vertexBufferUpload.Get(), 0, 0, 1, &vertexData);
+			//m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_vertexBuffer.Get(), D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER));
 		}
 
 		// Load mesh indices. Each trio of indices represents a triangle to be rendered on the screen.
@@ -240,9 +262,7 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 
 			UpdateSubresources(m_commandList.Get(), m_indexBuffer.Get(), indexBufferUpload.Get(), 0, 0, 1, &indexData);
 
-			CD3DX12_RESOURCE_BARRIER indexBufferResourceBarrier =
-				CD3DX12_RESOURCE_BARRIER::Transition(m_indexBuffer.Get(), D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_INDEX_BUFFER);
-			m_commandList->ResourceBarrier(1, &indexBufferResourceBarrier);
+			m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_indexBuffer.Get(), D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_INDEX_BUFFER));
 		}
 
 		// Create a descriptor heap for the constant buffers.
@@ -295,11 +315,8 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		ID3D12CommandList* ppCommandLists[] = { m_commandList.Get() };
 		m_deviceResources->GetCommandQueue()->ExecuteCommandLists(_countof(ppCommandLists), ppCommandLists);
 
-		// Create vertex/index buffer views.
-		m_vertexBufferView.BufferLocation = m_vertexBuffer->GetGPUVirtualAddress();
-		m_vertexBufferView.StrideInBytes = sizeof(VertexPositionColor);
-		m_vertexBufferView.SizeInBytes = sizeof(cubeVertices);
 
+		// Create index buffer view.
 		m_indexBufferView.BufferLocation = m_indexBuffer->GetGPUVirtualAddress();
 		m_indexBufferView.SizeInBytes = sizeof(cubeIndices);
 		m_indexBufferView.Format = DXGI_FORMAT_R16_UINT;
@@ -381,6 +398,23 @@ void Sample3DSceneRenderer::Update(DX::StepTimer const& timer)
 		// Update the constant buffer resource.
 		UINT8* destination = m_mappedConstantBuffer + (m_deviceResources->GetCurrentFrameIndex() * c_alignedConstantBufferSize);
 		memcpy(destination, &m_constantBufferData, sizeof(m_constantBufferData));
+
+
+
+		for (int i = 0, ei = _countof(cubeVertices); i < ei; ++i)
+		{
+			VertexPositionColor v = cubeVertices[i];
+
+			float d = sinf(m_angle) * 0.1f;
+
+			XMFLOAT3 npos = XMFLOAT3(v.pos.x + d, v.pos.y - d, v.pos.z);
+			v.pos = npos;
+
+			m_Vertices[i] = v;
+
+		}
+
+
 	}
 }
 

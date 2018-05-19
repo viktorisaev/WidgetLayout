@@ -63,6 +63,9 @@ namespace WidgetLayout
 		// imgui
 		Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>        g_pd3dSrvDescHeap;
 
+		// vertex data
+		VertexPositionColor	*m_Vertices;
+
 	};
 }
 

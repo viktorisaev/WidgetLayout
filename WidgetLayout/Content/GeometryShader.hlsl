@@ -85,9 +85,9 @@ void main(triangle VertexToGeometryShaderData input[3], inout TriangleStream<Geo
 
 		//pos = mul(pos, view);
 		//pos = mul(pos, projection);
-		output.pos = pos + float4(0.2f, -0.3f, 0.0f, 0.0f);
+		output.pos = pos;
 
-		output.color = input[i].color;
+		output.color = input[i].color + float4(0.3f, -0.2f, 0.0f, 0.0f);	// REMOVE IT!!!!!!!!!!!!!!  color data to witness the GS is applied 
 
 		outputStream.Append(output);
 	}
