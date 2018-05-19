@@ -3,6 +3,7 @@
 #include "..\Common\DeviceResources.h"
 #include "ShaderStructures.h"
 #include "..\Common\StepTimer.h"
+#include ".\Widget.h"
 
 namespace WidgetLayout
 {
@@ -22,6 +23,17 @@ namespace WidgetLayout
 		void TrackingUpdate(float positionX);
 		void StopTracking();
 		bool IsTracking() { return m_tracking; }
+
+
+
+
+// widget interface
+		void ResetWidgetList();	// called at the begining of the widget list setup
+		void AddWidgetToList(const Widget& widget);	// add widget to render
+
+
+
+
 
 	private:
 		void LoadState();
@@ -65,6 +77,8 @@ namespace WidgetLayout
 
 		// vertex data
 		VertexPositionColor	*m_Vertices;
+
+		UINT m_WidgetCount;
 
 	};
 }

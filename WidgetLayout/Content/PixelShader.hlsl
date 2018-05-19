@@ -7,5 +7,5 @@
 // A pass-through function for the (interpolated) color data.
 float4 main(GeometryToPixel input) : SV_TARGET
 {
-	return float4(input.color, 1.0f);
+	return float4(input.color, 0.5f);
 }

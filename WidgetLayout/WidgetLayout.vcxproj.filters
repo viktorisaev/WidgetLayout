@@ -59,6 +59,9 @@
     <Filter Include="ImGui">
       <UniqueIdentifier>{777cd28f-0ccf-41b7-a625-16b3711f198b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Widget">
+      <UniqueIdentifier>{11d98212-2138-4de5-8829-0b0bf7f1e898}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -72,6 +75,9 @@
     </ClCompile>
     <ClCompile Include="Imgui\imgui_impl_dx12.cpp">
       <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Widget.cpp">
+      <Filter>Widget</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +104,9 @@
     </ClInclude>
     <ClInclude Include="Imgui\stb_truetype.h">
       <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Widget.h">
+      <Filter>Widget</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

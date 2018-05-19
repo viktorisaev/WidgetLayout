@@ -43,33 +43,37 @@ Sample3DSceneRenderer::~Sample3DSceneRenderer()
 }
 
 
-const UINT NUMBER_OF_INDICES = 6;
+//const UINT NUMBER_OF_INDICES = 6;
 
 
 
 
+const UINT MAX_WIDGET_COUNT = 1000;
 
 
 
-
-
-const float SCREEN_WIDTH = 2.0f;
-const float SCREEN_HEIGHT = 2.0f;
-
-const float X = 0.5f * SCREEN_WIDTH - 1.0f;
-const float Y = 1.0f - 0.5f * SCREEN_HEIGHT;
-const float SX = 0.2f * SCREEN_WIDTH;
-const float SY = 0.2f * SCREEN_HEIGHT;
-
+//const float X = 0.5f * SCREEN_WIDTH - 1.0f;
+//const float Y = 1.0f - 0.5f * SCREEN_HEIGHT;
+//const float SX = 0.2f * SCREEN_WIDTH;
+//const float SY = 0.2f * SCREEN_HEIGHT;
 
 // Cube vertices. Each vertex has a position and a color.
-VertexPositionColor cubeVertices[] =
-{
-	{ XMFLOAT3(X, Y,  0.0f),				XMFLOAT3(SX, SY, 0.0f),			XMFLOAT3(0.0f, 0.0f, 1.0f) },	// bottom left
-	{ XMFLOAT3(X,  Y,  0.0f),				XMFLOAT3(0.3f, 0.1f, 0.0f),		XMFLOAT3(0.0f, 1.0f, 1.0f) },	// top left
-	{ XMFLOAT3(-1, 1,  0.0f),				XMFLOAT3(1.0f, 1.0f, 0.0f),		XMFLOAT3(1.0f, 0.0f, 1.0f) },	// bottom right
-	{ XMFLOAT3(X + SX,  Y,  0.0f),			XMFLOAT3(0.8f, 0.6f, 0.0f),		XMFLOAT3(1.0f, 1.0f, 0.0f) },	// top right
-};
+VertexPositionColor cubeVertices[MAX_WIDGET_COUNT];// =
+//{
+//	{ XMFLOAT3(X, Y,  0.0f),				XMFLOAT3(SX, SY, 0.0f),			XMFLOAT3(0.0f, 0.0f, 1.0f) },	// bottom left
+//	{ XMFLOAT3(X,  Y,  0.0f),				XMFLOAT3(0.3f, 0.1f, 0.0f),		XMFLOAT3(0.0f, 1.0f, 1.0f) },	// top left
+//	{ XMFLOAT3(-1, 1,  0.0f),				XMFLOAT3(1.0f, 1.0f, 0.0f),		XMFLOAT3(1.0f, 0.0f, 1.0f) },	// bottom right
+//	{ XMFLOAT3(X + SX,  Y,  0.0f),			XMFLOAT3(0.8f, 0.6f, 0.0f),		XMFLOAT3(1.0f, 1.0f, 0.0f) },	// top right
+//};
+
+
+
+
+
+
+
+
+
 
 
 
@@ -401,20 +405,8 @@ void Sample3DSceneRenderer::Update(DX::StepTimer const& timer)
 		UINT8* destination = m_mappedConstantBuffer + (m_deviceResources->GetCurrentFrameIndex() * c_alignedConstantBufferSize);
 		memcpy(destination, &m_constantBufferData, sizeof(m_constantBufferData));
 
-
-
-		for (int i = 0, ei = _countof(cubeVertices); i < ei; ++i)
-		{
-			VertexPositionColor v = cubeVertices[i];
-
-			float d = sinf(m_angle + i) * 0.1f;
-
-			XMFLOAT3 npos = XMFLOAT3(v.pos.x + d, v.pos.y - d, v.pos.z);
-			v.pos = npos;
-
-			m_Vertices[i] = v;
-
-		}
+		// copy widgets
+		memcpy(m_Vertices, cubeVertices, sizeof(cubeVertices));
 
 
 	}
@@ -564,3 +556,66 @@ bool Sample3DSceneRenderer::Render()
 
 	return true;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// widget interface ///////////////////////////////////////////////////////////
+
+
+const UINT REF_WIDTH = 1366;
+const UINT REF_HEIGHT = 696;
+
+const float SCREEN_WIDTH = 2.0f;
+const float SCREEN_HEIGHT = 2.0f;
+
+
+
+// called at the begining of the widget list setup
+void Sample3DSceneRenderer::ResetWidgetList()
+{
+	m_WidgetCount = 0;
+}
+
+
+
+
+namespace {
+	XMFLOAT2 PixelToScreen(const XMINT2 &p)
+	{
+		return XMFLOAT2(((float)p.x * SCREEN_WIDTH) / REF_WIDTH, ((float)p.y * SCREEN_HEIGHT) / REF_HEIGHT);
+	}
+}
+
+
+
+
+
+// add widget to render
+void Sample3DSceneRenderer::AddWidgetToList(const Widget& widget)
+{
+	if (m_WidgetCount < MAX_WIDGET_COUNT)
+	{
+		XMFLOAT2 pos = PixelToScreen(widget.GetPosition());
+		XMFLOAT2 size = PixelToScreen(widget.GetSize());
+		XMFLOAT3 color = widget.GetColor();
+
+		VertexPositionColor v{ XMFLOAT3(-(SCREEN_HEIGHT / 2) + pos.x, (SCREEN_HEIGHT / 2) - pos.y, 0.0f), XMFLOAT3(size.x, size.y, 0.0f), XMFLOAT3(color.x, color.y, color.z)};
+
+		cubeVertices[m_WidgetCount] = v;
+		m_WidgetCount += 1;
+	}
+}
+
+
+
+
+

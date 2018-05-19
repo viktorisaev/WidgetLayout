@@ -3,6 +3,7 @@
 #include "Common\StepTimer.h"
 #include "Common\DeviceResources.h"
 #include "Content\Sample3DSceneRenderer.h"
+#include "Widget.h"
 
 // Renders Direct3D content on the screen.
 namespace WidgetLayout
@@ -29,5 +30,9 @@ namespace WidgetLayout
 
 		// Rendering loop timer.
 		DX::StepTimer m_timer;
+
+
+		Widget m_Widgets[2];
+
 	};
 }

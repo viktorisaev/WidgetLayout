@@ -9,6 +9,9 @@ using namespace Concurrency;
 
 // The DirectX 12 Application template is documented at https://go.microsoft.com/fwlink/?LinkID=613670&clcid=0x409
 
+
+
+
 // Loads and initializes application assets when the application is loaded.
 WidgetLayoutMain::WidgetLayoutMain()
 {
@@ -18,7 +21,16 @@ WidgetLayoutMain::WidgetLayoutMain()
 	m_timer.SetFixedTimeStep(true);
 	m_timer.SetTargetElapsedSeconds(1.0 / 60);
 	*/
+
+
+	m_Widgets[0] = Widget(DirectX::XMINT2(30, 30), DirectX::XMINT2(500, 200), DirectX::XMFLOAT3(0.0f, 0.0f, 1.0f));
+	m_Widgets[1] = Widget(DirectX::XMINT2(400,50), DirectX::XMINT2(300,150), DirectX::XMFLOAT3(0.0f, 1.0f, 1.0f));
 }
+
+
+
+
+
 
 // Creates and initializes the renderers.
 void WidgetLayoutMain::CreateRenderers(const std::shared_ptr<DX::DeviceResources>& deviceResources)
@@ -29,6 +41,13 @@ void WidgetLayoutMain::CreateRenderers(const std::shared_ptr<DX::DeviceResources
 	OnWindowSizeChanged();
 }
 
+
+
+
+
+
+
+
 // Updates the application state once per frame.
 void WidgetLayoutMain::Update()
 {
@@ -38,7 +57,33 @@ void WidgetLayoutMain::Update()
 		// TODO: Replace this with your app's content update functions.
 		m_sceneRenderer->Update(m_timer);
 	});
+
+
+
+	for (int i = 0, ei = _countof(m_Widgets); i < ei; ++i)
+	{
+		float d = sinf(m_timer.GetTotalSeconds()) * 20;
+
+		m_Widgets[0] = Widget(DirectX::XMINT2(30, 30), DirectX::XMINT2(500+d, 200+d), DirectX::XMFLOAT3(0.0f, 0.0f, 1.0f));
+
+	}
+
+
+	// push widgets to render
+	m_sceneRenderer->ResetWidgetList();
+	for (int i = 0, ei = _countof(m_Widgets); i < ei; ++i)
+	{
+		m_sceneRenderer->AddWidgetToList(m_Widgets[i]);
+	}
+
 }
+
+
+
+
+
+
+
 
 // Renders the current frame according to the current application state.
 // Returns true if the frame was rendered and is ready to be displayed.
@@ -54,6 +99,13 @@ bool WidgetLayoutMain::Render()
 	// TODO: Replace this with your app's content rendering functions.
 	return m_sceneRenderer->Render();
 }
+
+
+
+
+
+
+
 
 // Updates application state when the window's size changes (e.g. device orientation change)
 void WidgetLayoutMain::OnWindowSizeChanged()
