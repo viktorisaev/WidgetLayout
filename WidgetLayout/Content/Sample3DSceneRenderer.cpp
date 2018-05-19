@@ -135,18 +135,18 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		const float SCREEN_WIDTH = 2.0f;
 		const float SCREEN_HEIGHT = 2.0f;
 
-		const float X = 0.05f * SCREEN_WIDTH - 1.0f;
-		const float Y = 1.0f - 0.05f * SCREEN_HEIGHT;
-		const float SX = 0.4f * SCREEN_WIDTH;
-		const float SY = 0.8f * SCREEN_HEIGHT;
+		const float X = 0.01f * SCREEN_WIDTH - 1.0f;
+		const float Y = 1.0f - 0.01f * SCREEN_HEIGHT;
+		const float SX = 0.8f * SCREEN_WIDTH;
+		const float SY = 0.2f * SCREEN_HEIGHT;
 
 
 		// Cube vertices. Each vertex has a position and a color.
 		VertexPositionColor cubeVertices[] =
 		{
 			{ XMFLOAT3(X, Y - SY,  0.0f), XMFLOAT3(0.3f, 0.3f, 0.3f) },	// bottom left
-		{ XMFLOAT3(X,  Y,  0.0f), XMFLOAT3(1.0f, 1.0f, 1.0f) },	// top left
-		{ XMFLOAT3(X+SX, Y-SY,  0.0f), XMFLOAT3(0.3f, 0.3f, 0.3f) },	// bottom right
+			{ XMFLOAT3(X,  Y,  0.0f), XMFLOAT3(1.0f, 1.0f, 1.0f) },	// top left
+			{ XMFLOAT3(X+SX, Y-SY,  0.0f), XMFLOAT3(0.3f, 0.3f, 0.3f) },	// bottom right
 			{ XMFLOAT3(X+SX,  Y,  0.0f), XMFLOAT3(1.0f, 1.0f, 1.0f) },	// top right
 		};
 
