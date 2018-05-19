@@ -93,8 +93,12 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		m_pixelShader = fileData;
 	});
 
+	auto createGSTask = DX::ReadDataAsync(L"GeometryShader.cso").then([this](std::vector<byte>& fileData) {
+		m_geometryShader = fileData;
+	});
+
 	// Create the pipeline state once the shaders are loaded.
-	auto createPipelineStateTask = (createPSTask && createVSTask).then([this]() {
+	auto createPipelineStateTask = (createPSTask && createVSTask && createGSTask).then([this]() {
 
 		static const D3D12_INPUT_ELEMENT_DESC inputLayout[] =
 		{
@@ -106,7 +110,8 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		state.InputLayout = { inputLayout, _countof(inputLayout) };
 		state.pRootSignature = m_rootSignature.Get();
         state.VS = CD3DX12_SHADER_BYTECODE(&m_vertexShader[0], m_vertexShader.size());
-        state.PS = CD3DX12_SHADER_BYTECODE(&m_pixelShader[0], m_pixelShader.size());
+		state.PS = CD3DX12_SHADER_BYTECODE(&m_pixelShader[0], m_pixelShader.size());
+		state.GS = CD3DX12_SHADER_BYTECODE(&m_geometryShader[0], m_geometryShader.size());
 		state.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
 		state.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
 		state.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
@@ -122,6 +127,7 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		// Shader data can be deleted once the pipeline state is created.
 		m_vertexShader.clear();
 		m_pixelShader.clear();
+		m_geometryShader.clear();
 	});
 
 	// Create and upload cube geometry resources to the GPU.

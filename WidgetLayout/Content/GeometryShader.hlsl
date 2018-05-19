@@ -10,9 +10,10 @@
 //	return resultPosition;
 //}
 
+#if 0
 
 [maxvertexcount(4)]	// maximun number of output vertices
-void main(point VertexToGeometryShaderData input[1], inout TriangleStream<GeometryToPixelShaderData> outputStream)
+void main(point VertexToGeometryShaderData input[1], inout TriangleStream<GeometryToPixelShaderData> outputStream)		// point=single point as input, TriangleStream=triangle(s) as output
 {
 	GeometryToPixelShaderData output = (GeometryToPixelShaderData)0;
 
@@ -67,11 +68,11 @@ void main(point VertexToGeometryShaderData input[1], inout TriangleStream<Geomet
 	outputStream.RestartStrip();
 }
 
+#endif
 
 
 
-
-#if 0
+#if 1
 // invariant triangle geometry shader
 [maxvertexcount(3)]
 void main(triangle VertexToGeometryShaderData input[3], inout TriangleStream<GeometryToPixelShaderData> outputStream)
@@ -82,9 +83,9 @@ void main(triangle VertexToGeometryShaderData input[3], inout TriangleStream<Geo
 	{
 		float4 pos = input[i].pos;
 
-		pos = mul(pos, view);
-		pos = mul(pos, projection);
-		output.pos = pos;
+		//pos = mul(pos, view);
+		//pos = mul(pos, projection);
+		output.pos = pos + float4(0.2f, -0.3f, 0.0f, 0.0f);
 
 		output.color = input[i].color;
 
@@ -94,7 +95,11 @@ void main(triangle VertexToGeometryShaderData input[3], inout TriangleStream<Geo
 	outputStream.RestartStrip();
 }
 
+#endif
 
+
+
+#if 0
 // invariant point geometry shader
 [maxvertexcount(1)]
 void main(point VertexToGeometryShaderData input[1], inout PointStream<GeometryToPixelShaderData> outputStream)
@@ -103,8 +108,8 @@ void main(point VertexToGeometryShaderData input[1], inout PointStream<GeometryT
 
 	float4 pos = input[0].pos;
 
-	pos = mul(pos, view);
-	pos = mul(pos, projection);
+	//pos = mul(pos, view);
+	//pos = mul(pos, projection);
 	output.pos = pos;
 
 	output.color = input[0].color * float3(0.6f, 0.1f, 1.0f);
@@ -125,8 +130,8 @@ void main(line VertexToGeometryShaderData input[2], inout LineStream<GeometryToP
 	{
 		float4 pos = input[i].pos;
 
-		pos = mul(pos, view);
-		pos = mul(pos, projection);
+		//pos = mul(pos, view);
+		//pos = mul(pos, projection);
 		output.pos = pos;
 
 		output.color = input[i].color;
