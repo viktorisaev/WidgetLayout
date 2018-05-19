@@ -39,6 +39,9 @@ Sample3DSceneRenderer::~Sample3DSceneRenderer()
 	m_mappedConstantBuffer = nullptr;
 }
 
+
+const UINT NUMBER_OF_INDICES = 6;
+
 void Sample3DSceneRenderer::CreateDeviceDependentResources()
 {
 	auto d3dDevice = m_deviceResources->GetD3DDevice();
@@ -116,17 +119,22 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		DX::ThrowIfFailed(d3dDevice->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, m_deviceResources->GetCommandAllocator(), m_pipelineState.Get(), IID_PPV_ARGS(&m_commandList)));
         NAME_D3D12_OBJECT(m_commandList);
 
+		const float SCREEN_WIDTH = 2.0f;
+		const float SCREEN_HEIGHT = 2.0f;
+
+		const float X = 0.05f * SCREEN_WIDTH - 1.0f;
+		const float Y = 1.0f - 0.05f * SCREEN_HEIGHT;
+		const float SX = 0.4f * SCREEN_WIDTH;
+		const float SY = 0.8f * SCREEN_HEIGHT;
+
+
 		// Cube vertices. Each vertex has a position and a color.
 		VertexPositionColor cubeVertices[] =
 		{
-			{ XMFLOAT3(-0.5f, -0.5f, -0.5f), XMFLOAT3(0.0f, 0.0f, 0.0f) },
-			{ XMFLOAT3(-0.5f, -0.5f,  0.5f), XMFLOAT3(0.0f, 0.0f, 1.0f) },
-			{ XMFLOAT3(-0.5f,  0.5f, -0.5f), XMFLOAT3(0.0f, 1.0f, 0.0f) },
-			{ XMFLOAT3(-0.5f,  0.5f,  0.5f), XMFLOAT3(0.0f, 1.0f, 1.0f) },
-			{ XMFLOAT3(0.5f, -0.5f, -0.5f), XMFLOAT3(1.0f, 0.0f, 0.0f) },
-			{ XMFLOAT3(0.5f, -0.5f,  0.5f), XMFLOAT3(1.0f, 0.0f, 1.0f) },
-			{ XMFLOAT3(0.5f,  0.5f, -0.5f), XMFLOAT3(1.0f, 1.0f, 0.0f) },
-			{ XMFLOAT3(0.5f,  0.5f,  0.5f), XMFLOAT3(1.0f, 1.0f, 1.0f) },
+			{ XMFLOAT3(X, Y - SY,  0.0f), XMFLOAT3(0.3f, 0.3f, 0.3f) },	// bottom left
+		{ XMFLOAT3(X,  Y,  0.0f), XMFLOAT3(1.0f, 1.0f, 1.0f) },	// top left
+		{ XMFLOAT3(X+SX, Y-SY,  0.0f), XMFLOAT3(0.3f, 0.3f, 0.3f) },	// bottom right
+			{ XMFLOAT3(X+SX,  Y,  0.0f), XMFLOAT3(1.0f, 1.0f, 1.0f) },	// top right
 		};
 
 		const UINT vertexBufferSize = sizeof(cubeVertices);
@@ -173,25 +181,10 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		// Load mesh indices. Each trio of indices represents a triangle to be rendered on the screen.
 		// For example: 0,2,1 means that the vertices with indexes 0, 2 and 1 from the vertex buffer compose the
 		// first triangle of this mesh.
-		unsigned short cubeIndices[] =
+		unsigned short cubeIndices[NUMBER_OF_INDICES] =
 		{
-			0, 2, 1, // -x
-			1, 2, 3,
-
-			4, 5, 6, // +x
-			5, 7, 6,
-
-			0, 1, 5, // -y
-			0, 5, 4,
-
-			2, 6, 7, // +y
-			2, 7, 3,
-
-			0, 4, 6, // -z
-			0, 6, 2,
-
-			1, 3, 7, // +z
-			1, 7, 5,
+			0, 1, 3, // +z
+			0, 3, 2,
 		};
 
 		const UINT indexBufferSize = sizeof(cubeIndices);
@@ -318,12 +311,6 @@ void Sample3DSceneRenderer::CreateWindowSizeDependentResources()
 		fovAngleY *= 2.0f;
 	}
 
-	// Note that the OrientationTransform3D matrix is post-multiplied here
-	// in order to correctly orient the scene to match the display orientation.
-	// This post-multiplication step is required for any draw calls that are
-	// made to the swap chain render target. For draw calls to other targets,
-	// this transform should not be applied.
-
 	// This sample makes use of a right-handed coordinate system using row-major matrices.
 	XMMATRIX perspectiveMatrix = XMMatrixPerspectiveFovRH(
 		fovAngleY,
@@ -335,17 +322,17 @@ void Sample3DSceneRenderer::CreateWindowSizeDependentResources()
 	XMFLOAT4X4 orientation = m_deviceResources->GetOrientationTransform3D();
 	XMMATRIX orientationMatrix = XMLoadFloat4x4(&orientation);
 
-	XMStoreFloat4x4(
-		&m_constantBufferData.projection,
-		XMMatrixTranspose(perspectiveMatrix * orientationMatrix)
-		);
+	//XMStoreFloat4x4(
+	//	&m_constantBufferData.projection,
+	//	XMMatrixTranspose(perspectiveMatrix * orientationMatrix)
+	//	);
 
 	// Eye is at (0,0.7,1.5), looking at point (0,-0.1,0) with the up-vector along the y-axis.
-	static const XMVECTORF32 eye = { 0.0f, 0.7f, 1.5f, 0.0f };
-	static const XMVECTORF32 at = { 0.0f, -0.1f, 0.0f, 0.0f };
-	static const XMVECTORF32 up = { 0.0f, 1.0f, 0.0f, 0.0f };
+	//static const XMVECTORF32 eye = { 0.0f, 0.7f, 1.5f, 0.0f };
+	//static const XMVECTORF32 at = { 0.0f, -0.1f, 0.0f, 0.0f };
+	//static const XMVECTORF32 up = { 0.0f, 1.0f, 0.0f, 0.0f };
 
-	XMStoreFloat4x4(&m_constantBufferData.view, XMMatrixTranspose(XMMatrixLookAtRH(eye, at, up)));
+	//XMStoreFloat4x4(&m_constantBufferData.view, XMMatrixTranspose(XMMatrixLookAtRH(eye, at, up)));
 }
 
 // Called once per frame, rotates the cube and calculates the model and view matrices.
@@ -405,7 +392,7 @@ void Sample3DSceneRenderer::LoadState()
 void Sample3DSceneRenderer::Rotate(float radians)
 {
 	// Prepare to pass the updated model matrix to the shader.
-	XMStoreFloat4x4(&m_constantBufferData.model, XMMatrixTranspose(XMMatrixRotationY(radians)));
+//	XMStoreFloat4x4(&m_constantBufferData.model, XMMatrixTranspose(XMMatrixRotationY(radians)));
 }
 
 void Sample3DSceneRenderer::StartTracking()
@@ -474,7 +461,7 @@ bool Sample3DSceneRenderer::Render()
 		m_commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		m_commandList->IASetVertexBuffers(0, 1, &m_vertexBufferView);
 		m_commandList->IASetIndexBuffer(&m_indexBufferView);
-		m_commandList->DrawIndexedInstanced(36, 1, 0, 0, 0);
+		m_commandList->DrawIndexedInstanced(NUMBER_OF_INDICES, 1, 0, 0, 0);
 
 		// Indicate that the render target will now be used to present when the command list is done executing.
 		CD3DX12_RESOURCE_BARRIER presentResourceBarrier =
