@@ -79,6 +79,9 @@
     <ClCompile Include="Widget.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
+    <ClCompile Include="WindowRect.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -106,6 +109,9 @@
       <Filter>ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Widget.h">
+      <Filter>Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowRect.h">
       <Filter>Widget</Filter>
     </ClInclude>
   </ItemGroup>

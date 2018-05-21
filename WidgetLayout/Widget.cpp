@@ -5,19 +5,11 @@
 
 
 
-DirectX::XMINT2 Widget::GetPosition() const
+const WindowRect& Widget::GetRect() const
 {
-	return m_Position;
+	return m_Rect;
 }
 
-
-
-
-
-DirectX::XMINT2 Widget::GetSize() const
-{
-	return m_Size;
-}
 
 
 

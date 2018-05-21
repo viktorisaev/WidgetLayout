@@ -616,8 +616,11 @@ void Sample3DSceneRenderer::AddWidgetToList(const Widget& widget)
 {
 	if (m_WidgetCount < MAX_WIDGET_COUNT)
 	{
-		XMFLOAT2 pos = PixelToScreen(widget.GetPosition());
-		XMFLOAT2 size = PixelToScreen(widget.GetSize());
+		const WindowRect& rect = widget.GetRect();
+
+
+		XMFLOAT2 pos = PixelToScreen(rect.GetPosition());
+		XMFLOAT2 size = PixelToScreen(rect.GetSize());
 		XMFLOAT4 color = widget.GetColor();
 
 		VertexPositionColor v{ XMFLOAT3(-(SCREEN_HEIGHT / 2) + pos.x, (SCREEN_HEIGHT / 2) - pos.y, 0.0f), XMFLOAT3(size.x, size.y, 0.0f), XMFLOAT4(color.x, color.y, color.z, color.w)};
