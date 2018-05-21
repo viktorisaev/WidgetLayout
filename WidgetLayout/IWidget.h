@@ -11,6 +11,8 @@ public:
 	// TODO: visitor or iterator
 	virtual void AddToRender(Sample3DSceneRenderer* _Render) = 0;
 
+	virtual void UpdateLayout(const WindowRect& _ParentWindowRect) = 0;
+
 
 };
 

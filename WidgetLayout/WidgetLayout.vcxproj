@@ -204,6 +204,7 @@
     <ClInclude Include="Imgui\stb_truetype.h" />
     <ClInclude Include="IWidget.h" />
     <ClInclude Include="PageWidget.h" />
+    <ClInclude Include="VerticalStackWidget.h" />
     <ClInclude Include="Widget.h" />
     <ClInclude Include="WidgetFactory.h" />
     <ClInclude Include="WidgetLayoutMain.h" />
@@ -244,6 +245,7 @@
     </ClCompile>
     <ClCompile Include="IWidget.cpp" />
     <ClCompile Include="PageWidget.cpp" />
+    <ClCompile Include="VerticalStackWidget.cpp" />
     <ClCompile Include="Widget.cpp" />
     <ClCompile Include="WidgetFactory.cpp" />
     <ClCompile Include="WidgetLayoutMain.cpp" />

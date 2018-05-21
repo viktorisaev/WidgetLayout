@@ -23,3 +23,8 @@ void PageWidget::AddToRender(Sample3DSceneRenderer * _Render)
 	_Render->AddColoredRectToList(this->GetRect(), this->GetColor());
 	m_PageWidget->AddToRender(_Render);
 }
+
+void PageWidget::UpdateLayout(const WindowRect & _ParentWindowRect)
+{
+	m_PageWidget->UpdateLayout(_ParentWindowRect);
+}

@@ -33,6 +33,16 @@ BoxWidget * WidgetFactory::CreateBoxWidget(DirectX::XMINT2 _Position, DirectX::X
 
 
 
+VerticalStackWidget * WidgetFactory::CreateVerticalStackWidget(DirectX::XMINT2 _Position, DirectX::XMINT2 _Size, DirectX::XMFLOAT4 _Color)
+{
+	VerticalStackWidget* widget = new VerticalStackWidget(_Position, _Size, _Color);
+
+	return widget;
+}
+
+
+
+
 void WidgetFactory::DeleteWidget(Widget * _Widget)
 {
 	delete _Widget;

@@ -20,6 +20,7 @@ public:
 
 	// TODO: visitor or iterator
 	void AddToRender(Sample3DSceneRenderer* _Render) override;
+	void UpdateLayout(const WindowRect& _ParentWindowRect) override;
 
 
 

@@ -4,33 +4,36 @@
 
 #include "WidgetFactory.h"
 
+#include <VerticalStackWidget.h>
+
 
 using namespace WidgetLayout;
 using namespace Windows::Foundation;
 using namespace Windows::System::Threading;
 using namespace Concurrency;
 
-// The DirectX 12 Application template is documented at https://go.microsoft.com/fwlink/?LinkID=613670&clcid=0x409
 
 
 
 
-// Loads and initializes application assets when the application is loaded.
 WidgetLayoutMain::WidgetLayoutMain()
 {
-	// TODO: Change the timer settings if you want something other than the default variable timestep mode.
-	// e.g. for 60 FPS fixed timestep update logic, call:
-	/*
-	m_timer.SetFixedTimeStep(true);
-	m_timer.SetTargetElapsedSeconds(1.0 / 60);
-	*/
-
 	m_PageWidget = WidgetFactory::CreatePageWidget(DirectX::XMINT2(0, 0), DirectX::XMINT2(1366, 696), DirectX::XMFLOAT4(0.31f, 0.3f, 0.3f, 1.0f));
-	m_InternalWidget = WidgetFactory::CreateBoxWidget(DirectX::XMINT2(30, 30), DirectX::XMINT2(500, 200), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.6f));
-	m_PageWidget->SetPageWidget(m_InternalWidget);
-	//m_Widgets[1] = Widget(DirectX::XMINT2(30, 30), DirectX::XMINT2(500, 200), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 0.6f));
-	//m_Widgets[2] = Widget(DirectX::XMINT2(400, 50), DirectX::XMINT2(300, 150), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 0.9f));
+	VerticalStackWidget *vertStack = WidgetFactory::CreateVerticalStackWidget(DirectX::XMINT2(30, 30), DirectX::XMINT2(800, 450), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.5f));
+
+	m_PageWidget->SetPageWidget(vertStack);
+
+	m_InternalWidget = WidgetFactory::CreateBoxWidget(DirectX::XMINT2(0, 0), DirectX::XMINT2(500, 200), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 0.8f));
+	BoxWidget* wid2 = WidgetFactory::CreateBoxWidget(DirectX::XMINT2(0, 0), DirectX::XMINT2(350, 150), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 0.8f));
+
+	vertStack->AddWidget(m_InternalWidget);
+	vertStack->AddWidget(wid2);
+
 }
+
+
+
+
 
 
 WidgetLayout::WidgetLayoutMain::~WidgetLayoutMain()
@@ -43,7 +46,6 @@ WidgetLayout::WidgetLayoutMain::~WidgetLayoutMain()
 
 
 
-// Creates and initializes the renderers.
 void WidgetLayoutMain::CreateRenderers(const std::shared_ptr<DX::DeviceResources>& deviceResources)
 {
 	// TODO: Replace this with your app's content initialization.
@@ -68,29 +70,17 @@ void WidgetLayoutMain::Update()
 		// TODO: Replace this with your app's content update functions.
 		m_sceneRenderer->Update(m_timer);
 	});
-
-
-
 	
+
+	m_PageWidget->UpdateLayout(WindowRect(DirectX::XMINT2(0, 0), DirectX::XMINT2(1366, 696)));
+
+
 //	for (int i = 0, ei = _countof(m_Widgets); i < ei; ++i)
 	{
 		int d = int(sinf(float(m_timer.GetTotalSeconds())) * 20.0f);
 
 		m_InternalWidget->SetSize(DirectX::XMINT2(500+d, 200+d));
 	}
-
-	// push widgets to render
-	m_sceneRenderer->ResetWidgetList();
-
-	// TODO: use visitor or iterator
-	m_PageWidget->AddToRender(m_sceneRenderer.get());
-
-	/*
-	//	for (int i = 0, ei = _countof(m_Widgets); i < ei; ++i)
-	{
-		m_sceneRenderer->AddWidgetToList(m_PageWidget);
-	}
-	*/
 
 }
 
@@ -111,8 +101,20 @@ bool WidgetLayoutMain::Render()
 		return false;
 	}
 
+	// push widgets to render
+	m_sceneRenderer->ResetWidgetList();
+
+	// TODO: use visitor or iterator
+	m_PageWidget->AddToRender(m_sceneRenderer.get());
+
+	/*
+	//	for (int i = 0, ei = _countof(m_Widgets); i < ei; ++i)
+	{
+	m_sceneRenderer->AddWidgetToList(m_PageWidget);
+	}
+	*/
+
 	// Render the scene objects.
-	// TODO: Replace this with your app's content rendering functions.
 	return m_sceneRenderer->Render();
 }
 
