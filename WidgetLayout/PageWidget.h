@@ -7,8 +7,9 @@
 class PageWidget : public Widget
 {
 public:
-	PageWidget();
-	~PageWidget();
+	PageWidget(DirectX::XMINT2 _Position, DirectX::XMINT2 _Size, DirectX::XMFLOAT4 _Color);
+	virtual ~PageWidget();
+
 
 	void SetPageWidget(Widget* _Widget)
 	{

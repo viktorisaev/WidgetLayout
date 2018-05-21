@@ -2,7 +2,7 @@
 #include "WidgetLayoutMain.h"
 #include "Common\DirectXHelper.h"
 
-#include <BoxWidget.h>
+#include "WidgetFactory.h"
 
 
 using namespace WidgetLayout;
@@ -25,8 +25,8 @@ WidgetLayoutMain::WidgetLayoutMain()
 	m_timer.SetTargetElapsedSeconds(1.0 / 60);
 	*/
 
-	m_PageWidget = new PageWidget();
-	m_InternalWidget = new BoxWidget(DirectX::XMINT2(30, 30), DirectX::XMINT2(500, 200), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.6f));
+	m_PageWidget = WidgetFactory::CreatePageWidget(DirectX::XMINT2(0, 0), DirectX::XMINT2(1366, 696), DirectX::XMFLOAT4(0.31f, 0.3f, 0.3f, 1.0f));
+	m_InternalWidget = WidgetFactory::CreateBoxWidget(DirectX::XMINT2(30, 30), DirectX::XMINT2(500, 200), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.6f));
 	m_PageWidget->SetPageWidget(m_InternalWidget);
 	//m_Widgets[1] = Widget(DirectX::XMINT2(30, 30), DirectX::XMINT2(500, 200), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 0.6f));
 	//m_Widgets[2] = Widget(DirectX::XMINT2(400, 50), DirectX::XMINT2(300, 150), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 0.9f));
@@ -35,10 +35,7 @@ WidgetLayoutMain::WidgetLayoutMain()
 
 WidgetLayout::WidgetLayoutMain::~WidgetLayoutMain()
 {
-	m_PageWidget->SetPageWidget(nullptr);
-	delete m_InternalWidget;
-
-	delete m_PageWidget;
+	WidgetFactory::DeleteWidget(m_PageWidget);
 }
 
 

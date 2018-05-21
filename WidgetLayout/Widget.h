@@ -25,6 +25,7 @@ public:
 	DirectX::XMFLOAT4 GetColor() const;
 
 
+	void SetPosition(DirectX::XMINT2 _Position);
 	void SetSize(DirectX::XMINT2 _Size);
 
 

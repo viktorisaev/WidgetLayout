@@ -15,7 +15,7 @@ public:
 		Widget(_Position, _Size, _Color)
 	{ }
 
-	~BoxWidget();
+	virtual ~BoxWidget();
 
 	// TODO: visitor or iterator
 	void AddToRender(Sample3DSceneRenderer* _Render) override;

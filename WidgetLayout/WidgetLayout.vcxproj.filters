@@ -91,6 +91,7 @@
     <ClCompile Include="IWidget.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
+    <ClCompile Include="WidgetFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -132,6 +133,7 @@
     <ClInclude Include="IWidget.h">
       <Filter>Widget</Filter>
     </ClInclude>
+    <ClInclude Include="WidgetFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

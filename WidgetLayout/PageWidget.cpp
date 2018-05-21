@@ -1,9 +1,12 @@
 #include "pch.h"
+
 #include "PageWidget.h"
+#include <WidgetFactory.h>
 
 
-PageWidget::PageWidget() :
-	Widget(DirectX::XMINT2(0, 0), DirectX::XMINT2(1366, 696), DirectX::XMFLOAT4(0.31f, 0.3f, 0.3f, 1.0f))
+
+PageWidget::PageWidget(DirectX::XMINT2 _Position, DirectX::XMINT2 _Size, DirectX::XMFLOAT4 _Color) :
+	Widget(_Position, _Size, _Color)
 {
 	
 }
@@ -11,6 +14,7 @@ PageWidget::PageWidget() :
 
 PageWidget::~PageWidget()
 {
+	WidgetFactory::DeleteWidget(m_PageWidget);
 }
 
 

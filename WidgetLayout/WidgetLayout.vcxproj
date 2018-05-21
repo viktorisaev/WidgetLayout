@@ -205,6 +205,7 @@
     <ClInclude Include="IWidget.h" />
     <ClInclude Include="PageWidget.h" />
     <ClInclude Include="Widget.h" />
+    <ClInclude Include="WidgetFactory.h" />
     <ClInclude Include="WidgetLayoutMain.h" />
     <ClInclude Include="Common\DirectXHelper.h" />
     <ClInclude Include="Common\StepTimer.h" />
@@ -244,6 +245,7 @@
     <ClCompile Include="IWidget.cpp" />
     <ClCompile Include="PageWidget.cpp" />
     <ClCompile Include="Widget.cpp" />
+    <ClCompile Include="WidgetFactory.cpp" />
     <ClCompile Include="WidgetLayoutMain.cpp" />
     <ClCompile Include="Content\Sample3DSceneRenderer.cpp" />
     <ClCompile Include="pch.cpp">
