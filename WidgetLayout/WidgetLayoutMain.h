@@ -3,7 +3,7 @@
 #include "Common\StepTimer.h"
 #include "Common\DeviceResources.h"
 #include "Content\Sample3DSceneRenderer.h"
-#include "Widget.h"
+#include "PageWidget.h"
 
 // Renders Direct3D content on the screen.
 namespace WidgetLayout
@@ -12,6 +12,7 @@ namespace WidgetLayout
 	{
 	public:
 		WidgetLayoutMain();
+		~WidgetLayoutMain();
 		void CreateRenderers(const std::shared_ptr<DX::DeviceResources>& deviceResources);
 		void Update();
 		bool Render();
@@ -32,7 +33,8 @@ namespace WidgetLayout
 		DX::StepTimer m_timer;
 
 
-		Widget m_Widgets[3];
+		PageWidget* m_PageWidget;
+		Widget* m_InternalWidget;
 
 	};
 }

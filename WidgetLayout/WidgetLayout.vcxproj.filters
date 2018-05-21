@@ -82,6 +82,15 @@
     <ClCompile Include="WindowRect.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
+    <ClCompile Include="PageWidget.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxWidget.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="IWidget.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -112,6 +121,15 @@
       <Filter>Widget</Filter>
     </ClInclude>
     <ClInclude Include="WindowRect.h">
+      <Filter>Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="PageWidget.h">
+      <Filter>Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxWidget.h">
+      <Filter>Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="IWidget.h">
       <Filter>Widget</Filter>
     </ClInclude>
   </ItemGroup>

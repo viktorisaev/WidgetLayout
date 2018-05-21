@@ -15,6 +15,9 @@ public:
 	DirectX::XMINT2 GetPosition() const;
 	DirectX::XMINT2 GetSize() const;
 
+	void SetPosition(DirectX::XMINT2 _Position);
+	void SetSize(DirectX::XMINT2 _Size);
+
 
 
 

@@ -18,3 +18,8 @@ DirectX::XMFLOAT4 Widget::GetColor() const
 {
 	return m_Color;
 }
+
+void Widget::SetSize(DirectX::XMINT2 _Size)
+{
+	m_Rect.SetSize(_Size);
+}

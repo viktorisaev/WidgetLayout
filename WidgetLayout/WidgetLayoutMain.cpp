@@ -2,6 +2,9 @@
 #include "WidgetLayoutMain.h"
 #include "Common\DirectXHelper.h"
 
+#include <BoxWidget.h>
+
+
 using namespace WidgetLayout;
 using namespace Windows::Foundation;
 using namespace Windows::System::Threading;
@@ -22,10 +25,20 @@ WidgetLayoutMain::WidgetLayoutMain()
 	m_timer.SetTargetElapsedSeconds(1.0 / 60);
 	*/
 
+	m_PageWidget = new PageWidget();
+	m_InternalWidget = new BoxWidget(DirectX::XMINT2(30, 30), DirectX::XMINT2(500, 200), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.6f));
+	m_PageWidget->SetPageWidget(m_InternalWidget);
+	//m_Widgets[1] = Widget(DirectX::XMINT2(30, 30), DirectX::XMINT2(500, 200), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 0.6f));
+	//m_Widgets[2] = Widget(DirectX::XMINT2(400, 50), DirectX::XMINT2(300, 150), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 0.9f));
+}
 
-	m_Widgets[0] = Widget(DirectX::XMINT2(30, 30), DirectX::XMINT2(500, 200), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.6f));
-	m_Widgets[1] = Widget(DirectX::XMINT2(30, 30), DirectX::XMINT2(500, 200), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 0.6f));
-	m_Widgets[2] = Widget(DirectX::XMINT2(400, 50), DirectX::XMINT2(300, 150), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 0.9f));
+
+WidgetLayout::WidgetLayoutMain::~WidgetLayoutMain()
+{
+	m_PageWidget->SetPageWidget(nullptr);
+	delete m_InternalWidget;
+
+	delete m_PageWidget;
 }
 
 
@@ -61,21 +74,26 @@ void WidgetLayoutMain::Update()
 
 
 
-	for (int i = 0, ei = _countof(m_Widgets); i < ei; ++i)
+	
+//	for (int i = 0, ei = _countof(m_Widgets); i < ei; ++i)
 	{
-		float d = sinf(m_timer.GetTotalSeconds()) * 20;
+		int d = int(sinf(float(m_timer.GetTotalSeconds())) * 20.0f);
 
-		m_Widgets[0] = Widget(DirectX::XMINT2(30, 30), DirectX::XMINT2(500+d, 200+d), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.6f));
-
+		m_InternalWidget->SetSize(DirectX::XMINT2(500+d, 200+d));
 	}
-
 
 	// push widgets to render
 	m_sceneRenderer->ResetWidgetList();
-	for (int i = 0, ei = _countof(m_Widgets); i < ei; ++i)
+
+	// TODO: use visitor or iterator
+	m_PageWidget->AddToRender(m_sceneRenderer.get());
+
+	/*
+	//	for (int i = 0, ei = _countof(m_Widgets); i < ei; ++i)
 	{
-		m_sceneRenderer->AddWidgetToList(m_Widgets[i]);
+		m_sceneRenderer->AddWidgetToList(m_PageWidget);
 	}
+	*/
 
 }
 

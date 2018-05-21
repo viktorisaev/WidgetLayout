@@ -3,9 +3,11 @@
 #include <DirectXMath.h>
 
 #include <WindowRect.h>
+#include <IWidget.h>
 
 
-class Widget
+// abstract
+class Widget : public IWidget
 {
 public:
 	Widget()
@@ -21,6 +23,11 @@ public:
 
 	const WindowRect& GetRect() const;
 	DirectX::XMFLOAT4 GetColor() const;
+
+
+	void SetSize(DirectX::XMINT2 _Size);
+
+
 
 
 private:

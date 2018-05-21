@@ -192,6 +192,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="BoxWidget.h" />
     <ClInclude Include="Common\d3dx12.h" />
     <ClInclude Include="Common\DeviceResources.h" />
     <ClInclude Include="Imgui\imconfig.h" />
@@ -201,6 +202,8 @@
     <ClInclude Include="Imgui\stb_rect_pack.h" />
     <ClInclude Include="Imgui\stb_textedit.h" />
     <ClInclude Include="Imgui\stb_truetype.h" />
+    <ClInclude Include="IWidget.h" />
+    <ClInclude Include="PageWidget.h" />
     <ClInclude Include="Widget.h" />
     <ClInclude Include="WidgetLayoutMain.h" />
     <ClInclude Include="Common\DirectXHelper.h" />
@@ -212,6 +215,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="BoxWidget.cpp" />
     <ClCompile Include="Common\DeviceResources.cpp" />
     <ClCompile Include="Imgui\imgui.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -237,6 +241,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="IWidget.cpp" />
+    <ClCompile Include="PageWidget.cpp" />
     <ClCompile Include="Widget.cpp" />
     <ClCompile Include="WidgetLayoutMain.cpp" />
     <ClCompile Include="Content\Sample3DSceneRenderer.cpp" />
