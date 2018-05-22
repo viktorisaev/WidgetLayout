@@ -35,3 +35,20 @@ WindowSize WindowSize::GetMin(const WindowSize _First, const WindowSize _Second)
 
 	return w;
 }
+
+
+
+WindowSize WindowSize::GetResized(int32_t _Hor, int32_t _Vert)
+{
+	return WindowSize(m_Size.x + _Hor, m_Size.y + _Vert);
+}
+
+
+
+const WindowSize& WindowSize::Resize(int32_t _Hor, int32_t _Vert)
+{
+	m_Size.x += _Hor;
+	m_Size.y += _Vert;
+
+	return *this;
+}

@@ -19,6 +19,9 @@ public:
 
 	static WindowSize GetMin(const WindowSize _First, const WindowSize _Second);
 
+	WindowSize GetResized(int32_t _Hor, int32_t _Vert);
+	const WindowSize& Resize(int32_t _Hor, int32_t _Vert);
+
 private:
 	DirectX::XMINT2 m_Size;
 

@@ -19,15 +19,17 @@ using namespace Concurrency;
 WidgetLayoutMain::WidgetLayoutMain()
 {
 	m_PageWidget = WidgetFactory::CreatePageWidget(DirectX::XMINT2(0, 0), WindowSize(1366, 696), DirectX::XMFLOAT4(0.31f, 0.3f, 0.3f, 1.0f));
-	VerticalStackWidget *vertStack = WidgetFactory::CreateVerticalStackWidget(DirectX::XMINT2(30, 30), WindowSize(800, 450), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.5f));
 
+	VerticalStackWidget *vertStack = WidgetFactory::CreateVerticalStackWidget(DirectX::XMINT2(30, 30), WindowSize(700, 450), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.5f));
 	m_PageWidget->SetPageWidget(vertStack);
 
+	// vertical children
 	m_InternalWidget = WidgetFactory::CreateBoxWidget(5, WindowSize(500, 200), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 0.8f));
-	BoxWidget* wid2 = WidgetFactory::CreateBoxWidget(5, WindowSize(350, 150), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 0.8f));
-
 	vertStack->AddWidget(m_InternalWidget);
-	vertStack->AddWidget(wid2);
+
+	vertStack->AddWidget(WidgetFactory::CreateBoxWidget(5, WindowSize(350, 150), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 0.8f)));
+
+	vertStack->AddWidget(WidgetFactory::CreateBoxWidget(15, WindowSize(80, 50), DirectX::XMFLOAT4(1.0f, 0.5f, 0.0f, 0.8f)));
 
 }
 
@@ -72,8 +74,6 @@ void WidgetLayoutMain::Update()
 	});
 	
 
-	m_PageWidget->UpdateLayout(WindowRect(DirectX::XMINT2(0, 0), WindowSize(1366, 696)));
-
 
 //	for (int i = 0, ei = _countof(m_Widgets); i < ei; ++i)
 	{
@@ -81,6 +81,8 @@ void WidgetLayoutMain::Update()
 
 		m_InternalWidget->SetSize(WindowSize(500+d, 200+d));
 	}
+
+	m_PageWidget->UpdateLayout(WindowRect(DirectX::XMINT2(0, 0), WindowSize(1366, 696)));
 
 }
 
