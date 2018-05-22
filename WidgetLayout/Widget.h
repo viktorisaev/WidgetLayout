@@ -13,26 +13,26 @@ public:
 	Widget()
 	{ }
 
-	Widget(DirectX::XMINT2 _Position, DirectX::XMINT2 _Size, DirectX::XMFLOAT4 _Color) :
-		m_Rect(_Position, _Size)
+	Widget(DirectX::XMINT2 _Position, WindowSize _Size, DirectX::XMFLOAT4 _Color) :
+		m_AbsRect(_Position, _Size)
 	,	m_Color(_Color)
 	{ }
 
 	~Widget()
 	{ }
 
-	const WindowRect& GetRect() const;
+	const WindowRect& GetAbsRect() const;
 	DirectX::XMFLOAT4 GetColor() const;
 
 
 	void SetPosition(DirectX::XMINT2 _Position);
-	void SetSize(DirectX::XMINT2 _Size);
+	void SetSize(WindowSize _Size);
 
 
 
 
-private:
-	WindowRect m_Rect;
+protected:
+	WindowRect m_AbsRect;
 	DirectX::XMFLOAT4 m_Color;
 
 };

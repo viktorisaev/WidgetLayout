@@ -5,9 +5,9 @@
 
 
 
-const WindowRect& Widget::GetRect() const
+const WindowRect& Widget::GetAbsRect() const
 {
-	return m_Rect;
+	return m_AbsRect;
 }
 
 
@@ -21,10 +21,10 @@ DirectX::XMFLOAT4 Widget::GetColor() const
 
 void Widget::SetPosition(DirectX::XMINT2 _Position)
 {
-	m_Rect.SetPosition(_Position);
+	m_AbsRect.SetPosition(_Position);
 }
 
-void Widget::SetSize(DirectX::XMINT2 _Size)
+void Widget::SetSize(WindowSize _Size)
 {
-	m_Rect.SetSize(_Size);
+	m_AbsRect.SetSize(_Size);
 }

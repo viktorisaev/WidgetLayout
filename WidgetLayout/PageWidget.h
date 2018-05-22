@@ -7,7 +7,7 @@
 class PageWidget : public Widget
 {
 public:
-	PageWidget(DirectX::XMINT2 _Position, DirectX::XMINT2 _Size, DirectX::XMFLOAT4 _Color);
+	PageWidget(DirectX::XMINT2 _Position, WindowSize _Size, DirectX::XMFLOAT4 _Color);
 	virtual ~PageWidget();
 
 
@@ -20,7 +20,7 @@ public:
 
 	// TODO: visitor or iterator
 	void AddToRender(Sample3DSceneRenderer* _Render) override;
-	void UpdateLayout(const WindowRect& _ParentWindowRect) override;
+	void UpdateLayout(const WindowRect& _AvailableWindowRect) override;
 
 
 

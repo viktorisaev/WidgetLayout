@@ -5,7 +5,7 @@
 
 
 
-PageWidget::PageWidget(DirectX::XMINT2 _Position, DirectX::XMINT2 _Size, DirectX::XMFLOAT4 _Color) :
+PageWidget::PageWidget(DirectX::XMINT2 _Position, WindowSize _Size, DirectX::XMFLOAT4 _Color) :
 	Widget(_Position, _Size, _Color)
 {
 	
@@ -20,11 +20,11 @@ PageWidget::~PageWidget()
 
 void PageWidget::AddToRender(Sample3DSceneRenderer * _Render)
 {
-	_Render->AddColoredRectToList(this->GetRect(), this->GetColor());
+	_Render->AddColoredRectToList(this->GetAbsRect(), this->GetColor());
 	m_PageWidget->AddToRender(_Render);
 }
 
-void PageWidget::UpdateLayout(const WindowRect & _ParentWindowRect)
+void PageWidget::UpdateLayout(const WindowRect & _AvailableWindowRect)
 {
-	m_PageWidget->UpdateLayout(_ParentWindowRect);
+	m_PageWidget->UpdateLayout(_AvailableWindowRect);
 }

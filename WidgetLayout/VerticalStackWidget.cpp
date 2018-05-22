@@ -5,7 +5,7 @@
 
 
 
-VerticalStackWidget::VerticalStackWidget(DirectX::XMINT2 _Position, DirectX::XMINT2 _Size, DirectX::XMFLOAT4 _Color) :
+VerticalStackWidget::VerticalStackWidget(DirectX::XMINT2 _Position, WindowSize _Size, DirectX::XMFLOAT4 _Color) :
 	Widget(_Position, _Size, _Color)
 {
 }
@@ -27,7 +27,7 @@ VerticalStackWidget::~VerticalStackWidget()
 
 void VerticalStackWidget::AddToRender(Sample3DSceneRenderer * _Render)
 {
-	_Render->AddColoredRectToList(this->GetRect(), this->GetColor());
+	_Render->AddColoredRectToList(this->GetAbsRect(), this->GetColor());
 
 	for (Widget* w : m_Widgets)
 	{
@@ -35,25 +35,22 @@ void VerticalStackWidget::AddToRender(Sample3DSceneRenderer * _Render)
 	}
 }
 
-void VerticalStackWidget::UpdateLayout(const WindowRect & _ParentWindowRect)
+void VerticalStackWidget::UpdateLayout(const WindowRect & _AvailableWindowRect)
 {
 	UINT y = 0;
 	
 	for (Widget* w : m_Widgets)
 	{
-		const WindowRect& rect = w->GetRect();
+		const WindowRect& rect = w->GetAbsRect();
 
-		DirectX::XMINT2 newPos = DirectX::XMINT2(rect.GetPosition().x, y);
+		DirectX::XMINT2 newPos = DirectX::XMINT2(_AvailableWindowRect.GetPosition().x, y);
 
-		w->SetPosition(newPos);
+		WindowRect newRect = WindowRect(newPos, rect.GetSize());
+		w->UpdateLayout(newRect);
 
-		y += rect.GetSize().y;
+		y += rect.GetSize().GetHeight();
 	}
 
-	for (Widget* w : m_Widgets)
-	{
-		w->UpdateLayout(_ParentWindowRect);
-	}
 
 }
 

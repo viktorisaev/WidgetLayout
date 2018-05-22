@@ -11,15 +11,20 @@ class BoxWidget : public Widget
 public:
 	BoxWidget();
 
-	BoxWidget(DirectX::XMINT2 _Position, DirectX::XMINT2 _Size, DirectX::XMFLOAT4 _Color) :
-		Widget(_Position, _Size, _Color)
+	BoxWidget(int _Margin, WindowSize _Size, DirectX::XMFLOAT4 _Color) :
+		Widget(DirectX::XMINT2(), _Size, _Color)
+	,	m_Margin(_Margin)
 	{ }
 
 	virtual ~BoxWidget();
 
 	// TODO: visitor or iterator
 	void AddToRender(Sample3DSceneRenderer* _Render) override;
-	void UpdateLayout(const WindowRect& _ParentWindowRect) override;
+	void UpdateLayout(const WindowRect& _AvailableWindowRect) override;
+
+
+private:
+	int m_Margin;
 
 };
 

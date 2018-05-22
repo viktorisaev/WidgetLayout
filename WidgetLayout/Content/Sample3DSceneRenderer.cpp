@@ -615,7 +615,8 @@ void Sample3DSceneRenderer::AddColoredRectToList(const WindowRect& _WindowRect, 
 	if (m_WidgetCount < MAX_WIDGET_COUNT)
 	{
 		XMFLOAT2 pos = PixelToScreen(_WindowRect.GetPosition());
-		XMFLOAT2 size = PixelToScreen(_WindowRect.GetSize());
+		const WindowSize& winSize = _WindowRect.GetSize();
+		XMFLOAT2 size = PixelToScreen(DirectX::XMINT2(winSize.GetWidth(), winSize.GetHeight()));
 		XMFLOAT4 color = _Color;
 
 		VertexPositionColor v{ XMFLOAT3(-(SCREEN_HEIGHT / 2) + pos.x, (SCREEN_HEIGHT / 2) - pos.y, 0.0f), XMFLOAT3(size.x, size.y, 0.0f), XMFLOAT4(color.x, color.y, color.z, color.w)};
