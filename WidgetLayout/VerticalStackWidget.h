@@ -7,7 +7,7 @@
 class VerticalStackWidget :	public Widget
 {
 public:
-	VerticalStackWidget(DirectX::XMINT2 _Position, WindowSize _Size, DirectX::XMFLOAT4 _Color);
+	VerticalStackWidget(DirectX::XMINT2 _Position, WindowSize _Size, DirectX::XMFLOAT4 _Color, WindowSize _ChildSize);
 	virtual ~VerticalStackWidget();
 
 
@@ -17,8 +17,12 @@ public:
 
 	void AddWidget(Widget* _Widget);
 
+	void SetChildSize(WindowSize _ChildSize);
+
 
 private:
 	std::vector<Widget*> m_Widgets;
+
+	WindowSize m_ChildSize;
 };
 

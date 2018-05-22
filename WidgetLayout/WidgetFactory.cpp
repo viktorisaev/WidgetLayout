@@ -30,12 +30,19 @@ BoxWidget * WidgetFactory::CreateBoxWidget(int _Margin, WindowSize _Size, Direct
 	return widget;
 }
 
-
-
-
-VerticalStackWidget * WidgetFactory::CreateVerticalStackWidget(DirectX::XMINT2 _Position, WindowSize _Size, DirectX::XMFLOAT4 _Color)
+AspectBoxWidget * WidgetFactory::CreateAspectBoxWidget(int _Margin, WindowSize _Size, DirectX::XMFLOAT4 _Color)
 {
-	VerticalStackWidget* widget = new VerticalStackWidget(_Position, _Size, _Color);
+	AspectBoxWidget* widget = new AspectBoxWidget(_Margin, _Size, _Color);
+
+	return widget;
+}
+
+
+
+
+VerticalStackWidget * WidgetFactory::CreateVerticalStackWidget(DirectX::XMINT2 _Position, WindowSize _Size, DirectX::XMFLOAT4 _Color, WindowSize _ChildSize)
+{
+	VerticalStackWidget* widget = new VerticalStackWidget(_Position, _Size, _Color, _ChildSize);
 
 	return widget;
 }

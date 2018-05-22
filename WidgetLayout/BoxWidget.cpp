@@ -40,12 +40,12 @@ WindowSize BoxWidget::GetRequiredSize(const WindowSize& _AvailableSize)
 
 	if (_AvailableSize.GetWidth() > 0)
 	{
-		w = min(w, _AvailableSize.GetWidth());
+		w = _AvailableSize.GetWidth();
 	}
 
 	if (_AvailableSize.GetHeight() > 0)
 	{
-		h = min(h, _AvailableSize.GetHeight());
+		h = _AvailableSize.GetHeight();
 	}
 
 	return WindowSize(w, h);

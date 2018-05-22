@@ -5,8 +5,9 @@
 
 
 
-VerticalStackWidget::VerticalStackWidget(DirectX::XMINT2 _Position, WindowSize _Size, DirectX::XMFLOAT4 _Color) :
-	Widget(_Position, _Size, _Color)
+VerticalStackWidget::VerticalStackWidget(DirectX::XMINT2 _Position, WindowSize _Size, DirectX::XMFLOAT4 _Color, WindowSize _ChildSize) :
+  Widget(_Position, _Size, _Color)
+, m_ChildSize(_ChildSize)
 {
 }
 
@@ -41,9 +42,15 @@ void VerticalStackWidget::AddToRender(Sample3DSceneRenderer * _Render)
 
 void VerticalStackWidget::UpdateLayout(const WindowRect & _AvailableWindowRect)
 {
-	UINT y = 0;
+	int32_t y = 0;
 
-	WindowSize childSize(_AvailableWindowRect.GetSize().GetWidth(), 0);	// get "Auto" size
+	int32_t childWidth = min(_AvailableWindowRect.GetSize().GetWidth(), this->GetAbsRect().GetSize().GetWidth());
+//	if (m_ChildSize.GetWidth() > 0)
+	{
+		childWidth = m_ChildSize.GetWidth();
+	}
+
+	WindowSize childSize(childWidth, m_ChildSize.GetHeight());	// get "Auto" size
 
 	DirectX::XMINT2 availPos = _AvailableWindowRect.GetPosition();
 	DirectX::XMINT2 containerPos = this->GetAbsRect().GetPosition();
@@ -81,4 +88,9 @@ WindowSize VerticalStackWidget::GetRequiredSize(const WindowSize & _AvailableSiz
 void VerticalStackWidget::AddWidget(Widget * _Widget)
 {
 	m_Widgets.push_back(_Widget);
+}
+
+void VerticalStackWidget::SetChildSize(WindowSize _ChildSize)
+{
+	m_ChildSize = _ChildSize;
 }

@@ -100,6 +100,9 @@
     <ClCompile Include="WindowSize.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
+    <ClCompile Include="AspectBoxWidget.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -148,6 +151,9 @@
       <Filter>Widget</Filter>
     </ClInclude>
     <ClInclude Include="WindowSize.h">
+      <Filter>Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="AspectBoxWidget.h">
       <Filter>Widget</Filter>
     </ClInclude>
   </ItemGroup>

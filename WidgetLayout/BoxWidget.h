@@ -26,9 +26,8 @@ public:
 
 	void SetSize(const WindowSize& _AvailableSize);
 
-private:
+protected:
 	int m_Margin;
-
 	WindowSize m_DefaultSize;	// default size
 
 };
