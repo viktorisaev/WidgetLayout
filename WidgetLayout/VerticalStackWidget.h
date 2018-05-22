@@ -13,6 +13,7 @@ public:
 
 	void AddToRender(Sample3DSceneRenderer* _Render) override;
 	void UpdateLayout(const WindowRect& _AvailableWindowRect) override;
+	WindowSize GetRequiredSize(const WindowSize& _AvailableSize) override;
 
 	void AddWidget(Widget* _Widget);
 

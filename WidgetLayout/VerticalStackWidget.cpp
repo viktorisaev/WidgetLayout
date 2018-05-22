@@ -41,17 +41,26 @@ void VerticalStackWidget::UpdateLayout(const WindowRect & _AvailableWindowRect)
 	
 	for (Widget* w : m_Widgets)
 	{
-		const WindowRect& rect = w->GetAbsRect();
+		WindowSize rect = w->GetRequiredSize(_AvailableWindowRect.GetSize());
 
 		DirectX::XMINT2 newPos = DirectX::XMINT2(_AvailableWindowRect.GetPosition().x, y);
 
-		WindowRect newRect = WindowRect(newPos, rect.GetSize());
+		WindowRect newRect = WindowRect(newPos, rect);
 		w->UpdateLayout(newRect);
 
-		y += rect.GetSize().GetHeight();
+		y += rect.GetHeight();
 	}
 
 
+}
+
+
+
+WindowSize VerticalStackWidget::GetRequiredSize(const WindowSize & _AvailableSize)
+{
+	WindowSize w = WindowSize::GetMin(m_AbsRect.GetSize(), _AvailableSize);
+
+	return w;
 }
 
 

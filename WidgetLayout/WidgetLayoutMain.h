@@ -3,7 +3,11 @@
 #include "Common\StepTimer.h"
 #include "Common\DeviceResources.h"
 #include "Content\Sample3DSceneRenderer.h"
-#include "PageWidget.h"
+
+#include <PageWidget.h>
+#include <BoxWidget.h>
+
+
 
 // Renders Direct3D content on the screen.
 namespace WidgetLayout
@@ -34,7 +38,7 @@ namespace WidgetLayout
 
 
 		PageWidget* m_PageWidget;
-		Widget* m_InternalWidget;
+		BoxWidget* m_InternalWidget;
 
 	};
 }

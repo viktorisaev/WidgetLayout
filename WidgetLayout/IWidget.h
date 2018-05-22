@@ -2,6 +2,8 @@
 
 #include <Content/Sample3DSceneRenderer.h>	// TODO: remove!!!
 
+#include <WindowSize.h>
+
 
 // interface to Widget
 class IWidget
@@ -12,6 +14,8 @@ public:
 	virtual void AddToRender(Sample3DSceneRenderer* _Render) = 0;
 
 	virtual void UpdateLayout(const WindowRect& _AvailableWindowRect) = 0;
+
+	virtual WindowSize GetRequiredSize(const WindowSize& _AvailableSize) = 0;
 
 
 };
