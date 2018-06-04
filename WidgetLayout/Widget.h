@@ -6,6 +6,7 @@
 #include <IWidget.h>
 
 
+
 // abstract
 class Widget : public IWidget
 {

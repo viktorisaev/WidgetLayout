@@ -21,40 +21,30 @@ void BoxWidget::AddToRender(Sample3DSceneRenderer * _Render)
 
 
 
-void BoxWidget::UpdateLayout(const WindowRect & _AvailableWindowRect)
+void BoxWidget::UpdateLayout(const WindowRect& _VisibleRect)
 {
-	DirectX::XMINT2 rectPos = _AvailableWindowRect.GetPosition();
-	DirectX::XMINT2 newPos = DirectX::XMINT2(rectPos.x + m_Margin, rectPos.y + m_Margin);
+	WindowSize size = m_LayoutData.GetRequiredSizeWithParent(_VisibleRect.GetSize());
 
+	DirectX::XMINT2 rectPos = _VisibleRect.GetPosition();
+	DirectX::XMINT2 newPos = DirectX::XMINT2(rectPos.x + m_LayoutData.GetMargin(), rectPos.y + m_LayoutData.GetMargin());
+
+	// set draw rect
 	Widget::SetPosition(newPos);
-	Widget::SetSize( _AvailableWindowRect.GetSize().GetResized(-m_Margin*2, -m_Margin*2) );
+	Widget::SetSize( m_LayoutData.GetContentSize(size) );
 }
 
 
 
 
-WindowSize BoxWidget::GetRequiredSize(const WindowSize& _AvailableSize)
+WindowSize BoxWidget::GetRequiredSize(const WindowSize& _MaxContentRect)
 {
-	int32_t w = m_DefaultSize.GetWidth() + m_Margin * 2;
-	int32_t h = m_DefaultSize.GetHeight() + m_Margin * 2;
-
-	if (_AvailableSize.GetWidth() > 0)
-	{
-		w = _AvailableSize.GetWidth();
-	}
-
-	if (_AvailableSize.GetHeight() > 0)
-	{
-		h = _AvailableSize.GetHeight();
-	}
-
-	return WindowSize(w, h);
+	return m_LayoutData.GetRequiredSizeWithParent(_MaxContentRect);
 }
 
 
 
 
-void BoxWidget::SetSize(const WindowSize & _AvailableSize)
+void BoxWidget::SetSize(const WindowSize & _Size)
 {
-	m_DefaultSize = _AvailableSize;
+	m_LayoutData.SetSize(_Size);
 }

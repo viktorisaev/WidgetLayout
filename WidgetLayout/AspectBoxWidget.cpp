@@ -11,11 +11,13 @@ AspectBoxWidget::~AspectBoxWidget()
 {
 }
 
-WindowSize AspectBoxWidget::GetRequiredSize(const WindowSize & _AvailableSize)
+WindowSize AspectBoxWidget::GetRequiredSize(const WindowSize & _MaxContentRect)
 {
-	WindowSize winSize = BoxWidget::GetRequiredSize(_AvailableSize);
+	WindowSize winSize = BoxWidget::GetRequiredSize(_MaxContentRect);
+	WindowSize defaultSize = m_LayoutData.GetInternalSize();
 
-	int32_t nX = (winSize.GetHeight() * m_DefaultSize.GetWidth()) / m_DefaultSize.GetHeight();
+	WindowSize heightControlsWidth = WindowSize((winSize.GetHeight() * defaultSize.GetWidth()) / defaultSize.GetHeight(), winSize.GetHeight());
+	WindowSize widthControlsHeight = WindowSize(winSize.GetWidth(), (winSize.GetWidth() * defaultSize.GetHeight()) / defaultSize.GetWidth() );
 
-	return WindowSize(nX, winSize.GetHeight());
+	return heightControlsWidth;
 }

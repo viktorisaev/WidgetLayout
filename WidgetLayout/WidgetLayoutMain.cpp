@@ -19,18 +19,23 @@ WidgetLayoutMain::WidgetLayoutMain()
 {
 	m_PageWidget = WidgetFactory::CreatePageWidget(DirectX::XMINT2(0, 0), WindowSize(1366, 696), DirectX::XMFLOAT4(0.31f, 0.3f, 0.3f, 1.0f));
 
-	m_VerticalStackWidget = WidgetFactory::CreateVerticalStackWidget(DirectX::XMINT2(30, 30), WindowSize(700, 450), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.5f), WindowSize(700, 50));
+
+	m_VerticalStackWidget = WidgetFactory::CreateVerticalStackWidget( 15, WindowSize(ENVELOP_CHILD, FIT_PARENT), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.5f), WindowSize(ENVELOP_CHILD, 150));
 	m_PageWidget->SetPageWidget(m_VerticalStackWidget);
 
 	// vertical children
-	m_VerticalStackWidget->AddWidget(WidgetFactory::CreateAspectBoxWidget(0, WindowSize(120, 80), DirectX::XMFLOAT4(1.0f, 0.5f, 0.0f, 0.8f)));
+//	m_VerticalStackWidget->AddWidget(WidgetFactory::CreateAspectBoxWidget(0, WindowSize(120, 80), DirectX::XMFLOAT4(1.0f, 0.5f, 0.0f, 0.8f)));
 
-	m_InternalWidget = WidgetFactory::CreateBoxWidget(5, WindowSize(500, 100), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 0.8f));
+	m_InternalWidget = WidgetFactory::CreateBoxWidget(10, WindowSize(500, 200), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 0.8f));
+//	m_PageWidget->SetPageWidget(m_InternalWidget);
 	m_VerticalStackWidget->AddWidget(m_InternalWidget);
+	m_VerticalStackWidget->AddWidget(WidgetFactory::CreateBoxWidget(10, WindowSize(500, 200), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 0.8f)));
 
-	m_VerticalStackWidget->AddWidget(WidgetFactory::CreateBoxWidget(5, WindowSize(350, 90), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 0.8f)));
+//	m_PageWidget->SetPageWidget(m_VerticalStackWidget);
 
-
+	//VerticalStackWidget *w1 = WidgetFactory::CreateVerticalStackWidget(DirectX::XMINT2(8, 8), 7, WindowSize(350, 90), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 0.8f), WindowSize(ENVELOP_CHILD, ENVELOP_CHILD));
+	//w1->AddWidget(WidgetFactory::CreateBoxWidget(3, WindowSize(80, 50), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 0.8f)));
+	//m_VerticalStackWidget->AddWidget(w1);
 }
 
 
@@ -75,12 +80,12 @@ void WidgetLayoutMain::Update()
 	
 
 	// tweak some params by timer
-	int d1 = int(sinf(float(m_timer.GetTotalSeconds())) * 20.0f);
+	int d1 = int(sinf(float(m_timer.GetTotalSeconds())) * 5*20.0f);
 	int d2 = int(sinf(float(m_timer.GetTotalSeconds() *1.8f)) * 20.0f);
 	m_InternalWidget->SetSize(WindowSize(500+d1, 200+d1));
-	m_VerticalStackWidget->SetChildSize(WindowSize(0, 90+d2));
+//	m_VerticalStackWidget->SetChildSize(WindowSize(0, 90+d2));
 
-	m_PageWidget->UpdateLayout(WindowRect(DirectX::XMINT2(0, 0), WindowSize(1366, 696)));
+	m_PageWidget->UpdateLayout(WindowRect(DirectX::XMINT2(0, 0), WindowSize(1366, 696)) );
 
 }
 

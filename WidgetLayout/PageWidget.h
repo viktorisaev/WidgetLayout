@@ -20,8 +20,8 @@ public:
 
 	// TODO: visitor or iterator
 	void AddToRender(Sample3DSceneRenderer* _Render) override;
-	void UpdateLayout(const WindowRect& _AvailableWindowRect) override;
-	WindowSize GetRequiredSize(const WindowSize& _AvailableSize) override;
+	void UpdateLayout(const WindowRect& _VisibleRect) override;
+	WindowSize GetRequiredSize(const WindowSize& _MaxContentRect) override;
 
 
 

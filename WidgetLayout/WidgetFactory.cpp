@@ -22,13 +22,14 @@ PageWidget * WidgetFactory::CreatePageWidget(DirectX::XMINT2 _Position, WindowSi
 
 
 
-
 BoxWidget * WidgetFactory::CreateBoxWidget(int _Margin, WindowSize _Size, DirectX::XMFLOAT4 _Color)
 {
 	BoxWidget* widget = new BoxWidget(_Margin, _Size, _Color);
 
 	return widget;
 }
+
+
 
 AspectBoxWidget * WidgetFactory::CreateAspectBoxWidget(int _Margin, WindowSize _Size, DirectX::XMFLOAT4 _Color)
 {
@@ -39,14 +40,12 @@ AspectBoxWidget * WidgetFactory::CreateAspectBoxWidget(int _Margin, WindowSize _
 
 
 
-
-VerticalStackWidget * WidgetFactory::CreateVerticalStackWidget(DirectX::XMINT2 _Position, WindowSize _Size, DirectX::XMFLOAT4 _Color, WindowSize _ChildSize)
+VerticalStackWidget * WidgetFactory::CreateVerticalStackWidget(int32_t _Margin, WindowSize _Size, DirectX::XMFLOAT4 _Color, WindowSize _ElementSize)
 {
-	VerticalStackWidget* widget = new VerticalStackWidget(_Position, _Size, _Color, _ChildSize);
+	VerticalStackWidget* widget = new VerticalStackWidget(_Margin, _Size, _Color, _ElementSize);
 
 	return widget;
 }
-
 
 
 

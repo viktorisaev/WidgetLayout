@@ -204,6 +204,7 @@
     <ClInclude Include="Imgui\stb_textedit.h" />
     <ClInclude Include="Imgui\stb_truetype.h" />
     <ClInclude Include="IWidget.h" />
+    <ClInclude Include="LayoutData.h" />
     <ClInclude Include="PageWidget.h" />
     <ClInclude Include="VerticalStackWidget.h" />
     <ClInclude Include="Widget.h" />
@@ -247,6 +248,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="IWidget.cpp" />
+    <ClCompile Include="LayoutData.cpp" />
     <ClCompile Include="PageWidget.cpp" />
     <ClCompile Include="VerticalStackWidget.cpp" />
     <ClCompile Include="Widget.cpp" />

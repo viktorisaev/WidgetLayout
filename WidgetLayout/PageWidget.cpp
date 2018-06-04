@@ -29,17 +29,17 @@ void PageWidget::AddToRender(Sample3DSceneRenderer * _Render)
 
 
 
-void PageWidget::UpdateLayout(const WindowRect & _AvailableWindowRect)
+void PageWidget::UpdateLayout(const WindowRect& _VisibleRect)
 {
-	m_PageWidget->UpdateLayout(_AvailableWindowRect);
+	m_PageWidget->UpdateLayout(_VisibleRect);
 }
 
 
 
 
-WindowSize PageWidget::GetRequiredSize(const WindowSize & _AvailableSize)
+WindowSize PageWidget::GetRequiredSize(const WindowSize & _MaxContentRect)
 {
-	WindowSize w = WindowSize::GetMin(m_AbsRect.GetSize(), _AvailableSize);
+	WindowSize w = WindowSize::GetMin(m_AbsRect.GetSize(), _MaxContentRect);
 
 	return w;
 }
