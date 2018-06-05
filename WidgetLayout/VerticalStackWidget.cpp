@@ -54,14 +54,21 @@ void VerticalStackWidget::UpdateLayout(const WindowRect& _VisibleRect)
 	Widget::SetSize(size);
 
 	// 2) layout content
-	WindowSize singleChildSize = WindowSize::GetMin(m_ElementSize, size);
+//	WindowSize singleChildSize = WindowSize::GetMin(, size);
 	
 	int32_t childY = 0;
 	for (Widget* childWidget : m_Widgets)
 	{
-		WindowSize rect = childWidget->GetRequiredSize( singleChildSize );
+		WindowSize rect = childWidget->GetRequiredSize(m_ElementSize);
+
+		rect.SetWidth(min( rect.GetWidth(), size.GetWidth() ));
 
 		DirectX::XMINT2 newPos = DirectX::XMINT2(rectPos.x, rectPos.y + childY);
+
+		if (rect.GetHeight() == ENVELOP_CHILD)
+		{
+			rect.SetHeight(0);	// can't draw child of 'fit parent' if element size is not defined
+		}
 
 		WindowRect newRect = WindowRect( newPos , rect );
 		childWidget->UpdateLayout( newRect );
@@ -81,8 +88,16 @@ WindowSize VerticalStackWidget::GetChildrenSize(const WindowSize& _ElementRect)
 	for (Widget* childWidget : m_Widgets)
 	{
 		WindowSize rect = childWidget->GetRequiredSize(_ElementRect);
-		w = max(w, rect.GetWidth());
-		h += rect.GetHeight();
+
+		if (rect.GetWidth() != ENVELOP_CHILD)
+		{
+			w = max(w, rect.GetWidth());
+		}
+
+		if (rect.GetHeight() != ENVELOP_CHILD)
+		{
+			h += rect.GetHeight();
+		}
 	}
 
 	return WindowSize(w, h);

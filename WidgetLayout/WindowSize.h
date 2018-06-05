@@ -16,6 +16,8 @@ public:
 
 	int32_t GetWidth() const { return m_Size.x; }
 	int32_t GetHeight() const { return m_Size.y; }
+	void SetWidth(const int32_t _Width) { m_Size.x = _Width; }
+	void SetHeight(const int32_t _Height) { m_Size.y = _Height; }
 
 	static WindowSize GetMin(const WindowSize _First, const WindowSize _Second);
 

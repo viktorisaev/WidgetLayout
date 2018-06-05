@@ -20,16 +20,18 @@ WidgetLayoutMain::WidgetLayoutMain()
 	m_PageWidget = WidgetFactory::CreatePageWidget(DirectX::XMINT2(0, 0), WindowSize(1366, 696), DirectX::XMFLOAT4(0.31f, 0.3f, 0.3f, 1.0f));
 
 
-	m_VerticalStackWidget = WidgetFactory::CreateVerticalStackWidget( 15, WindowSize(ENVELOP_CHILD, FIT_PARENT), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.5f), WindowSize(ENVELOP_CHILD, 150));
+	m_VerticalStackWidget = WidgetFactory::CreateVerticalStackWidget( 15, WindowSize(ENVELOP_CHILD, FIT_PARENT), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, /*ENVELOP_CHILD*/110));
 	m_PageWidget->SetPageWidget(m_VerticalStackWidget);
 
 	// vertical children
 //	m_VerticalStackWidget->AddWidget(WidgetFactory::CreateAspectBoxWidget(0, WindowSize(120, 80), DirectX::XMFLOAT4(1.0f, 0.5f, 0.0f, 0.8f)));
 
 	m_InternalWidget = WidgetFactory::CreateBoxWidget(10, WindowSize(500, 200), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 0.8f));
-//	m_PageWidget->SetPageWidget(m_InternalWidget);
 	m_VerticalStackWidget->AddWidget(m_InternalWidget);
-	m_VerticalStackWidget->AddWidget(WidgetFactory::CreateBoxWidget(10, WindowSize(500, 200), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 0.8f)));
+	//	m_PageWidget->SetPageWidget(m_InternalWidget);
+	m_VerticalStackWidget->AddWidget(WidgetFactory::CreateBoxWidget(10, WindowSize(500, 140), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 0.8f)));
+	m_VerticalStackWidget->AddWidget(WidgetFactory::CreateBoxWidget(10, WindowSize(FIT_PARENT, 130), DirectX::XMFLOAT4(0.5f, 1.0f, 0.0f, 0.8f)));
+	m_VerticalStackWidget->AddWidget(WidgetFactory::CreateBoxWidget(10, WindowSize(200, FIT_PARENT), DirectX::XMFLOAT4(0.5f, 0.5f, 0.0f, 0.8f)));
 
 //	m_PageWidget->SetPageWidget(m_VerticalStackWidget);
 
