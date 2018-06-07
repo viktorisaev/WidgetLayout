@@ -540,6 +540,7 @@ bool Sample3DSceneRenderer::Render()
 		// 1. Show a simple window
 		// Tip: if we don't call ImGui::Begin()/ImGui::End() the widgets appears in a window automatically called "Debug"
 		{
+			ImGui::SetNextWindowPos(ImVec2(900, 50));
 			ImGui::SetNextWindowSize(ImVec2(400, 150), ImGuiSetCond_FirstUseEver);
 			ImGui::Begin("London control");
 			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
