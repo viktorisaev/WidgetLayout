@@ -118,3 +118,10 @@ void VerticalStackWidget::AddWidget(Widget * _Widget)
 {
 	m_Widgets.push_back(_Widget);
 }
+
+
+
+void VerticalStackWidget::SetElementSize(const WindowSize& _WindowSize)
+{
+	m_ElementSize = _WindowSize;
+}

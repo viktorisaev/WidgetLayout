@@ -39,8 +39,8 @@ namespace WidgetLayout
 
 
 		PageWidget* m_PageWidget;
-		BoxWidget* m_InternalWidget;
-		VerticalStackWidget* m_VerticalStackWidget;
+		BoxWidget* m_InternalWidget = 0;
+		VerticalStackWidget* m_VerticalStackWidget = 0;
 
 	};
 }

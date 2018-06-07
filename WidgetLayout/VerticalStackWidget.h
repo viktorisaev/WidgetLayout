@@ -18,6 +18,8 @@ public:
 
 	void AddWidget(Widget* _Widget);
 
+	void SetElementSize(const WindowSize& _WindowSize);
+
 protected:
 	WindowSize GetChildrenSize(const WindowSize& _ElementRect);
 
