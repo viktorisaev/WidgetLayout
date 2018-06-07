@@ -36,7 +36,7 @@ void BoxWidget::UpdateLayout(const WindowRect& _VisibleRect)
 
 
 
-WindowSize BoxWidget::GetRequiredSize(const WindowSize& _MaxContentRect)
+WindowSize BoxWidget::GetEnvelopSize(const WindowSize& _MaxContentRect)
 {
 	return m_LayoutData.GetRequiredSizeWithParent(_MaxContentRect);
 }

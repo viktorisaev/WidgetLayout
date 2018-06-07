@@ -37,7 +37,7 @@ void PageWidget::UpdateLayout(const WindowRect& _VisibleRect)
 
 
 
-WindowSize PageWidget::GetRequiredSize(const WindowSize & _MaxContentRect)
+WindowSize PageWidget::GetEnvelopSize(const WindowSize & _MaxContentRect)
 {
 	WindowSize w = WindowSize::GetMin(m_AbsRect.GetSize(), _MaxContentRect);
 

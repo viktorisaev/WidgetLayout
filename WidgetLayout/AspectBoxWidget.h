@@ -17,7 +17,7 @@ public:
 	virtual ~AspectBoxWidget();
 
 
-	WindowSize GetRequiredSize(const WindowSize& _MaxContentRect) override;
+	WindowSize GetEnvelopSize(const WindowSize& _MaxContentRect) override;
 
 };
 

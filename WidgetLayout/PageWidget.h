@@ -21,7 +21,7 @@ public:
 	// TODO: visitor or iterator
 	void AddToRender(Sample3DSceneRenderer* _Render) override;
 	void UpdateLayout(const WindowRect& _VisibleRect) override;
-	WindowSize GetRequiredSize(const WindowSize& _MaxContentRect) override;
+	WindowSize GetEnvelopSize(const WindowSize& _MaxContentRect) override;
 
 
 

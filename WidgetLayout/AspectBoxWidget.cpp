@@ -11,9 +11,9 @@ AspectBoxWidget::~AspectBoxWidget()
 {
 }
 
-WindowSize AspectBoxWidget::GetRequiredSize(const WindowSize & _MaxContentRect)
+WindowSize AspectBoxWidget::GetEnvelopSize(const WindowSize & _MaxContentRect)
 {
-	WindowSize winSize = BoxWidget::GetRequiredSize(_MaxContentRect);
+	WindowSize winSize = BoxWidget::GetEnvelopSize(_MaxContentRect);
 	WindowSize defaultSize = m_LayoutData.GetInternalSize();
 
 	WindowSize heightControlsWidth = WindowSize((winSize.GetHeight() * defaultSize.GetWidth()) / defaultSize.GetHeight(), winSize.GetHeight());

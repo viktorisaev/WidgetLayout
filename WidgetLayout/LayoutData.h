@@ -17,8 +17,9 @@ public:
 	WindowSize GetMinimumSize();	// size + margin
 	void SetSize(const WindowSize& _Size);
 	WindowSize GetContentSize(const WindowSize & _EnvelopSize);
-	WindowSize GetRequiredSizeWithParent(const WindowSize& _ParentContentRect);
-	WindowSize GetRequiredSizeWithChildrenAndParent(const WindowSize& _ChildrenRect, const WindowSize& _ParentContentRect);
+	WindowSize GetRequiredSizeWithParent(const WindowSize& _ParentontentRect);
+	WindowSize GetRequiredSizeWithContent(const WindowSize& _ContentRect);
+	WindowSize GetRequiredSizeWithContentAndParent(const WindowSize& _ContentRect, const WindowSize& _ParentContentRect);
 	int32_t GetMargin();
 	WindowSize GetInternalSize();
 	WindowSize GetEnvelopSize(const WindowSize & _ContentSize);

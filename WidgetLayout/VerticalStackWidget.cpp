@@ -49,7 +49,7 @@ void VerticalStackWidget::UpdateLayout(const WindowRect& _VisibleRect)
 	// set draw rect
 	Widget::SetPosition(rectPos);
 
-	WindowSize size = m_LayoutData.GetRequiredSizeWithChildrenAndParent(contentSize, _VisibleRect.GetSize());
+	WindowSize size = m_LayoutData.GetContentSize(m_LayoutData.GetRequiredSizeWithContentAndParent(contentSize, _VisibleRect.GetSize()));
 
 	Widget::SetSize(size);
 
@@ -59,21 +59,21 @@ void VerticalStackWidget::UpdateLayout(const WindowRect& _VisibleRect)
 	int32_t childY = 0;
 	for (Widget* childWidget : m_Widgets)
 	{
-		WindowSize rect = childWidget->GetRequiredSize(m_ElementSize);
+		WindowSize childEnvelopRect = childWidget->GetEnvelopSize(m_ElementSize);
 
-		rect.SetWidth(min( rect.GetWidth(), size.GetWidth() ));
+		childEnvelopRect.SetWidth(min( childEnvelopRect.GetWidth(), size.GetWidth() ));
 
 		DirectX::XMINT2 newPos = DirectX::XMINT2(rectPos.x, rectPos.y + childY);
 
-		if (rect.GetHeight() == ENVELOP_CHILD)
+		if (childEnvelopRect.GetHeight() == ENVELOP_CHILD)
 		{
-			rect.SetHeight(0);	// can't draw child of 'fit parent' if element size is not defined
+			childEnvelopRect.SetHeight(0);	// can't draw child of 'fit parent' if element size is not defined
 		}
 
-		WindowRect newRect = WindowRect( newPos , rect );
+		WindowRect newRect = WindowRect( newPos , childEnvelopRect );
 		childWidget->UpdateLayout( newRect );
 
-		childY += rect.GetHeight();
+		childY += childEnvelopRect.GetHeight();
 	}
 }
 
@@ -87,7 +87,7 @@ WindowSize VerticalStackWidget::GetChildrenSize(const WindowSize& _ElementRect)
 	int32_t h = 0;
 	for (Widget* childWidget : m_Widgets)
 	{
-		WindowSize rect = childWidget->GetRequiredSize(_ElementRect);
+		WindowSize rect = childWidget->GetEnvelopSize(_ElementRect);
 
 		if (rect.GetWidth() != ENVELOP_CHILD)
 		{
@@ -105,7 +105,7 @@ WindowSize VerticalStackWidget::GetChildrenSize(const WindowSize& _ElementRect)
 
 
 
-WindowSize VerticalStackWidget::GetRequiredSize(const WindowSize & _MaxContentRect)
+WindowSize VerticalStackWidget::GetEnvelopSize(const WindowSize & _MaxContentRect)
 {
 	WindowSize contentSize = GetChildrenSize(m_ElementSize);
 	WindowSize envelopSize = m_LayoutData.GetEnvelopSize(contentSize);

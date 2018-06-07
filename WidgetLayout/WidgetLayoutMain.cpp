@@ -22,10 +22,11 @@ WidgetLayoutMain::WidgetLayoutMain()
 	VerticalStackWidget* globVertStack = WidgetFactory::CreateVerticalStackWidget( 15 , WindowSize(FIT_PARENT, FIT_PARENT) , DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f) , WindowSize(ENVELOP_CHILD, ENVELOP_CHILD) );
 	m_PageWidget->SetPageWidget(globVertStack);
 
-	m_VerticalStackWidget = WidgetFactory::CreateVerticalStackWidget( 10 , WindowSize(ENVELOP_CHILD, ENVELOP_CHILD), DirectX::XMFLOAT4(0.0f, 1.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, /*ENVELOP_CHILD*/95));
+	m_VerticalStackWidget = WidgetFactory::CreateVerticalStackWidget( 15 , WindowSize(ENVELOP_CHILD, 350), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, /*ENVELOP_CHILD*/95));
 	globVertStack->AddWidget(m_VerticalStackWidget);
 //	m_PageWidget->SetPageWidget(m_VerticalStackWidget);
 //
+
 	// vertical children
 	m_VerticalStackWidget->AddWidget(WidgetFactory::CreateBoxWidget( 10 , WindowSize(120, 80), DirectX::XMFLOAT4(1.0f, 0.5f, 0.0f, 0.8f)));
 
@@ -37,7 +38,7 @@ WidgetLayoutMain::WidgetLayoutMain()
 	m_VerticalStackWidget->AddWidget(WidgetFactory::CreateBoxWidget(20, WindowSize(200, FIT_PARENT/*not rendered if height not defined!*/), DirectX::XMFLOAT4(0.5f, 0.5f, 0.0f, 0.8f)));
 
 
-	VerticalStackWidget* vertStack2 = WidgetFactory::CreateVerticalStackWidget(10, WindowSize(ENVELOP_CHILD, ENVELOP_CHILD), DirectX::XMFLOAT4(0.0f, 1.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, ENVELOP_CHILD));
+	VerticalStackWidget* vertStack2 = WidgetFactory::CreateVerticalStackWidget(15, WindowSize(ENVELOP_CHILD, ENVELOP_CHILD), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, ENVELOP_CHILD));
 	globVertStack->AddWidget(vertStack2);
 	vertStack2->AddWidget(WidgetFactory::CreateBoxWidget(5, WindowSize(200, 100), DirectX::XMFLOAT4(0.5f, 0.5f, 0.0f, 0.8f)));
 	vertStack2->AddWidget(WidgetFactory::CreateBoxWidget(5, WindowSize(300, 20), DirectX::XMFLOAT4(0.4f, 0.6f, 0.0f, 0.8f)));
@@ -98,10 +99,10 @@ void WidgetLayoutMain::Update()
 		m_InternalWidget->SetSize(WindowSize(500+d1, 200+d1));
 	}
 
-	//if (m_VerticalStackWidget)
-	//{
-	//	m_VerticalStackWidget->SetElementSize(WindowSize(0, 90+d2));
-	//}
+	if (m_VerticalStackWidget)
+	{
+		m_VerticalStackWidget->SetElementSize(WindowSize(ENVELOP_CHILD, 90+d2));
+	}
 
 	m_PageWidget->UpdateLayout(WindowRect(DirectX::XMINT2(0, 0), WindowSize(1366, 696)) );
 

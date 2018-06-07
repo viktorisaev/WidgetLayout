@@ -44,13 +44,13 @@ WindowSize LayoutData::GetContentSize(const WindowSize & _EnvelopSize)
 
 
 
-WindowSize LayoutData::GetRequiredSizeWithParent(const WindowSize & _MaxContentRect)
+WindowSize LayoutData::GetRequiredSizeWithParent(const WindowSize & _ParentContentRect)
 {
 	// width
 	int32_t w;
 	if (m_Size.GetWidth() == FIT_PARENT)
 	{
-		w = _MaxContentRect.GetWidth();
+		w = _ParentContentRect.GetWidth();
 	}
 	else
 	{
@@ -58,14 +58,14 @@ WindowSize LayoutData::GetRequiredSizeWithParent(const WindowSize & _MaxContentR
 		{
 			int i = 1;	// error! can't envelop chile if no child size
 		}
-		w = GetMeasureWithEnvelop(m_Size.GetWidth() + GetDoubleMargin(), _MaxContentRect.GetWidth());
+		w = GetMeasureWithEnvelop(m_Size.GetWidth() + GetDoubleMargin(), _ParentContentRect.GetWidth());
 	}
 
 	// height
 	int32_t h;
 	if (m_Size.GetHeight() == FIT_PARENT)
 	{
-		h = _MaxContentRect.GetHeight();
+		h = _ParentContentRect.GetHeight();
 	}
 	else
 	{
@@ -73,7 +73,7 @@ WindowSize LayoutData::GetRequiredSizeWithParent(const WindowSize & _MaxContentR
 		{
 			int i = 1;	// error! can't envelop chile if no child size
 		}
-		h = GetMeasureWithEnvelop(m_Size.GetHeight() + GetDoubleMargin(), _MaxContentRect.GetHeight());
+		h = GetMeasureWithEnvelop(m_Size.GetHeight() + GetDoubleMargin(), _ParentContentRect.GetHeight());
 	}
 
 	return WindowSize( w , h );
@@ -81,20 +81,20 @@ WindowSize LayoutData::GetRequiredSizeWithParent(const WindowSize & _MaxContentR
 
 
 
-WindowSize LayoutData::GetRequiredSizeWithChildrenAndParent(const WindowSize& _ChildrenRect, const WindowSize& _ParentContentRect)
+WindowSize LayoutData::GetRequiredSizeWithContentAndParent(const WindowSize& _ChildrenRect, const WindowSize& _ParentContentRect)
 {
 	// width
 	int32_t w;
 	const int32_t myWidth = m_Size.GetWidth();
 	if (myWidth == FIT_PARENT)
 	{
-		w = _ParentContentRect.GetWidth() - GetDoubleMargin();
+		w = _ParentContentRect.GetWidth();
 	}
 	else
 	{
 		if (myWidth == ENVELOP_CHILD)
 		{
-			w = _ChildrenRect.GetWidth();
+			w = _ChildrenRect.GetWidth() + GetDoubleMargin();
 		}
 		else
 		{
@@ -107,13 +107,13 @@ WindowSize LayoutData::GetRequiredSizeWithChildrenAndParent(const WindowSize& _C
 	const int32_t myHeight = m_Size.GetHeight();
 	if (myHeight == FIT_PARENT)
 	{
-		h = _ParentContentRect.GetHeight() - GetDoubleMargin();
+		h = _ParentContentRect.GetHeight();
 	}
 	else
 	{
 		if (myHeight == ENVELOP_CHILD)
 		{
-			h = _ChildrenRect.GetHeight();
+			h = _ChildrenRect.GetHeight() + GetDoubleMargin();
 		}
 		else
 		{
@@ -126,9 +126,55 @@ WindowSize LayoutData::GetRequiredSizeWithChildrenAndParent(const WindowSize& _C
 
 
 
+WindowSize LayoutData::GetRequiredSizeWithContent(const WindowSize& _ContentRect)
+{
+	// width
+	int32_t w;
+	const int32_t myWidth = m_Size.GetWidth();
+	if (myWidth == FIT_PARENT)
+	{
+		int i = 1;
+	}
+	else
+	{
+		if (myWidth == ENVELOP_CHILD)
+		{
+			w = _ContentRect.GetWidth() + GetDoubleMargin();
+		}
+		else
+		{
+			w = myWidth + GetDoubleMargin();
+		}
+	}
+
+	// height
+	int32_t h;
+	const int32_t myHeight = m_Size.GetHeight();
+	if (myHeight == FIT_PARENT)
+	{
+		int i = 1;
+	}
+	else
+	{
+		if (myHeight == ENVELOP_CHILD)
+		{
+			h = _ContentRect.GetHeight() + GetDoubleMargin();
+		}
+		else
+		{
+			h = myHeight + GetDoubleMargin();
+		}
+	}
+
+	return WindowSize(w, h);
+}
+
+
+
+
 WindowSize LayoutData::GetEnvelopSize(const WindowSize & _ContentSize)
 {
-	return WindowSize(_ContentSize.GetWidth() + GetDoubleMargin(), _ContentSize.GetHeight() + GetDoubleMargin());
+	return GetRequiredSizeWithContent(_ContentSize);
 }
 
 

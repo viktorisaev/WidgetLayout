@@ -15,7 +15,7 @@ public:
 
 	virtual void UpdateLayout(const WindowRect& _VisibleRect) = 0;
 
-	virtual WindowSize GetRequiredSize(const WindowSize& _MaxContentRect) = 0;
+	virtual WindowSize GetEnvelopSize(const WindowSize& _MaxContentRect) = 0;
 
 
 };
