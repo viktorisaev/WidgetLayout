@@ -6,7 +6,7 @@
 
 #include <PageWidget.h>
 #include <BoxWidget.h>
-#include <VerticalStackWidget.h>
+#include <StackWidget.h>
 
 
 
@@ -39,8 +39,8 @@ namespace WidgetLayout
 
 
 		PageWidget* m_PageWidget;
-		BoxWidget* m_InternalWidget = 0;
-		VerticalStackWidget* m_VerticalStackWidget = 0;
+		StackWidget* m_InternalWidget = 0;
+		StackWidget* m_VerticalStackWidget = 0;
 
 	};
 }

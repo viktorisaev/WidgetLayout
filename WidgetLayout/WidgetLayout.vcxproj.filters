@@ -94,9 +94,6 @@
     <ClCompile Include="WidgetFactory.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
-    <ClCompile Include="VerticalStackWidget.cpp">
-      <Filter>Widget</Filter>
-    </ClCompile>
     <ClCompile Include="WindowSize.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
@@ -104,6 +101,9 @@
       <Filter>Widget</Filter>
     </ClCompile>
     <ClCompile Include="AspectRatioWidget.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="StackWidget.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
   </ItemGroup>
@@ -150,9 +150,6 @@
     <ClInclude Include="WidgetFactory.h">
       <Filter>Widget</Filter>
     </ClInclude>
-    <ClInclude Include="VerticalStackWidget.h">
-      <Filter>Widget</Filter>
-    </ClInclude>
     <ClInclude Include="WindowSize.h">
       <Filter>Widget</Filter>
     </ClInclude>
@@ -161,6 +158,9 @@
     </ClInclude>
     <ClInclude Include="Content\ShaderData.hlsl" />
     <ClInclude Include="AspectRatioWidget.h">
+      <Filter>Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="StackWidget.h">
       <Filter>Widget</Filter>
     </ClInclude>
   </ItemGroup>

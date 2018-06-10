@@ -40,9 +40,9 @@ AspectRatioWidget * WidgetFactory::CreateAspectWrappedWidget(WindowSize _Refener
 
 
 
-VerticalStackWidget * WidgetFactory::CreateVerticalStackWidget(int32_t _Margin, WindowSize _Size, DirectX::XMFLOAT4 _Color, WindowSize _ElementSize)
+StackWidget * WidgetFactory::CreateStackWidget(StackWidget::Direction _Direction, int32_t _Margin, WindowSize _Size, DirectX::XMFLOAT4 _Color, WindowSize _ElementSize)
 {
-	VerticalStackWidget* widget = new VerticalStackWidget(_Margin, _Size, _Color, _ElementSize);
+	StackWidget* widget = new StackWidget(_Direction, _Margin, _Size, _Color, _ElementSize);
 
 	return widget;
 }

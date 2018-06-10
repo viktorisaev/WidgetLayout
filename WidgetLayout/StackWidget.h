@@ -5,11 +5,19 @@
 #include <LayoutData.h>
 
 
-class VerticalStackWidget :	public Widget
+class StackWidget :	public Widget
 {
 public:
-	VerticalStackWidget(int32_t _Margin, WindowSize _Size, DirectX::XMFLOAT4 _Color, WindowSize _ElementSize);
-	virtual ~VerticalStackWidget();
+
+	enum Direction
+	{
+		Vertical,
+		Horizontal
+	};
+
+
+	StackWidget(Direction _Direction, int32_t _Margin, WindowSize _Size, DirectX::XMFLOAT4 _Color, WindowSize _ElementSize);
+	virtual ~StackWidget();
 
 // control
 	void AddWidget(Widget* _Widget);
@@ -31,5 +39,6 @@ private:
 protected:
 	LayoutData m_LayoutData;	// rect + margin
 	WindowSize m_ElementSize;	// size of one element of the stack or ENVELOP_CHILD
+	Direction m_Direction;	// horizontal or vertical
 };
 
