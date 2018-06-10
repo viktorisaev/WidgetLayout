@@ -31,9 +31,9 @@ BoxWidget * WidgetFactory::CreateBoxWidget(int _Margin, WindowSize _Size, Direct
 
 
 
-AspectBoxWidget * WidgetFactory::CreateAspectBoxWidget(int _Margin, WindowSize _Size, DirectX::XMFLOAT4 _Color)
+AspectRatioWidget * WidgetFactory::CreateAspectWrappedWidget(WindowSize _RefenerceSize, Widget * const _ContentWidget)
 {
-	AspectBoxWidget* widget = new AspectBoxWidget(_Margin, _Size, _Color);
+	AspectRatioWidget* widget = new AspectRatioWidget(_RefenerceSize, _ContentWidget);
 
 	return widget;
 }

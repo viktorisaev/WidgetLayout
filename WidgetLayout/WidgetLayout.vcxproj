@@ -192,7 +192,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
-    <ClInclude Include="AspectBoxWidget.h" />
+    <ClInclude Include="AspectRatioWidget.h" />
     <ClInclude Include="BoxWidget.h" />
     <ClInclude Include="Common\d3dx12.h" />
     <ClInclude Include="Common\DeviceResources.h" />
@@ -220,7 +220,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="AspectBoxWidget.cpp" />
+    <ClCompile Include="AspectRatioWidget.cpp" />
     <ClCompile Include="BoxWidget.cpp" />
     <ClCompile Include="Common\DeviceResources.cpp" />
     <ClCompile Include="Imgui\imgui.cpp">

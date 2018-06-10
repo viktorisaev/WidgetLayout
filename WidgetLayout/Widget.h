@@ -25,6 +25,8 @@ public:
 	const WindowRect& GetAbsRect() const;
 	DirectX::XMFLOAT4 GetColor() const;
 
+	virtual void AddToRender(Sample3DSceneRenderer* _Render) override;
+
 
 protected:
 	void SetPosition(DirectX::XMINT2 _Position);

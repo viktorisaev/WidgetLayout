@@ -11,14 +11,15 @@ public:
 	VerticalStackWidget(int32_t _Margin, WindowSize _Size, DirectX::XMFLOAT4 _Color, WindowSize _ElementSize);
 	virtual ~VerticalStackWidget();
 
+// control
+	void AddWidget(Widget* _Widget);
+	void SetElementSize(const WindowSize& _WindowSize);
 
+// IWidget
 	void AddToRender(Sample3DSceneRenderer* _Render) override;
 	void UpdateLayout(const WindowRect& _VisibleRect) override;
-	WindowSize GetEnvelopSize(const WindowSize& _MaxContentRect) override;
+	WindowSize GetEnvelopSize(const WindowSize& _ParentContentRect) override;
 
-	void AddWidget(Widget* _Widget);
-
-	void SetElementSize(const WindowSize& _WindowSize);
 
 protected:
 	WindowSize GetChildrenSize(const WindowSize& _ElementRect);

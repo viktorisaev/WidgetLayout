@@ -5,19 +5,26 @@
 
 
 
+
+void Widget::AddToRender(Sample3DSceneRenderer * _Render)
+{
+	_Render->AddColoredRectToList(m_AbsRect, m_Color);
+}
+
+
+
 const WindowRect& Widget::GetAbsRect() const
 {
 	return m_AbsRect;
 }
 
 
-
-
-
 DirectX::XMFLOAT4 Widget::GetColor() const
 {
 	return m_Color;
 }
+
+
 
 void Widget::SetPosition(DirectX::XMINT2 _Position)
 {

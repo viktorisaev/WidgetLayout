@@ -100,10 +100,10 @@
     <ClCompile Include="WindowSize.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
-    <ClCompile Include="AspectBoxWidget.cpp">
+    <ClCompile Include="LayoutData.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
-    <ClCompile Include="LayoutData.cpp">
+    <ClCompile Include="AspectRatioWidget.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
   </ItemGroup>
@@ -156,10 +156,11 @@
     <ClInclude Include="WindowSize.h">
       <Filter>Widget</Filter>
     </ClInclude>
-    <ClInclude Include="AspectBoxWidget.h">
+    <ClInclude Include="LayoutData.h">
       <Filter>Widget</Filter>
     </ClInclude>
-    <ClInclude Include="LayoutData.h">
+    <ClInclude Include="Content\ShaderData.hlsl" />
+    <ClInclude Include="AspectRatioWidget.h">
       <Filter>Widget</Filter>
     </ClInclude>
   </ItemGroup>
@@ -171,9 +172,6 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Content\GeometryShader.hlsl">
-      <Filter>Content</Filter>
-    </FxCompile>
-    <FxCompile Include="Content\ShaderData.hlsl">
       <Filter>Content</Filter>
     </FxCompile>
     <FxCompile Include="Content\VertexShader.hlsl">

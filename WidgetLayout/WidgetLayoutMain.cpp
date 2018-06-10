@@ -19,16 +19,28 @@ WidgetLayoutMain::WidgetLayoutMain()
 {
 	m_PageWidget = WidgetFactory::CreatePageWidget(DirectX::XMINT2(0, 0), WindowSize(1366, 696), DirectX::XMFLOAT4(0.31f, 0.3f, 0.3f, 1.0f));
 
-	VerticalStackWidget* globVertStack = WidgetFactory::CreateVerticalStackWidget( 15 , WindowSize(FIT_PARENT, FIT_PARENT) , DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f) , WindowSize(ENVELOP_CHILD, ENVELOP_CHILD) );
+	VerticalStackWidget* globVertStack = WidgetFactory::CreateVerticalStackWidget(15, WindowSize(FIT_PARENT, FIT_PARENT), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, ENVELOP_CHILD));
 	m_PageWidget->SetPageWidget(globVertStack);
 
-	m_VerticalStackWidget = WidgetFactory::CreateVerticalStackWidget( 15 , WindowSize(ENVELOP_CHILD, 350), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, /*ENVELOP_CHILD*/95));
-	globVertStack->AddWidget(m_VerticalStackWidget);
-//	m_PageWidget->SetPageWidget(m_VerticalStackWidget);
-//
+//	m_VerticalStackWidget = WidgetFactory::CreateVerticalStackWidget(15, WindowSize(ENVELOP_CHILD, 350), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, /*ENVELOP_CHILD*/95));
+	m_VerticalStackWidget = WidgetFactory::CreateVerticalStackWidget(15, WindowSize(ENVELOP_CHILD, 350), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, /*ENVELOP_CHILD*/95));
+	AspectRatioWidget *aspectWidget = WidgetFactory::CreateAspectWrappedWidget(WindowSize(100, 100), m_VerticalStackWidget);
 
-	// vertical children
-	m_VerticalStackWidget->AddWidget(WidgetFactory::CreateBoxWidget( 10 , WindowSize(120, 80), DirectX::XMFLOAT4(1.0f, 0.5f, 0.0f, 0.8f)));
+	globVertStack->AddWidget(m_VerticalStackWidget);
+	//	m_PageWidget->SetPageWidget(m_VerticalStackWidget);
+	//
+
+		// vertical children
+	m_VerticalStackWidget->AddWidget(
+		WidgetFactory::CreateAspectWrappedWidget(WindowSize(100, 100),
+			WidgetFactory::CreateBoxWidget(10, WindowSize(120, FIT_PARENT/*80*/), DirectX::XMFLOAT4(1.0f, 0.5f, 0.0f, 0.8f))
+		)
+	);
+	m_VerticalStackWidget->AddWidget(
+		WidgetFactory::CreateAspectWrappedWidget(WindowSize(100, 100),
+			WidgetFactory::CreateBoxWidget(10, WindowSize(120, 30), DirectX::XMFLOAT4(1.0f, 0.5f, 0.0f, 0.8f))
+		)
+	);
 
 	m_InternalWidget = WidgetFactory::CreateBoxWidget(10, WindowSize(500, 200), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 0.8f));
 	m_VerticalStackWidget->AddWidget(m_InternalWidget);

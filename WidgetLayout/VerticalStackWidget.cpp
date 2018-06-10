@@ -26,7 +26,7 @@ VerticalStackWidget::~VerticalStackWidget()
 
 void VerticalStackWidget::AddToRender(Sample3DSceneRenderer * _Render)
 {
-	_Render->AddColoredRectToList(this->GetAbsRect(), this->GetColor());
+	Widget::AddToRender(_Render);
 
 	for (Widget* w : m_Widgets)
 	{

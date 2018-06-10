@@ -20,9 +20,9 @@ public:
 	virtual ~BoxWidget();
 
 	// TODO: visitor or iterator
-	void AddToRender(Sample3DSceneRenderer* _Render) override;
+//	void AddToRender(Sample3DSceneRenderer* _Render) override;	// implementation in base class is enough (position+color)
 	void UpdateLayout(const WindowRect& _VisibleRect) override;
-	WindowSize GetEnvelopSize(const WindowSize& _MaxContentRect) override;
+	WindowSize GetEnvelopSize(const WindowSize& _ParentContentRect) override;
 
 	void SetSize(const WindowSize& _Size);
 

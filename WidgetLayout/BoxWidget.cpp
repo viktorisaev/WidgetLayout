@@ -13,11 +13,6 @@ BoxWidget::~BoxWidget()
 
 
 
-void BoxWidget::AddToRender(Sample3DSceneRenderer * _Render)
-{
-	_Render->AddColoredRectToList(this->GetAbsRect(), this->GetColor());
-}
-
 
 
 
@@ -36,9 +31,9 @@ void BoxWidget::UpdateLayout(const WindowRect& _VisibleRect)
 
 
 
-WindowSize BoxWidget::GetEnvelopSize(const WindowSize& _MaxContentRect)
+WindowSize BoxWidget::GetEnvelopSize(const WindowSize& _ParentContentRect)
 {
-	return m_LayoutData.GetRequiredSizeWithParent(_MaxContentRect);
+	return m_LayoutData.GetRequiredSizeWithParent(_ParentContentRect);
 }
 
 

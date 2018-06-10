@@ -11,7 +11,7 @@ public:
 	virtual ~PageWidget();
 
 
-	void SetPageWidget(Widget* _Widget)
+	void SetPageWidget(Widget* const _Widget)
 	{
 		m_PageWidget = _Widget;
 	}
