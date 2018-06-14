@@ -39,6 +39,7 @@ void BoxWidget::BuildWorldPosition(const WindowPos & _ParentPos)
 
 WindowSize BoxWidget::GetEnvelopSize(const WindowSize& _ParentContentRect)
 {
+	m_NumberOfSizeCalculations += 1;
 	return m_LayoutData.GetRequiredSizeWithParent(m_WindowDefaultSize, _ParentContentRect);
 }
 

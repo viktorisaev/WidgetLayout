@@ -15,6 +15,12 @@ using namespace Concurrency;
 
 
 
+int m_NumberOfSizeCalculations;
+
+
+
+
+
 WidgetLayoutMain::WidgetLayoutMain()
 {
 	m_PageWidget = WidgetFactory::CreatePageWidget(DirectX::XMFLOAT4(0.31f, 0.3f, 0.3f, 1.0f));
@@ -127,10 +133,14 @@ void WidgetLayoutMain::Update()
 		m_VerticalStackWidget->SetElementSize(WindowSize(ENVELOP_CHILD, 90+d2));
 	}
 
+	m_NumberOfSizeCalculations = 0;
+
 	// 1) create layout (define sizes)
 	m_PageWidget->UpdateLayout( WindowSize(1366, 696) );
 	// 2) build world positions (offset windows)
 	m_PageWidget->BuildWorldPosition( WindowPos(0, 0) );
+
+
 
 }
 
@@ -153,6 +163,8 @@ bool WidgetLayoutMain::Render()
 
 	// push widgets to render
 	m_sceneRenderer->ResetWidgetList();
+
+	m_sceneRenderer->DisplayNumber(m_NumberOfSizeCalculations);
 
 	// TODO: use visitor or iterator
 	m_PageWidget->AddToRender(m_sceneRenderer.get());

@@ -90,7 +90,7 @@ void StackWidget::UpdateLayout(const WindowSize& _ParentSize)
 
 void StackWidget::BuildWorldPosition(const WindowPos & _ParentPos)
 {
-	// 1) content size is m_ContentSize
+	// content size is m_ContentSize
 
 	// margin
 	WindowPos rectPos = _ParentPos;
@@ -190,6 +190,8 @@ WindowSize StackWidget::GetChildrenSize(const WindowSize& _ElementRect)
 
 WindowSize StackWidget::GetEnvelopSize(const WindowSize & _MaxContentRect)
 {
+	m_NumberOfSizeCalculations += 1;
+
 	WindowSize contentSize = GetChildrenSize(m_ElementSize);
 	WindowSize envelopSize = m_LayoutData.GetRequiredSizeWithContentAndParent(m_WindowDefaultSize, contentSize, _MaxContentRect);
 

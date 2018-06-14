@@ -545,6 +545,9 @@ bool Sample3DSceneRenderer::Render()
 			ImGui::Begin("London control");
 			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 			ImGui::Text("%i x %i", int(outputSize.Width), int(outputSize.Height));
+
+			ImGui::Text("Number: %i", m_NumberToDisplay);
+
 			ImGui::End();
 
 			//ImVec4 clear_col = ImColor(114, 144, 154);
@@ -625,6 +628,15 @@ void Sample3DSceneRenderer::AddColoredRectToList(const WindowRect& _WindowRect, 
 		cubeVertices[m_WidgetCount] = v;
 		m_WidgetCount += 1;
 	}
+}
+
+
+
+
+
+void Sample3DSceneRenderer::DisplayNumber(const int _NumberToDisplay)
+{
+	m_NumberToDisplay = _NumberToDisplay;
 }
 
 

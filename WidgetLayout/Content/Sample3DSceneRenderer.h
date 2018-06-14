@@ -28,6 +28,7 @@ public:
 // widget interface
 	void ResetWidgetList();	// called at the begining of the widget list setup
 	void AddColoredRectToList(const WindowRect& _WindowRect, DirectX::XMFLOAT4 _Color);	// add widget to render
+	void DisplayNumber(const int _NumberToDisplay);	// display this number in the debug window
 
 
 
@@ -77,6 +78,8 @@ private:
 	VertexPositionColor	*m_Vertices;
 
 	UINT m_WidgetCount;
+
+	int m_NumberToDisplay;
 
 };
 

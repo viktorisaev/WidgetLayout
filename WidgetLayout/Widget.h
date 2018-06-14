@@ -7,6 +7,9 @@
 
 
 
+extern int m_NumberOfSizeCalculations;
+
+
 // abstract
 class Widget : public IWidget
 {
