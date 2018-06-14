@@ -12,9 +12,9 @@ class BoxWidget : public Widget
 public:
 	BoxWidget();
 
-	BoxWidget(int _Margin, WindowSize _Size, DirectX::XMFLOAT4 _Color) :
-	  Widget(_Color)
-	, m_LayoutData(_Margin, _Size)
+	BoxWidget(int _Margin, const WindowSize& _WindowDefaultSize, const DirectX::XMFLOAT4& _Color) :
+	  Widget(_WindowDefaultSize, _Color)
+	, m_LayoutData(_Margin)
 	{ }
 
 	virtual ~BoxWidget();

@@ -5,9 +5,9 @@
 
 
 
-StackWidget::StackWidget(Direction _Direction, int32_t _Margin, WindowSize _Size, DirectX::XMFLOAT4 _Color, WindowSize _ElementSize) :
-  Widget(_Color)
-, m_LayoutData(_Margin, _Size)
+StackWidget::StackWidget(Direction _Direction, int32_t _Margin, const WindowSize& _WindowDefaultSize, DirectX::XMFLOAT4 _Color, WindowSize _ElementSize) :
+  Widget(_WindowDefaultSize, _Color)
+, m_LayoutData(_Margin)
 , m_ElementSize(_ElementSize)
 , m_Direction(_Direction)
 {
@@ -42,7 +42,7 @@ void StackWidget::UpdateLayout(const WindowSize& _ParentSize)
 	// 1) calculate content size
 	m_ContentSize = GetChildrenSize(m_ElementSize);
 
-	m_Size = m_LayoutData.GetContentSize(m_LayoutData.GetRequiredSizeWithContentAndParent(m_ContentSize, _ParentSize));
+	m_Size = m_LayoutData.GetContentSize(m_LayoutData.GetRequiredSizeWithContentAndParent(m_WindowDefaultSize, m_ContentSize, _ParentSize));
 
 	// 2) layout content
 //	WindowSize singleChildSize = WindowSize::GetMin(, size);
@@ -191,7 +191,7 @@ WindowSize StackWidget::GetChildrenSize(const WindowSize& _ElementRect)
 WindowSize StackWidget::GetEnvelopSize(const WindowSize & _MaxContentRect)
 {
 	WindowSize contentSize = GetChildrenSize(m_ElementSize);
-	WindowSize envelopSize = m_LayoutData.GetEnvelopSize(contentSize);
+	WindowSize envelopSize = m_LayoutData.GetEnvelopSize(m_WindowDefaultSize, contentSize);
 
 	return envelopSize;
 }

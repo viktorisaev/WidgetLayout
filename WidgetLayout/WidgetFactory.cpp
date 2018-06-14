@@ -13,7 +13,7 @@ WidgetFactory::~WidgetFactory()
 
 
 
-PageWidget * WidgetFactory::CreatePageWidget(DirectX::XMFLOAT4 _Color)
+PageWidget * WidgetFactory::CreatePageWidget(const DirectX::XMFLOAT4& _Color)
 {
 	PageWidget* widget = new PageWidget(_Color);
 
@@ -22,9 +22,9 @@ PageWidget * WidgetFactory::CreatePageWidget(DirectX::XMFLOAT4 _Color)
 
 
 
-BoxWidget * WidgetFactory::CreateBoxWidget(int _Margin, WindowSize _Size, DirectX::XMFLOAT4 _Color)
+BoxWidget * WidgetFactory::CreateBoxWidget(int _Margin, const WindowSize& _WindowDefaultSize, const DirectX::XMFLOAT4& _Color)
 {
-	BoxWidget* widget = new BoxWidget(_Margin, _Size, _Color);
+	BoxWidget* widget = new BoxWidget(_Margin, _WindowDefaultSize, _Color);
 
 	return widget;
 }
@@ -40,9 +40,9 @@ AspectRatioWidget * WidgetFactory::CreateAspectWrappedWidget(WindowSize _Refener
 
 
 
-StackWidget * WidgetFactory::CreateStackWidget(StackWidget::Direction _Direction, int32_t _Margin, WindowSize _Size, DirectX::XMFLOAT4 _Color, WindowSize _ElementSize)
+StackWidget * WidgetFactory::CreateStackWidget(StackWidget::Direction _Direction, int32_t _Margin, const WindowSize& _WindowDefaultSize, const DirectX::XMFLOAT4& _Color, WindowSize _ElementSize)
 {
-	StackWidget* widget = new StackWidget(_Direction, _Margin, _Size, _Color, _ElementSize);
+	StackWidget* widget = new StackWidget(_Direction, _Margin, _WindowDefaultSize, _Color, _ElementSize);
 
 	return widget;
 }

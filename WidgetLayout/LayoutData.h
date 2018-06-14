@@ -11,18 +11,18 @@ class LayoutData
 {
 public:
 	LayoutData();
-	LayoutData(int32_t _Margin, WindowSize _Size);
+	LayoutData(int32_t _Margin/*, WindowSize _Size*/);
 	~LayoutData();
 
-	WindowSize GetMinimumSize();	// size + margin
-	void SetSize(const WindowSize& _Size);
+//	WindowSize GetMinimumSize();	// size + margin
+//	void SetSize(const WindowSize& _Size);
 	WindowSize GetContentSize(const WindowSize & _EnvelopSize);
-	WindowSize GetRequiredSizeWithParent(const WindowSize& _ParentContentRect);
-	WindowSize GetRequiredSizeWithContent(const WindowSize& _ContentRect);
-	WindowSize GetRequiredSizeWithContentAndParent(const WindowSize& _ContentRect, const WindowSize& _ParentContentRect);
+	WindowSize GetRequiredSizeWithParent(const WindowSize& _windowSize, const WindowSize& _ParentContentRect);
+	WindowSize GetRequiredSizeWithContent(const WindowSize& _windowSize, const WindowSize& _ContentRect);
+	WindowSize GetRequiredSizeWithContentAndParent(const WindowSize& _windowSize, const WindowSize& _ContentRect, const WindowSize& _ParentContentRect);
 	int32_t GetMargin();
-	WindowSize GetInternalSize();
-	WindowSize GetEnvelopSize(const WindowSize & _ContentSize);
+//	WindowSize GetInternalSize();
+	WindowSize GetEnvelopSize(const WindowSize& _windowSize, const WindowSize & _ContentSize);
 
 
 private:
@@ -32,6 +32,6 @@ private:
 
 private:
 	int32_t m_Margin;
-	WindowSize m_Size;
+//	WindowSize m_Size;	// in widget
 };
 

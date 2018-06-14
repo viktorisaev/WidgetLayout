@@ -16,7 +16,7 @@ public:
 	};
 
 
-	StackWidget(Direction _Direction, int32_t _Margin, WindowSize _Size, DirectX::XMFLOAT4 _Color, WindowSize _ElementSize);
+	StackWidget(Direction _Direction, int32_t _Margin, const WindowSize& _WindowDefaultSize, DirectX::XMFLOAT4 _Color, WindowSize _ElementSize);
 	virtual ~StackWidget();
 
 // control

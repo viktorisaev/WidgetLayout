@@ -18,7 +18,7 @@ BoxWidget::~BoxWidget()
 
 void BoxWidget::UpdateLayout(const WindowSize& _ParentSize)
 {
-	m_EnvelopSize = m_LayoutData.GetRequiredSizeWithParent(_ParentSize);	// store size for render
+	m_EnvelopSize = m_LayoutData.GetRequiredSizeWithParent(m_WindowDefaultSize, _ParentSize);	// store size for render
 }
 
 
@@ -38,7 +38,7 @@ void BoxWidget::BuildWorldPosition(const WindowPos & _ParentPos)
 
 WindowSize BoxWidget::GetEnvelopSize(const WindowSize& _ParentContentRect)
 {
-	return m_LayoutData.GetRequiredSizeWithParent(_ParentContentRect);
+	return m_LayoutData.GetRequiredSizeWithParent(m_WindowDefaultSize, _ParentContentRect);
 }
 
 
@@ -46,6 +46,9 @@ WindowSize BoxWidget::GetEnvelopSize(const WindowSize& _ParentContentRect)
 
 void BoxWidget::SetSize(const WindowSize & _Size)
 {
-	m_LayoutData.SetSize(_Size);
+	// m_LayoutData.SetSize(_Size);
+
+	// set box size (texture? :)
+	m_WindowDefaultSize = _Size;
 }
 

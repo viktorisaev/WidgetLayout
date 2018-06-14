@@ -6,9 +6,9 @@ LayoutData::LayoutData()
 {
 }
 
-LayoutData::LayoutData(int32_t _Margin, WindowSize _Size) :
+LayoutData::LayoutData(int32_t _Margin/*, WindowSize _Size*/) :
   m_Margin(_Margin)
-, m_Size(_Size)
+//, m_Size(_Size)
 {
 }
 
@@ -19,18 +19,18 @@ LayoutData::~LayoutData()
 
 
 
-WindowSize LayoutData::GetMinimumSize()
-{
-	return WindowSize(m_Size.GetWidth() + GetDoubleMargin(), m_Size.GetHeight() + GetDoubleMargin());
-}
+//WindowSize LayoutData::GetMinimumSize()
+//{
+//	return WindowSize(m_Size.GetWidth() + GetDoubleMargin(), m_Size.GetHeight() + GetDoubleMargin());
+//}
 
 
 
 
-void LayoutData::SetSize(const WindowSize & _Size)
-{
-	m_Size = _Size;
-}
+//void LayoutData::SetSize(const WindowSize & _Size)
+//{
+//	m_Size = _Size;
+//}
 
 
 
@@ -44,36 +44,36 @@ WindowSize LayoutData::GetContentSize(const WindowSize & _EnvelopSize)
 
 
 
-WindowSize LayoutData::GetRequiredSizeWithParent(const WindowSize & _ParentContentRect)
+WindowSize LayoutData::GetRequiredSizeWithParent(const WindowSize& _windowSize, const WindowSize & _ParentContentRect)
 {
 	// width
 	int32_t w;
-	if (m_Size.GetWidth() == FIT_PARENT)
+	if (_windowSize.GetWidth() == FIT_PARENT)
 	{
 		w = _ParentContentRect.GetWidth();
 	}
 	else
 	{
-		if (m_Size.GetWidth() == ENVELOP_CHILD)
+		if (_windowSize.GetWidth() == ENVELOP_CHILD)
 		{
 			int i = 1;	// error! can't envelop child if no child size
 		}
-		w = GetMeasureWithEnvelop(m_Size.GetWidth() + GetDoubleMargin(), _ParentContentRect.GetWidth());
+		w = GetMeasureWithEnvelop(_windowSize.GetWidth() + GetDoubleMargin(), _ParentContentRect.GetWidth());
 	}
 
 	// height
 	int32_t h;
-	if (m_Size.GetHeight() == FIT_PARENT)
+	if (_windowSize.GetHeight() == FIT_PARENT)
 	{
 		h = _ParentContentRect.GetHeight();
 	}
 	else
 	{
-		if (m_Size.GetHeight() == ENVELOP_CHILD)
+		if (_windowSize.GetHeight() == ENVELOP_CHILD)
 		{
 			int i = 1;	// error! can't envelop child if no child size
 		}
-		h = GetMeasureWithEnvelop(m_Size.GetHeight() + GetDoubleMargin(), _ParentContentRect.GetHeight());
+		h = GetMeasureWithEnvelop(_windowSize.GetHeight() + GetDoubleMargin(), _ParentContentRect.GetHeight());
 	}
 
 	return WindowSize( w , h );
@@ -81,11 +81,11 @@ WindowSize LayoutData::GetRequiredSizeWithParent(const WindowSize & _ParentConte
 
 
 
-WindowSize LayoutData::GetRequiredSizeWithContentAndParent(const WindowSize& _ChildrenRect, const WindowSize& _ParentContentRect)
+WindowSize LayoutData::GetRequiredSizeWithContentAndParent(const WindowSize& _windowSize, const WindowSize& _ChildrenRect, const WindowSize& _ParentContentRect)
 {
 	// width
 	int32_t w;
-	const int32_t myWidth = m_Size.GetWidth();
+	const int32_t myWidth = _windowSize.GetWidth();
 	if (myWidth == FIT_PARENT)
 	{
 		w = _ParentContentRect.GetWidth();
@@ -104,7 +104,7 @@ WindowSize LayoutData::GetRequiredSizeWithContentAndParent(const WindowSize& _Ch
 
 	// height
 	int32_t h;
-	const int32_t myHeight = m_Size.GetHeight();
+	const int32_t myHeight = _windowSize.GetHeight();
 	if (myHeight == FIT_PARENT)
 	{
 		h = _ParentContentRect.GetHeight();
@@ -126,11 +126,11 @@ WindowSize LayoutData::GetRequiredSizeWithContentAndParent(const WindowSize& _Ch
 
 
 
-WindowSize LayoutData::GetRequiredSizeWithContent(const WindowSize& _ContentRect)
+WindowSize LayoutData::GetRequiredSizeWithContent(const WindowSize& _windowSize, const WindowSize& _ContentRect)
 {
 	// width
 	int32_t w;
-	const int32_t myWidth = m_Size.GetWidth();
+	const int32_t myWidth = _windowSize.GetWidth();
 	if (myWidth == FIT_PARENT)	// not possible to define 'fit parent' if only content size provided
 	{
 		int i = 1;
@@ -149,7 +149,7 @@ WindowSize LayoutData::GetRequiredSizeWithContent(const WindowSize& _ContentRect
 
 	// height
 	int32_t h;
-	const int32_t myHeight = m_Size.GetHeight();
+	const int32_t myHeight = _windowSize.GetHeight();
 	if (myHeight == FIT_PARENT)	// not possible to define 'fit parent' if only content size provided
 	{
 		int i = 1;
@@ -172,9 +172,9 @@ WindowSize LayoutData::GetRequiredSizeWithContent(const WindowSize& _ContentRect
 
 
 
-WindowSize LayoutData::GetEnvelopSize(const WindowSize & _ContentSize)
+WindowSize LayoutData::GetEnvelopSize(const WindowSize& _windowSize, const WindowSize & _ContentSize)
 {
-	return GetRequiredSizeWithContent(_ContentSize);
+	return GetRequiredSizeWithContent(_windowSize, _ContentSize);
 }
 
 
@@ -185,10 +185,10 @@ int32_t LayoutData::GetMargin()
 	return m_Margin;
 }
 
-WindowSize LayoutData::GetInternalSize()
-{
-	return m_Size;
-}
+//WindowSize LayoutData::GetInternalSize()
+//{
+//	return m_Size;
+//}
 
 
 

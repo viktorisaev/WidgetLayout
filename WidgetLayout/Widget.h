@@ -14,9 +14,10 @@ public:
 	Widget()
 	{ }
 
-	Widget(const DirectX::XMFLOAT4& _Color) :
-		m_WorldRect()
-	,	m_Color(_Color)
+	Widget(const WindowSize& _WindowDefaultSize, const DirectX::XMFLOAT4& _Color) :
+	  m_WorldRect()
+	, m_Color(_Color)
+	, m_WindowDefaultSize(_WindowDefaultSize)
 	{ }
 
 	~Widget()
@@ -24,6 +25,8 @@ public:
 
 	const WindowRect& GetWorldRect() const;
 	DirectX::XMFLOAT4 GetDebugColor() const;
+
+	const WindowSize& GetWindowDefaultSize();
 
 	virtual void AddToRender(Sample3DSceneRenderer* _Render) override;
 
@@ -35,10 +38,12 @@ protected:
 	const WindowRect& GetRect() { return m_WorldRect; }
 
 
+protected:
+	WindowSize m_WindowDefaultSize;	// setup size of the widget
+
 
 private:
 	WindowRect m_WorldRect;
 	DirectX::XMFLOAT4 m_Color;
-
 };
 

@@ -6,7 +6,7 @@
 
 
 PageWidget::PageWidget(const DirectX::XMFLOAT4& _Color) :
-	Widget(_Color)
+	Widget(WindowSize(0,0), _Color)		// for page widget size is defined at UpdateLayout time
 {
 }
 
