@@ -2,6 +2,7 @@
 
 #include <DirectXMath.h>
 
+#include <WindowPos.h>
 #include <WindowSize.h>
 
 
@@ -10,21 +11,21 @@ class WindowRect
 {
 public:
 	WindowRect();
-	WindowRect(DirectX::XMINT2 m_Position, WindowSize m_Size);
+	WindowRect(const WindowPos& _Position, const WindowSize& _Size);
 	~WindowRect();
 
 
-	DirectX::XMINT2 GetPosition() const;
-	WindowSize GetSize() const;
+	const WindowPos& GetPosition() const;
+	const WindowSize& GetSize() const;
 
-	void SetPosition(DirectX::XMINT2 _Position);
+	void SetPosition(const WindowPos& _Position);
 	void SetSize(WindowSize _Size);
 
 	bool Contains(const WindowRect& _Other) const;
 
 
 private:
-	DirectX::XMINT2 m_Position;
+	WindowPos m_Position;
 	WindowSize m_Size;
 
 };

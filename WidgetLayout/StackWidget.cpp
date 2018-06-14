@@ -6,7 +6,7 @@
 
 
 StackWidget::StackWidget(Direction _Direction, int32_t _Margin, WindowSize _Size, DirectX::XMFLOAT4 _Color, WindowSize _ElementSize) :
-  Widget(DirectX::XMINT2(0,0), _Size, _Color)
+  Widget(_Color)
 , m_LayoutData(_Margin, _Size)
 , m_ElementSize(_ElementSize)
 , m_Direction(_Direction)
@@ -37,22 +37,12 @@ void StackWidget::AddToRender(Sample3DSceneRenderer * _Render)
 
 
 
-void StackWidget::UpdateLayout(const WindowRect& _VisibleRect)
+void StackWidget::UpdateLayout(const WindowSize& _ParentSize)
 {
 	// 1) calculate content size
-	WindowSize contentSize = GetChildrenSize(m_ElementSize);
+	m_ContentSize = GetChildrenSize(m_ElementSize);
 
-	// margin
-	DirectX::XMINT2 rectPos = _VisibleRect.GetPosition();
-	rectPos.x += m_LayoutData.GetMargin();
-	rectPos.y += m_LayoutData.GetMargin();
-
-	// set draw rect
-	Widget::SetPosition(rectPos);
-
-	WindowSize size = m_LayoutData.GetContentSize(m_LayoutData.GetRequiredSizeWithContentAndParent(contentSize, _VisibleRect.GetSize()));
-
-	Widget::SetSize(size);
+	m_Size = m_LayoutData.GetContentSize(m_LayoutData.GetRequiredSizeWithContentAndParent(m_ContentSize, _ParentSize));
 
 	// 2) layout content
 //	WindowSize singleChildSize = WindowSize::GetMin(, size);
@@ -62,13 +52,13 @@ void StackWidget::UpdateLayout(const WindowRect& _VisibleRect)
 	{
 		WindowSize childEnvelopRect = childWidget->GetEnvelopSize(m_ElementSize);
 
-		DirectX::XMINT2 newPos;
+		WindowPos newPos;
 
 		if (m_Direction == Vertical)
 		{
-			 newPos = DirectX::XMINT2(rectPos.x, rectPos.y + childPos);
+			 newPos = WindowPos(0, childPos);
 
-			childEnvelopRect.SetWidth(min(childEnvelopRect.GetWidth(), size.GetWidth()));
+			childEnvelopRect.SetWidth(min(childEnvelopRect.GetWidth(), m_Size.GetWidth()));
 
 			if (childEnvelopRect.GetHeight() == ENVELOP_CHILD)
 			{
@@ -78,9 +68,9 @@ void StackWidget::UpdateLayout(const WindowRect& _VisibleRect)
 		}
 		else
 		{	// Horizontal
-			newPos = DirectX::XMINT2(rectPos.x + childPos, rectPos.y);
+			newPos = WindowPos(childPos, 0);
 
-			childEnvelopRect.SetHeight(min(childEnvelopRect.GetHeight(), size.GetHeight()));
+			childEnvelopRect.SetHeight(min(childEnvelopRect.GetHeight(), m_Size.GetHeight()));
 
 			if (childEnvelopRect.GetWidth() == ENVELOP_CHILD)
 			{
@@ -89,8 +79,70 @@ void StackWidget::UpdateLayout(const WindowRect& _VisibleRect)
 			childPos += childEnvelopRect.GetWidth();
 		}
 
-		WindowRect newRect = WindowRect( newPos , childEnvelopRect );
+		WindowSize newRect = WindowSize( childEnvelopRect );
 		childWidget->UpdateLayout( newRect );
+	}	// for each child
+}
+
+
+
+
+
+void StackWidget::BuildWorldPosition(const WindowPos & _ParentPos)
+{
+	// 1) content size is m_ContentSize
+
+	// margin
+	WindowPos rectPos = _ParentPos;
+	rectPos.Offset( m_LayoutData.GetMargin(), m_LayoutData.GetMargin() );
+
+	// set draw rect
+	Widget::SetPosition(rectPos);
+
+	Widget::SetSize(m_Size);
+
+	// 2) layout content
+
+	int32_t childDelta;	// would used for X or Y depends on m_Direction
+	for (Widget* childWidget : m_Widgets)
+	{
+		WindowSize childEnvelopRect = childWidget->GetEnvelopSize(m_ElementSize);
+
+		WindowPos newPos;
+
+		if (m_Direction == Vertical)
+		{
+			childEnvelopRect.SetWidth(min(childEnvelopRect.GetWidth(), m_Size.GetWidth()));
+
+			if (childEnvelopRect.GetHeight() == ENVELOP_CHILD)
+			{
+				childEnvelopRect.SetHeight(0);	// can't draw child of 'fit parent' if element size is not defined
+			}
+			childDelta = childEnvelopRect.GetHeight();
+		}
+		else
+		{	// Horizontal
+			childEnvelopRect.SetHeight(min(childEnvelopRect.GetHeight(), m_Size.GetHeight()));
+
+			if (childEnvelopRect.GetWidth() == ENVELOP_CHILD)
+			{
+				childEnvelopRect.SetWidth(0);	// can't draw child of 'fit parent' if element size is not defined
+			}
+			childDelta = childEnvelopRect.GetWidth();
+		}
+
+		childWidget->BuildWorldPosition(rectPos);
+
+		// promote
+		if (m_Direction == Vertical)
+		{
+			rectPos.Offset(0, childDelta);
+		}
+		else
+		{	// Horizontal
+			rectPos.Offset(childDelta, 0);
+		}
+
 	}
 }
 
@@ -135,8 +187,6 @@ WindowSize StackWidget::GetChildrenSize(const WindowSize& _ElementRect)
 
 	return WindowSize(w, h);
 }
-
-
 
 WindowSize StackWidget::GetEnvelopSize(const WindowSize & _MaxContentRect)
 {

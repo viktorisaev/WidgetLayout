@@ -56,7 +56,7 @@ WindowSize LayoutData::GetRequiredSizeWithParent(const WindowSize & _ParentConte
 	{
 		if (m_Size.GetWidth() == ENVELOP_CHILD)
 		{
-			int i = 1;	// error! can't envelop chile if no child size
+			int i = 1;	// error! can't envelop child if no child size
 		}
 		w = GetMeasureWithEnvelop(m_Size.GetWidth() + GetDoubleMargin(), _ParentContentRect.GetWidth());
 	}
@@ -71,7 +71,7 @@ WindowSize LayoutData::GetRequiredSizeWithParent(const WindowSize & _ParentConte
 	{
 		if (m_Size.GetHeight() == ENVELOP_CHILD)
 		{
-			int i = 1;	// error! can't envelop chile if no child size
+			int i = 1;	// error! can't envelop child if no child size
 		}
 		h = GetMeasureWithEnvelop(m_Size.GetHeight() + GetDoubleMargin(), _ParentContentRect.GetHeight());
 	}
@@ -131,7 +131,7 @@ WindowSize LayoutData::GetRequiredSizeWithContent(const WindowSize& _ContentRect
 	// width
 	int32_t w;
 	const int32_t myWidth = m_Size.GetWidth();
-	if (myWidth == FIT_PARENT)
+	if (myWidth == FIT_PARENT)	// not possible to define 'fit parent' if only content size provided
 	{
 		int i = 1;
 	}
@@ -150,7 +150,7 @@ WindowSize LayoutData::GetRequiredSizeWithContent(const WindowSize& _ContentRect
 	// height
 	int32_t h;
 	const int32_t myHeight = m_Size.GetHeight();
-	if (myHeight == FIT_PARENT)
+	if (myHeight == FIT_PARENT)	// not possible to define 'fit parent' if only content size provided
 	{
 		int i = 1;
 	}

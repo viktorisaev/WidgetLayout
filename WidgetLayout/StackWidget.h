@@ -25,8 +25,9 @@ public:
 
 // IWidget
 	void AddToRender(Sample3DSceneRenderer* _Render) override;
-	void UpdateLayout(const WindowRect& _VisibleRect) override;
+	void UpdateLayout(const WindowSize& _ParentSize) override;
 	WindowSize GetEnvelopSize(const WindowSize& _ParentContentRect) override;
+	virtual void BuildWorldPosition(const WindowPos & _ParentPos) override;
 
 
 protected:
@@ -39,6 +40,8 @@ private:
 protected:
 	LayoutData m_LayoutData;	// rect + margin
 	WindowSize m_ElementSize;	// size of one element of the stack or ENVELOP_CHILD
-	Direction m_Direction;	// horizontal or vertical
+	Direction m_Direction; // horizontal or vertical
+	WindowSize m_ContentSize;	// calculated in UpdateLayout to pass to BuildWorldPosition
+	WindowSize m_Size;	// size of the window after UpdateLayout
 };
 

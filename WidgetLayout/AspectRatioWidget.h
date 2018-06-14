@@ -15,9 +15,10 @@ public:
 
 
 // IWidget
-	virtual void UpdateLayout(const WindowRect & _VisibleRect) override;
+	virtual void UpdateLayout(const WindowSize& _ParentSize) override;
 	virtual WindowSize GetEnvelopSize(const WindowSize& _ParentContentRect) override;
 	virtual void AddToRender(Sample3DSceneRenderer* _Render) override;
+	virtual void BuildWorldPosition(const WindowPos & _ParentPos) override;
 
 protected:
 	WindowSize GetAspectRatioSize(const WindowSize& _QueriedContentSize);

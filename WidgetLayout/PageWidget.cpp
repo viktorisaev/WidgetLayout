@@ -5,10 +5,9 @@
 
 
 
-PageWidget::PageWidget(DirectX::XMINT2 _Position, WindowSize _Size, DirectX::XMFLOAT4 _Color) :
-	Widget(_Position, _Size, _Color)
+PageWidget::PageWidget(const DirectX::XMFLOAT4& _Color) :
+	Widget(_Color)
 {
-	
 }
 
 
@@ -22,24 +21,33 @@ PageWidget::~PageWidget()
 
 void PageWidget::AddToRender(Sample3DSceneRenderer * _Render)
 {
-	_Render->AddColoredRectToList(this->GetAbsRect(), this->GetColor());
+	_Render->AddColoredRectToList(this->GetWorldRect(), this->GetDebugColor());
 	m_PageWidget->AddToRender(_Render);
 }
 
 
 
 
-void PageWidget::UpdateLayout(const WindowRect& _VisibleRect)
+void PageWidget::UpdateLayout(const WindowSize& _ParentSize)
 {
-	m_PageWidget->UpdateLayout(_VisibleRect);
+	this->SetSize(_ParentSize);
+	m_PageWidget->UpdateLayout(_ParentSize);
 }
 
+
+
+void PageWidget::BuildWorldPosition(const WindowPos & _ParentPos)
+{
+	this->SetPosition(_ParentPos);
+	m_PageWidget->BuildWorldPosition(_ParentPos);
+}
 
 
 
 WindowSize PageWidget::GetEnvelopSize(const WindowSize & _MaxContentRect)
 {
-	WindowSize w = WindowSize::GetMin(m_AbsRect.GetSize(), _MaxContentRect);
+	WindowSize w = WindowSize::GetMin(this->GetRect().GetSize(), _MaxContentRect);
 
 	return w;
 }
+

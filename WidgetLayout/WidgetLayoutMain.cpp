@@ -17,12 +17,12 @@ using namespace Concurrency;
 
 WidgetLayoutMain::WidgetLayoutMain()
 {
-	m_PageWidget = WidgetFactory::CreatePageWidget(DirectX::XMINT2(0, 0), WindowSize(1366, 696), DirectX::XMFLOAT4(0.31f, 0.3f, 0.3f, 1.0f));
+	m_PageWidget = WidgetFactory::CreatePageWidget(DirectX::XMFLOAT4(0.31f, 0.3f, 0.3f, 1.0f));
 
 	StackWidget* globVertStack = WidgetFactory::CreateStackWidget(StackWidget::Vertical, 15, WindowSize(FIT_PARENT, FIT_PARENT), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, ENVELOP_CHILD));
 	m_PageWidget->SetPageWidget(globVertStack);
 
-//	m_VerticalStackWidget = WidgetFactory::CreateVerticalStackWidget(15, WindowSize(ENVELOP_CHILD, 350), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, /*ENVELOP_CHILD*/95));
+	//	m_VerticalStackWidget = WidgetFactory::CreateVerticalStackWidget(15, WindowSize(ENVELOP_CHILD, 350), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, /*ENVELOP_CHILD*/95));
 	m_VerticalStackWidget = WidgetFactory::CreateStackWidget(StackWidget::Vertical, 15, WindowSize(ENVELOP_CHILD, 350), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, /*ENVELOP_CHILD*/95));
 	AspectRatioWidget *aspectWidget = WidgetFactory::CreateAspectWrappedWidget(WindowSize(100, 100), m_VerticalStackWidget);
 
@@ -30,7 +30,7 @@ WidgetLayoutMain::WidgetLayoutMain()
 	//	m_PageWidget->SetPageWidget(m_VerticalStackWidget);
 	//
 
-		// vertical children
+	// vertical children
 	m_VerticalStackWidget->AddWidget(
 		WidgetFactory::CreateAspectWrappedWidget(WindowSize(100, 100),
 			WidgetFactory::CreateBoxWidget(10, WindowSize(120, FIT_PARENT/*80*/), DirectX::XMFLOAT4(1.0f, 0.5f, 0.0f, 0.8f))
@@ -115,6 +115,7 @@ void WidgetLayoutMain::Update()
 	int d1 = int(sinf(float(m_timer.GetTotalSeconds())) * 100.0f);
 	int d2 = int(sinf(float(m_timer.GetTotalSeconds() *1.8f)) * 20.0f);
 	int d3 = int(sinf(float(m_timer.GetTotalSeconds() *2.1f)) * 50.0f);
+	
 	if (m_InternalWidget)
 	{
 		m_InternalWidget->SetElementSize(WindowSize(400+d3, /*ENVELOP_CHILD*/100+d3));
@@ -125,7 +126,10 @@ void WidgetLayoutMain::Update()
 		m_VerticalStackWidget->SetElementSize(WindowSize(ENVELOP_CHILD, 90+d2));
 	}
 
-	m_PageWidget->UpdateLayout(WindowRect(DirectX::XMINT2(0, 0), WindowSize(1366, 696)) );
+	// 1) create layout (define sizes)
+	m_PageWidget->UpdateLayout( WindowSize(1366, 696) );
+	// 2) build world positions (offset windows)
+	m_PageWidget->BuildWorldPosition( WindowPos(0, 0) );
 
 }
 

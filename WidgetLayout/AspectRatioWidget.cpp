@@ -23,10 +23,14 @@ WindowSize AspectRatioWidget::GetEnvelopSize(const WindowSize & _ParentContentRe
 	return GetAspectRatioSize(winSize);
 }
 
+
+
 void AspectRatioWidget::AddToRender(Sample3DSceneRenderer * _Render)
 {
 	m_ContentWidget->AddToRender(_Render);
 }
+
+
 
 WindowSize AspectRatioWidget::GetAspectRatioSize(const WindowSize & _QueriedContentSize)
 {
@@ -37,8 +41,17 @@ WindowSize AspectRatioWidget::GetAspectRatioSize(const WindowSize & _QueriedCont
 	return heightControlsWidth;
 }
 
-void AspectRatioWidget::UpdateLayout(const WindowRect & _VisibleRect)
+
+
+
+void AspectRatioWidget::UpdateLayout(const WindowSize& _ParentSize)
 {
-	WindowRect asepectRect = WindowRect(_VisibleRect.GetPosition(), GetAspectRatioSize(_VisibleRect.GetSize()));
-	m_ContentWidget->UpdateLayout(asepectRect);
+	WindowSize aspectedSize = GetAspectRatioSize(_ParentSize);
+	m_ContentWidget->UpdateLayout(aspectedSize);
+}
+
+
+void AspectRatioWidget::BuildWorldPosition(const WindowPos & _ParentPos)
+{
+	m_ContentWidget->BuildWorldPosition(_ParentPos);
 }

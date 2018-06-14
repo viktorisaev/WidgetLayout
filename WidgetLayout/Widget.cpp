@@ -8,30 +8,30 @@
 
 void Widget::AddToRender(Sample3DSceneRenderer * _Render)
 {
-	_Render->AddColoredRectToList(m_AbsRect, m_Color);
+	_Render->AddColoredRectToList(m_WorldRect, m_Color);
 }
 
 
 
-const WindowRect& Widget::GetAbsRect() const
+const WindowRect& Widget::GetWorldRect() const
 {
-	return m_AbsRect;
+	return m_WorldRect;
 }
 
 
-DirectX::XMFLOAT4 Widget::GetColor() const
+DirectX::XMFLOAT4 Widget::GetDebugColor() const
 {
 	return m_Color;
 }
 
 
 
-void Widget::SetPosition(DirectX::XMINT2 _Position)
+void Widget::SetPosition(const WindowPos& _Position)
 {
-	m_AbsRect.SetPosition(_Position);
+	m_WorldRect.SetPosition(_Position);
 }
 
 void Widget::SetSize(WindowSize _Size)
 {
-	m_AbsRect.SetSize(_Size);
+	m_WorldRect.SetSize(_Size);
 }

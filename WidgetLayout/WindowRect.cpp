@@ -13,7 +13,7 @@ WindowRect::~WindowRect()
 
 
 
-WindowRect::WindowRect(DirectX::XMINT2 _Position, WindowSize _Size) :
+WindowRect::WindowRect(const WindowPos& _Position, const WindowSize& _Size) :
 	m_Position(_Position)
 ,	m_Size(_Size)
 {
@@ -22,19 +22,19 @@ WindowRect::WindowRect(DirectX::XMINT2 _Position, WindowSize _Size) :
 
 
 
-DirectX::XMINT2 WindowRect::GetPosition() const
+const WindowPos& WindowRect::GetPosition() const
 {
 	return m_Position;
 }
 
 
 
-WindowSize WindowRect::GetSize() const
+const WindowSize& WindowRect::GetSize() const
 {
 	return m_Size;
 }
 
-void WindowRect::SetPosition(DirectX::XMINT2 _Position)
+void WindowRect::SetPosition(const WindowPos& _Position)
 {
 	m_Position = _Position;
 }

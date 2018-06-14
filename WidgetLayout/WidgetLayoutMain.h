@@ -38,9 +38,10 @@ namespace WidgetLayout
 		DX::StepTimer m_timer;
 
 
-		PageWidget* m_PageWidget;
-		StackWidget* m_InternalWidget = 0;
-		StackWidget* m_VerticalStackWidget = 0;
+		PageWidget* m_PageWidget = nullptr;
+		StackWidget* m_InternalWidget = nullptr;
+//		BoxWidget* m_InternalWidget = nullptr;
+		StackWidget* m_VerticalStackWidget = nullptr;
 
 	};
 }

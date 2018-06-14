@@ -13,9 +13,9 @@ WidgetFactory::~WidgetFactory()
 
 
 
-PageWidget * WidgetFactory::CreatePageWidget(DirectX::XMINT2 _Position, WindowSize _Size, DirectX::XMFLOAT4 _Color)
+PageWidget * WidgetFactory::CreatePageWidget(DirectX::XMFLOAT4 _Color)
 {
-	PageWidget* widget = new PageWidget(_Position, _Size, _Color);
+	PageWidget* widget = new PageWidget(_Color);
 
 	return widget;
 }

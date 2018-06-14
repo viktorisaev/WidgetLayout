@@ -88,9 +88,6 @@
     <ClCompile Include="BoxWidget.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
-    <ClCompile Include="IWidget.cpp">
-      <Filter>Widget</Filter>
-    </ClCompile>
     <ClCompile Include="WidgetFactory.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
@@ -104,6 +101,9 @@
       <Filter>Widget</Filter>
     </ClCompile>
     <ClCompile Include="StackWidget.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowPos.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
   </ItemGroup>
@@ -150,9 +150,6 @@
     <ClInclude Include="WidgetFactory.h">
       <Filter>Widget</Filter>
     </ClInclude>
-    <ClInclude Include="WindowSize.h">
-      <Filter>Widget</Filter>
-    </ClInclude>
     <ClInclude Include="LayoutData.h">
       <Filter>Widget</Filter>
     </ClInclude>
@@ -161,6 +158,12 @@
       <Filter>Widget</Filter>
     </ClInclude>
     <ClInclude Include="StackWidget.h">
+      <Filter>Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowSize.h">
+      <Filter>Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowPos.h">
       <Filter>Widget</Filter>
     </ClInclude>
   </ItemGroup>

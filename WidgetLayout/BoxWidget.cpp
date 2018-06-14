@@ -16,16 +16,21 @@ BoxWidget::~BoxWidget()
 
 
 
-void BoxWidget::UpdateLayout(const WindowRect& _VisibleRect)
+void BoxWidget::UpdateLayout(const WindowSize& _ParentSize)
 {
-	WindowSize size = m_LayoutData.GetRequiredSizeWithParent(_VisibleRect.GetSize());
+	m_EnvelopSize = m_LayoutData.GetRequiredSizeWithParent(_ParentSize);	// store size for render
+}
 
-	DirectX::XMINT2 rectPos = _VisibleRect.GetPosition();
-	DirectX::XMINT2 newPos = DirectX::XMINT2(rectPos.x + m_LayoutData.GetMargin(), rectPos.y + m_LayoutData.GetMargin());
+
+
+
+void BoxWidget::BuildWorldPosition(const WindowPos & _ParentPos)
+{
+	WindowPos newPos = WindowPos(_ParentPos.GetX() + m_LayoutData.GetMargin(), _ParentPos.GetY() + m_LayoutData.GetMargin());
 
 	// set draw rect
 	Widget::SetPosition(newPos);
-	Widget::SetSize( m_LayoutData.GetContentSize(size) );
+	Widget::SetSize(m_LayoutData.GetContentSize(m_EnvelopSize));
 }
 
 
@@ -43,3 +48,4 @@ void BoxWidget::SetSize(const WindowSize & _Size)
 {
 	m_LayoutData.SetSize(_Size);
 }
+

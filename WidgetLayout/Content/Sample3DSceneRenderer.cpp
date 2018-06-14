@@ -615,7 +615,7 @@ void Sample3DSceneRenderer::AddColoredRectToList(const WindowRect& _WindowRect, 
 {
 	if (m_WidgetCount < MAX_WIDGET_COUNT)
 	{
-		XMFLOAT2 pos = PixelToScreen(_WindowRect.GetPosition());
+		XMFLOAT2 pos = PixelToScreen( XMINT2(_WindowRect.GetPosition().GetX(), _WindowRect.GetPosition().GetY()) );
 		const WindowSize& winSize = _WindowRect.GetSize();
 		XMFLOAT2 size = PixelToScreen(DirectX::XMINT2(winSize.GetWidth(), winSize.GetHeight()));
 		XMFLOAT4 color = _Color;

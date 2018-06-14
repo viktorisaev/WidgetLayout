@@ -215,6 +215,7 @@
     <ClInclude Include="Content\Sample3DSceneRenderer.h" />
     <ClInclude Include="Content\ShaderStructures.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="WindowPos.h" />
     <ClInclude Include="WindowRect.h" />
     <ClInclude Include="WindowSize.h" />
   </ItemGroup>
@@ -247,7 +248,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="IWidget.cpp" />
     <ClCompile Include="LayoutData.cpp" />
     <ClCompile Include="PageWidget.cpp" />
     <ClCompile Include="StackWidget.cpp" />
@@ -263,6 +263,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="WindowPos.cpp" />
     <ClCompile Include="WindowRect.cpp" />
     <ClCompile Include="WindowSize.cpp" />
   </ItemGroup>
