@@ -19,12 +19,12 @@ WidgetLayoutMain::WidgetLayoutMain()
 {
 	m_PageWidget = WidgetFactory::CreatePageWidget(DirectX::XMFLOAT4(0.31f, 0.3f, 0.3f, 1.0f));
 
-	StackWidget* globVertStack = WidgetFactory::CreateStackWidget(StackWidget::Vertical, 15, WindowSize(FIT_PARENT, FIT_PARENT), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, ENVELOP_CHILD));
+	StackWidget* globVertStack = WidgetFactory::CreateStackWidget(StackWidget::Vertical, 15, WindowSize(/*ENVELOP_CHILD*/1000/*FIT_PARENT*/, FIT_PARENT), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f), WindowSize(1000/*ENVELOP_CHILD*/, ENVELOP_CHILD));
 	m_PageWidget->SetPageWidget(globVertStack);
 
 	//	m_VerticalStackWidget = WidgetFactory::CreateVerticalStackWidget(15, WindowSize(ENVELOP_CHILD, 350), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, /*ENVELOP_CHILD*/95));
-	m_VerticalStackWidget = WidgetFactory::CreateStackWidget(StackWidget::Vertical, 15, WindowSize(ENVELOP_CHILD, 350), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, /*ENVELOP_CHILD*/95));
-	AspectRatioWidget *aspectWidget = WidgetFactory::CreateAspectWrappedWidget(WindowSize(100, 100), m_VerticalStackWidget);
+	m_VerticalStackWidget = WidgetFactory::CreateStackWidget(StackWidget::Vertical, 15, WindowSize(/*FIT_PARENT*//*800*/ENVELOP_CHILD, 350), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, /*ENVELOP_CHILD*/95));
+//	AspectRatioWidget *aspectWidget = WidgetFactory::CreateAspectWrappedWidget(WindowSize(100, 100), m_VerticalStackWidget);
 
 	globVertStack->AddWidget(m_VerticalStackWidget);
 	//	m_PageWidget->SetPageWidget(m_VerticalStackWidget);
@@ -42,6 +42,7 @@ WidgetLayoutMain::WidgetLayoutMain()
 		)
 	);
 
+	
 	m_InternalWidget = WidgetFactory::CreateStackWidget(StackWidget::Horizontal, 10, WindowSize(ENVELOP_CHILD, ENVELOP_CHILD), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 0.37f), WindowSize(100/*ENVELOP_CHILD*/, 100/*ENVELOP_CHILD*/));
 	m_InternalWidget->AddWidget(WidgetFactory::CreateBoxWidget(10, WindowSize(FIT_PARENT/*100*/, 80), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 0.8f)));
 	m_InternalWidget->AddWidget(

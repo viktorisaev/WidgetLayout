@@ -30,7 +30,8 @@ void BoxWidget::BuildWorldPosition(const WindowPos & _ParentPos)
 
 	// set draw rect
 	Widget::SetPosition(newPos);
-	Widget::SetSize(m_LayoutData.GetContentSize(m_EnvelopSize));
+	WindowSize renderSize = m_LayoutData.GetContentSize(m_EnvelopSize);
+	Widget::SetSize(renderSize);
 }
 
 

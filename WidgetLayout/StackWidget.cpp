@@ -191,7 +191,7 @@ WindowSize StackWidget::GetChildrenSize(const WindowSize& _ElementRect)
 WindowSize StackWidget::GetEnvelopSize(const WindowSize & _MaxContentRect)
 {
 	WindowSize contentSize = GetChildrenSize(m_ElementSize);
-	WindowSize envelopSize = m_LayoutData.GetEnvelopSize(m_WindowDefaultSize, contentSize);
+	WindowSize envelopSize = m_LayoutData.GetRequiredSizeWithContentAndParent(m_WindowDefaultSize, contentSize, _MaxContentRect);
 
 	return envelopSize;
 }
