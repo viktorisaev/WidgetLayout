@@ -197,8 +197,17 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\bkg.DDS">
-      <Filter>Content</Filter>
+    <Image Include="Assets\bkg_box.DDS">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\bkg_button.DDS">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\bkg_exact.DDS">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\bkg_fill.DDS">
+      <Filter>Assets</Filter>
     </Image>
   </ItemGroup>
 </Project>

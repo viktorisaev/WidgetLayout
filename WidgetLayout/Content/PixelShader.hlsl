@@ -1,7 +1,7 @@
 
 #include "ShaderData.hlsl"
 
-Texture2D texDiffuse : register(t0);
+Texture2D texDiffuse[2] : register(t0);
 SamplerState textureSampler : register(s0);
 
 
@@ -13,7 +13,7 @@ float4 main(GeometryToPixel input) : SV_TARGET
 	float4 output;
 
 	// fetch texture
-	float4 diffuse = texDiffuse.Sample(textureSampler, input.uv);
+	float4 diffuse = texDiffuse[input.textureIndex].Sample(textureSampler, input.uv);
 	output = diffuse * input.color;
 
 	// fog

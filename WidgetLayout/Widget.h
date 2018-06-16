@@ -10,6 +10,17 @@
 extern int m_NumberOfSizeCalculations;
 
 
+// TODO: not a good place
+enum WIDGET_TEXTURES
+{
+	WIDGET_TEXTURE_FILL = 0,
+	WIDGET_TEXTURE_FRAME,
+	WIDGET_TEXTURE_EXACT,
+	WIDGET_TEXTURE_BUTTON,
+};
+
+
+
 // abstract
 class Widget : public IWidget
 {
@@ -29,8 +40,6 @@ public:
 	const WindowRect& GetWorldRect() const;
 	DirectX::XMFLOAT4 GetDebugColor() const;
 
-	const WindowSize& GetWindowDefaultSize();
-
 	virtual void AddToRender(Sample3DSceneRenderer* _Render) override;
 
 
@@ -44,8 +53,6 @@ protected:
 protected:
 	WindowSize m_WindowDefaultSize;	// setup size of the widget
 
-
-private:
 	WindowRect m_WorldRect;
 	DirectX::XMFLOAT4 m_Color;
 };

@@ -43,24 +43,28 @@ void main(point VertexToGeometry input[1], inout TriangleStream<GeometryToPixel>
 //	p1 = AppyViewProject(p1);
 	output.pos = p1;
 	output.uv = float2(0.0f, 0.0f);
+	output.textureIndex = input[0].textureIndex;
 	outputStream.Append(output);
 
 	output.color = input[0].color;
 	//	p2 = AppyViewProject(p2);
 	output.pos = p2;
 	output.uv = float2(1.0f, 0.0f);
+	output.textureIndex = input[0].textureIndex;
 	outputStream.Append(output);
 
 	output.color = input[0].color;
 	//	p3 = AppyViewProject(p3);
 	output.pos = p3;
 	output.uv = float2(0.0f, 1.0f);
+	output.textureIndex = input[0].textureIndex;
 	outputStream.Append(output);
 
 	output.color = input[0].color;
 	//	p4 = AppyViewProject(p4);
 	output.pos = p4;
 	output.uv = float2(1.0f, 1.0f);
+	output.textureIndex = input[0].textureIndex;
 	outputStream.Append(output);
 
 	outputStream.RestartStrip();

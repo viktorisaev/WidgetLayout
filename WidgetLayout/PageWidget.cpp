@@ -21,7 +21,7 @@ PageWidget::~PageWidget()
 
 void PageWidget::AddToRender(Sample3DSceneRenderer * _Render)
 {
-	_Render->AddColoredRectToList(this->GetWorldRect(), this->GetDebugColor());
+	_Render->AddColoredRectToList(this->GetWorldRect(), this->GetDebugColor(), WIDGET_TEXTURE_FILL);
 	m_PageWidget->AddToRender(_Render);
 }
 

@@ -22,9 +22,9 @@ PageWidget * WidgetFactory::CreatePageWidget(const DirectX::XMFLOAT4& _Color)
 
 
 
-BoxWidget * WidgetFactory::CreateBoxWidget(int _Margin, const WindowSize& _WindowDefaultSize, const DirectX::XMFLOAT4& _Color)
+BoxWidget * WidgetFactory::CreateBoxWidget(int _Margin, const WindowSize& _WindowDefaultSize, const DirectX::XMFLOAT4& _Color, UINT _TextureIndex)
 {
-	BoxWidget* widget = new BoxWidget(_Margin, _WindowDefaultSize, _Color);
+	BoxWidget* widget = new BoxWidget(_Margin, _WindowDefaultSize, _Color, _TextureIndex);
 
 	return widget;
 }

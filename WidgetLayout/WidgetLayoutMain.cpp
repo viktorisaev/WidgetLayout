@@ -28,53 +28,44 @@ WidgetLayoutMain::WidgetLayoutMain()
 	StackWidget* globVertStack = WidgetFactory::CreateStackWidget(StackWidget::Vertical, 15, WindowSize(/*ENVELOP_CHILD*/1000/*FIT_PARENT*/, FIT_PARENT), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f), WindowSize(1000/*ENVELOP_CHILD*/, ENVELOP_CHILD));
 	m_PageWidget->SetPageWidget(globVertStack);
 
-	//	m_VerticalStackWidget = WidgetFactory::CreateVerticalStackWidget(15, WindowSize(ENVELOP_CHILD, 350), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, /*ENVELOP_CHILD*/95));
 	m_VerticalStackWidget = WidgetFactory::CreateStackWidget(StackWidget::Vertical, 15, WindowSize(/*FIT_PARENT*//*800*/ENVELOP_CHILD, 350), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, /*ENVELOP_CHILD*/95));
-//	AspectRatioWidget *aspectWidget = WidgetFactory::CreateAspectWrappedWidget(WindowSize(100, 100), m_VerticalStackWidget);
 
 	globVertStack->AddWidget(m_VerticalStackWidget);
-	//	m_PageWidget->SetPageWidget(m_VerticalStackWidget);
-	//
 
 	// vertical children
 	m_VerticalStackWidget->AddWidget(
 		WidgetFactory::CreateAspectWrappedWidget(WindowSize(100, 100),
-			WidgetFactory::CreateBoxWidget(10, WindowSize(120, FIT_PARENT/*80*/), DirectX::XMFLOAT4(1.0f, 0.5f, 0.0f, 0.8f))
+			WidgetFactory::CreateBoxWidget(10, WindowSize(120, FIT_PARENT/*80*/), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), WIDGET_TEXTURE_BUTTON)
 		)
 	);
 	m_VerticalStackWidget->AddWidget(
 		WidgetFactory::CreateAspectWrappedWidget(WindowSize(100, 100),
-			WidgetFactory::CreateBoxWidget(10, WindowSize(120, 30), DirectX::XMFLOAT4(1.0f, 0.5f, 0.0f, 0.8f))
+			WidgetFactory::CreateBoxWidget(10, WindowSize(120, 30), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), WIDGET_TEXTURE_BUTTON)
 		)
 	);
 
-	
+	// horizontal
 	m_InternalWidget = WidgetFactory::CreateStackWidget(StackWidget::Horizontal, 10, WindowSize(ENVELOP_CHILD, ENVELOP_CHILD), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 0.37f), WindowSize(100/*ENVELOP_CHILD*/, 100/*ENVELOP_CHILD*/));
-	m_InternalWidget->AddWidget(WidgetFactory::CreateBoxWidget(10, WindowSize(FIT_PARENT/*100*/, 80), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 0.8f)));
+	m_InternalWidget->AddWidget( WidgetFactory::CreateBoxWidget(10, WindowSize(FIT_PARENT/*100*/, 80), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 0.8f), WIDGET_TEXTURE_FRAME) );
 	m_InternalWidget->AddWidget(
 		WidgetFactory::CreateAspectWrappedWidget(WindowSize(100, 100),
-			WidgetFactory::CreateBoxWidget(10, WindowSize(100, 100), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 0.8f))
+			WidgetFactory::CreateBoxWidget(10, WindowSize(500, FIT_PARENT), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), WIDGET_TEXTURE_BUTTON)
 		)
 	);
-	m_InternalWidget->AddWidget(WidgetFactory::CreateBoxWidget(10, WindowSize(FIT_PARENT, 100), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 0.8f)));
+	m_InternalWidget->AddWidget( WidgetFactory::CreateBoxWidget(10, WindowSize(FIT_PARENT, 100), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 0.8f), WIDGET_TEXTURE_FRAME) );
 	m_VerticalStackWidget->AddWidget(m_InternalWidget);
 
-	//	m_PageWidget->SetPageWidget(m_InternalWidget);
-	m_VerticalStackWidget->AddWidget(WidgetFactory::CreateBoxWidget(15, WindowSize(500, 140), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 0.8f)));
-	m_VerticalStackWidget->AddWidget(WidgetFactory::CreateBoxWidget(10, WindowSize(FIT_PARENT, 130), DirectX::XMFLOAT4(0.5f, 1.0f, 0.0f, 0.8f)));
-	m_VerticalStackWidget->AddWidget(WidgetFactory::CreateBoxWidget(20, WindowSize(200, FIT_PARENT/*not rendered if height not defined!*/), DirectX::XMFLOAT4(0.5f, 0.5f, 0.0f, 0.8f)));
+
+	m_VerticalStackWidget->AddWidget(WidgetFactory::CreateBoxWidget(15, WindowSize(500, 140), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 0.8f), WIDGET_TEXTURE_EXACT) );
+	m_VerticalStackWidget->AddWidget(WidgetFactory::CreateBoxWidget(10, WindowSize(FIT_PARENT, 130), DirectX::XMFLOAT4(0.5f, 1.0f, 0.0f, 0.8f), WIDGET_TEXTURE_EXACT) );
+	m_VerticalStackWidget->AddWidget(WidgetFactory::CreateBoxWidget(20, WindowSize(200, FIT_PARENT/*not rendered if height not defined!*/), DirectX::XMFLOAT4(0.5f, 0.5f, 0.0f, 0.8f), WIDGET_TEXTURE_EXACT));
+
 
 
 	StackWidget* vertStack2 = WidgetFactory::CreateStackWidget(StackWidget::Horizontal, 15, WindowSize(ENVELOP_CHILD, ENVELOP_CHILD), DirectX::XMFLOAT4(1.0f, 0.0f, 1.0f, 0.37f), WindowSize(160/*ENVELOP_CHILD*/, ENVELOP_CHILD));
 	globVertStack->AddWidget(vertStack2);
-	vertStack2->AddWidget(WidgetFactory::CreateBoxWidget(5, WindowSize(100, 60), DirectX::XMFLOAT4(0.7f, 0.2f, 0.0f, 0.8f)));
-	vertStack2->AddWidget(WidgetFactory::CreateBoxWidget(5, WindowSize(FIT_PARENT, 60), DirectX::XMFLOAT4(0.6f, 0.3f, 0.0f, 0.8f)));
-
-//	m_PageWidget->SetPageWidget(m_VerticalStackWidget);
-
-	//StackWidget *w1 = WidgetFactory::CreateVerticalStackWidget(DirectX::XMINT2(8, 8), 7, WindowSize(350, 90), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 0.8f), WindowSize(ENVELOP_CHILD, ENVELOP_CHILD));
-	//w1->AddWidget(WidgetFactory::CreateBoxWidget(3, WindowSize(80, 50), DirectX::XMFLOAT4(1.0f, 1.0f, 0.0f, 0.8f)));
-	//m_VerticalStackWidget->AddWidget(w1);
+	vertStack2->AddWidget( WidgetFactory::CreateBoxWidget(5, WindowSize(100, 60), DirectX::XMFLOAT4(0.7f, 0.2f, 0.0f, 0.8f), WIDGET_TEXTURE_FRAME) );
+	vertStack2->AddWidget( WidgetFactory::CreateBoxWidget(5, WindowSize(FIT_PARENT, 60), DirectX::XMFLOAT4(0.6f, 0.3f, 0.0f, 0.8f), WIDGET_TEXTURE_FRAME) );
 }
 
 

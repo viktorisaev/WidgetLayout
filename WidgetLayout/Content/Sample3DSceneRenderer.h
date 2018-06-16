@@ -27,14 +27,16 @@ public:
 
 // widget interface
 	void ResetWidgetList();	// called at the begining of the widget list setup
-	void AddColoredRectToList(const WindowRect& _WindowRect, DirectX::XMFLOAT4 _Color);	// add widget to render
+	void AddColoredRectToList(const WindowRect& _WindowRect, DirectX::XMFLOAT4 _Color, UINT _TextureIndex);	// add widget to render
 	void DisplayNumber(const int _NumberToDisplay);	// display this number in the debug window
 
-private:
+private:	// func
 	void LoadState();
 	void Rotate(float radians);
 
-private:
+	void LoadTexture(const std::wstring& _TextureName, Microsoft::WRL::ComPtr<ID3D12Resource>& _Texture, const CD3DX12_CPU_DESCRIPTOR_HANDLE& _CpuTextureRingHandle);
+
+private:	// data
 	// Constant buffers must be 256-byte aligned.
 	static const UINT c_alignedConstantBufferSize = (sizeof(ModelViewProjectionConstantBuffer) + 255) & ~255;
 
@@ -47,15 +49,18 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12PipelineState>			m_pipelineState;
 
 	
-	// single global CBV heap: constants + imgui + texture
+	// single global CBV descriptors heap: constants + imgui + texture*N
+
+	static const UINT N_TEXTURES = 4;
+
 	enum CBV_HEAP_STRUCTURE
 	{
 		CBV_CONSTANTS = 0,
 		CBV_IMGUI = CBV_CONSTANTS + DX::c_frameCount,
 		CBV_TEXTURE,
-		CBV_TOTAL_NUMBER_OF_DESCRIPTORS,
+		CBV_TOTAL_NUMBER_OF_DESCRIPTORS = CBV_TEXTURE + N_TEXTURES,
 	};
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>		m_cbvHeap;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>		m_cbvDescriptorHeap;
 
 
 	Microsoft::WRL::ComPtr<ID3D12Resource>				m_vertexBuffer;
@@ -80,11 +85,11 @@ private:
 	bool	m_tracking;
 
 	// textures
-	Microsoft::WRL::ComPtr<ID3D12Resource>				m_Texture;
+	Microsoft::WRL::ComPtr<ID3D12Resource>				m_Texture[N_TEXTURES];
 
 
 	// vertex data
-	VertexPositionColor	*m_Vertices;
+	VertexPositionColorTexture	*m_Vertices;
 
 	UINT m_WidgetCount;
 

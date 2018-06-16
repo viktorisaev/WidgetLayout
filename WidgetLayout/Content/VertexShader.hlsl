@@ -27,5 +27,7 @@ VertexToGeometry main(VertexShaderInput input)
 	// Pass the color through without modification.
 	output.color = input.color;
 
+	output.textureIndex = input.textureIndex;
+
 	return output;
 }

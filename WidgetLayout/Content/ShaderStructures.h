@@ -13,9 +13,10 @@ struct ModelViewProjectionConstantBuffer
 
 
 // Used to send per-vertex data to the vertex shader.
-struct VertexPositionColor
+struct VertexPositionColorTexture
 {
 	DirectX::XMFLOAT3 pos;
 	DirectX::XMFLOAT3 size;
 	DirectX::XMFLOAT4 color;
+	UINT textureInder;
 };

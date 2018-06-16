@@ -16,6 +16,15 @@ BoxWidget::~BoxWidget()
 
 
 
+void BoxWidget::AddToRender(Sample3DSceneRenderer * _Render)
+{
+	_Render->AddColoredRectToList(m_WorldRect, m_Color, m_TextureIndex);
+}
+
+
+
+
+
 void BoxWidget::UpdateLayout(const WindowSize& _ParentSize)
 {
 	m_EnvelopSize = m_LayoutData.GetRequiredSizeWithParent(m_WindowDefaultSize, _ParentSize);	// store size for render

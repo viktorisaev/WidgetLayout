@@ -8,7 +8,7 @@
 
 void Widget::AddToRender(Sample3DSceneRenderer * _Render)
 {
-	_Render->AddColoredRectToList(m_WorldRect, m_Color);
+	_Render->AddColoredRectToList(m_WorldRect, m_Color, WIDGET_TEXTURE_FILL);
 }
 
 
