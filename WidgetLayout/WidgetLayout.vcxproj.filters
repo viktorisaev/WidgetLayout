@@ -106,6 +106,9 @@
     <ClCompile Include="WindowPos.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
+    <ClCompile Include="Common\DDSTextureLoader.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -166,6 +169,15 @@
     <ClInclude Include="WindowPos.h">
       <Filter>Widget</Filter>
     </ClInclude>
+    <ClInclude Include="Common\DDSTextureLoader.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\dds.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\LoaderHelpers.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -183,5 +195,10 @@
     <FxCompile Include="Content\PixelShader.hlsl">
       <Filter>Content</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\bkg.DDS">
+      <Filter>Content</Filter>
+    </Image>
   </ItemGroup>
 </Project>

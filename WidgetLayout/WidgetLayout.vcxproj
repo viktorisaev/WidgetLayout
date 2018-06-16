@@ -182,6 +182,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Image Include="Assets\bkg.DDS" />
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
     <Image Include="Assets\SplashScreen.scale-200.png" />
     <Image Include="Assets\Square150x150Logo.scale-200.png" />
@@ -195,7 +196,10 @@
     <ClInclude Include="AspectRatioWidget.h" />
     <ClInclude Include="BoxWidget.h" />
     <ClInclude Include="Common\d3dx12.h" />
+    <ClInclude Include="Common\dds.h" />
+    <ClInclude Include="Common\DDSTextureLoader.h" />
     <ClInclude Include="Common\DeviceResources.h" />
+    <ClInclude Include="Common\LoaderHelpers.h" />
     <ClInclude Include="Imgui\imconfig.h" />
     <ClInclude Include="Imgui\imgui.h" />
     <ClInclude Include="Imgui\imgui_impl_dx12.h" />
@@ -223,6 +227,7 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="AspectRatioWidget.cpp" />
     <ClCompile Include="BoxWidget.cpp" />
+    <ClCompile Include="Common\DDSTextureLoader.cpp" />
     <ClCompile Include="Common\DeviceResources.cpp" />
     <ClCompile Include="Imgui\imgui.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
