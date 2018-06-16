@@ -29,5 +29,8 @@ VertexToGeometry main(VertexShaderInput input)
 
 	output.textureIndex = input.textureIndex;
 
+	output.textureCoords = input.textureCoords;
+
+
 	return output;
 }

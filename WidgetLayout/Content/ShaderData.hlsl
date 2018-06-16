@@ -8,6 +8,7 @@ struct VertexShaderInput
 	float3 size : COLOR1;
 	float4 color : COLOR0;
 	uint textureIndex : COLOR2;
+	float4 textureCoords : COLOR3;
 };
 
 // Per-pixel color data passed through the pixel shader.
@@ -17,6 +18,7 @@ struct VertexToGeometry
 	float3 size : COLOR1;
 	float4 color : COLOR0;
 	uint textureIndex : COLOR2;
+	float4 textureCoords : COLOR3;
 };
 
 // Per-pixel color data passed through the pixel shader.

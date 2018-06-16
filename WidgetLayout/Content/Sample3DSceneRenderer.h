@@ -28,6 +28,8 @@ public:
 // widget interface
 	void ResetWidgetList();	// called at the begining of the widget list setup
 	void AddColoredRectToList(const WindowRect& _WindowRect, DirectX::XMFLOAT4 _Color, UINT _TextureIndex);	// add widget to render
+	void AddColoredRectToList(const WindowRect& _WindowRect, DirectX::XMFLOAT4 _Color, UINT _TextureIndex, 
+		const float _Left, const float _Top, const float _Right, const float _Bottom);	// add widget to render with texture and UV
 	void DisplayNumber(const int _NumberToDisplay);	// display this number in the debug window
 
 private:	// func

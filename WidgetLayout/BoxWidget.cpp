@@ -18,7 +18,9 @@ BoxWidget::~BoxWidget()
 
 void BoxWidget::AddToRender(Sample3DSceneRenderer * _Render)
 {
-	_Render->AddColoredRectToList(m_WorldRect, m_Color, m_TextureIndex);
+	float _clipBottom = m_WindowDefaultSize.GetHeight() != FIT_PARENT ? float(m_WorldRect.GetSize().GetHeight()) / float(m_WindowDefaultSize.GetHeight()) : 1.0f;
+
+	_Render->AddColoredRectToList(m_WorldRect, m_Color, m_TextureIndex, 0.0f, 0.0f, 1.0f, _clipBottom);
 }
 
 

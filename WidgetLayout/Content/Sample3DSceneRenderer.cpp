@@ -193,6 +193,7 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 			{ "COLOR", 1, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
 			{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 24, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
 			{ "COLOR", 2, DXGI_FORMAT_R32_UINT, 0, 40, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+			{ "COLOR", 3, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 44, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
 		};
 
 		D3D12_GRAPHICS_PIPELINE_STATE_DESC state = {};
@@ -760,18 +761,24 @@ namespace {
 // add widget to render
 void Sample3DSceneRenderer::AddColoredRectToList(const WindowRect& _WindowRect, XMFLOAT4 _Color, UINT _TextureIndex)
 {
+	AddColoredRectToList( _WindowRect, _Color, _TextureIndex, 0.0f, 0.0f, 1.0f, 1.0f);
+}
+
+void Sample3DSceneRenderer::AddColoredRectToList(const WindowRect & _WindowRect, DirectX::XMFLOAT4 _Color, UINT _TextureIndex, const float _Left, const float _Top, const float _Right, const float _Bottom)
+{
 	if (m_WidgetCount < MAX_WIDGET_COUNT)
 	{
-		XMFLOAT2 pos = PixelToScreen( XMINT2(_WindowRect.GetPosition().GetX(), _WindowRect.GetPosition().GetY()) );
+		XMFLOAT2 pos = PixelToScreen(XMINT2(_WindowRect.GetPosition().GetX(), _WindowRect.GetPosition().GetY()));
 		const WindowSize& winSize = _WindowRect.GetSize();
 		XMFLOAT2 size = PixelToScreen(DirectX::XMINT2(winSize.GetWidth(), winSize.GetHeight()));
 		XMFLOAT4 color = _Color;
 
-		VertexPositionColorTexture v{ 
-			XMFLOAT3(-(SCREEN_HEIGHT / 2) + pos.x, (SCREEN_HEIGHT / 2) - pos.y, 0.0f), 
+		VertexPositionColorTexture v{
+			XMFLOAT3(-(SCREEN_HEIGHT / 2) + pos.x, (SCREEN_HEIGHT / 2) - pos.y, 0.0f),
 			XMFLOAT3(size.x, size.y, 0.0f),
-			XMFLOAT4(color.x, color.y, color.z, color.w), 
-			_TextureIndex
+			XMFLOAT4(color.x, color.y, color.z, color.w),
+			_TextureIndex,
+			XMFLOAT4(_Left, _Top, _Right, _Bottom)
 		};
 
 		cubeVertices[m_WidgetCount] = v;

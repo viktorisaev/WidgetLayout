@@ -30,6 +30,11 @@ namespace WidgetLayout
 		void OnMouseMoved(int x, int y);
 		void OnMousePressedReleased(bool left, bool right);
 
+	private:	// func
+		void Layout1();
+		void Layout2();
+
+
 	private:
 		// TODO: Replace with your own content renderers.
 		std::unique_ptr<Sample3DSceneRenderer> m_sceneRenderer;

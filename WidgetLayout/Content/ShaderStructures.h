@@ -19,4 +19,5 @@ struct VertexPositionColorTexture
 	DirectX::XMFLOAT3 size;
 	DirectX::XMFLOAT4 color;
 	UINT textureInder;
+	DirectX::XMFLOAT4 ltrb;
 };
