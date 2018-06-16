@@ -25,7 +25,7 @@ WidgetLayoutMain::WidgetLayoutMain()
 {
 	m_PageWidget = WidgetFactory::CreatePageWidget(DirectX::XMFLOAT4(0.31f, 0.3f, 0.3f, 1.0f));
 
-	Layout2();
+	Layout3();
 }
 
 
@@ -95,6 +95,21 @@ void WidgetLayout::WidgetLayoutMain::Layout2()
 
 
 
+void WidgetLayout::WidgetLayoutMain::Layout3()
+{
+	m_HorizontalStackWidget = WidgetFactory::CreateStackWidget(StackWidget::Horizontal, 15, WindowSize(/*FIT_PARENT*//*800*/ENVELOP_CHILD, ENVELOP_CHILD), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 0.37f), WindowSize(ENVELOP_CHILD, /*ENVELOP_CHILD*/95));
+	m_PageWidget->SetPageWidget(m_HorizontalStackWidget);
+
+	m_HorizontalStackWidget->AddWidget(
+		WidgetFactory::CreateBoxWidget(10, WindowSize(FIT_PARENT, 120/*120*//*fixed height should clip the rectangle if parent height is not enough*/), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), WIDGET_TEXTURE_FRAME)
+	);
+	m_HorizontalStackWidget->AddWidget(
+		WidgetFactory::CreateBoxWidget(10, WindowSize(150, 120/*fixed height should clip the rectangle if parent height is not enough*/), DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), WIDGET_TEXTURE_BUTTON)
+	);
+}
+
+
+
 
 
 WidgetLayout::WidgetLayoutMain::~WidgetLayoutMain()
@@ -136,16 +151,23 @@ void WidgetLayoutMain::Update()
 	// tweak some params by timer
 	int d1 = int(sinf(float(m_timer.GetTotalSeconds())) * 100.0f);
 	int d2 = int(sinf(float(m_timer.GetTotalSeconds() *1.8f)) * 20.0f);
-	int d3 = int(sinf(float(m_timer.GetTotalSeconds() *2.1f)) * 50.0f);
+	int d3 = int(sinf(float(m_timer.GetTotalSeconds() *1.8f)) * 35.0f);
+	int d4 = int(sinf(float(m_timer.GetTotalSeconds() *2.1f)) * 50.0f);
 	
 	if (m_InternalWidget)
 	{
-		m_InternalWidget->SetElementSize(WindowSize(400+d3, /*ENVELOP_CHILD*/100+d3));
+		m_InternalWidget->SetElementSize(WindowSize(400+d4, /*ENVELOP_CHILD*/100+d4));
 	}
 
 	if (m_VerticalStackWidget)
 	{
 		m_VerticalStackWidget->SetElementSize(WindowSize(ENVELOP_CHILD, 110+d2));
+	}
+
+	
+	if (m_HorizontalStackWidget)
+	{
+		m_HorizontalStackWidget->SetElementSize(WindowSize(150 + d3, ENVELOP_CHILD));
 	}
 
 	m_NumberOfSizeCalculations = 0;

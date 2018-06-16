@@ -33,6 +33,7 @@ namespace WidgetLayout
 	private:	// func
 		void Layout1();
 		void Layout2();
+		void Layout3();
 
 
 	private:
@@ -47,6 +48,7 @@ namespace WidgetLayout
 		StackWidget* m_InternalWidget = nullptr;
 //		BoxWidget* m_InternalWidget = nullptr;
 		StackWidget* m_VerticalStackWidget = nullptr;
+		StackWidget* m_HorizontalStackWidget = nullptr;
 
 	};
 }
