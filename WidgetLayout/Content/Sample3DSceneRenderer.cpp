@@ -6,6 +6,7 @@
 #include <synchapi.h>
 #include "imgui.h"
 #include "imgui_impl_dx12.h"
+#include "Common/DDSTextureLoader.h"
 
 
 using namespace Concurrency;
@@ -120,6 +121,68 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 	});
 
 
+	// textures
+	auto loadTextureTask = DX::ReadDataAsync(L"Assets\\bkg.DDS");
+
+	// lifetime - till WaitForGpu finished
+	// Create an upload command list.
+	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> uploadCommandAllocator;
+
+	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> uploadCommandList;
+
+	auto createTextureTask = loadTextureTask.then([this, &d3dDevice, &uploadCommandList, &uploadCommandAllocator](const std::vector<byte>& ddsTextureData)
+	{
+		// from https://github.com/Microsoft/DirectXTK12/wiki/DDSTextureLoader
+
+		//d3dDevice->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&uploadCommandAllocator));
+		//NAME_D3D12_OBJECT(uploadCommandAllocator);
+
+		//DX::ThrowIfFailed(d3dDevice->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, uploadCommandAllocator.Get(), nullptr, IID_PPV_ARGS(&uploadCommandList)));
+		//NAME_D3D12_OBJECT(uploadCommandList);
+
+		//// create texture
+		//std::vector<D3D12_SUBRESOURCE_DATA> subresources;
+		//DX::ThrowIfFailed(DirectX::LoadDDSTextureFromMemory(d3dDevice, ddsTextureData.data(), ddsTextureData.size(), m_Texture.ReleaseAndGetAddressOf(), subresources));
+		//NAME_D3D12_OBJECT(m_Texture);
+
+		//const UINT64 uploadBufferSize = GetRequiredIntermediateSize(m_Texture.Get(), 0, static_cast<UINT>(subresources.size()));
+
+		//// Create the GPU upload buffer.
+		//ComPtr<ID3D12Resource> uploadHeap;
+		//DX::ThrowIfFailed(d3dDevice->CreateCommittedResource(&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD), D3D12_HEAP_FLAG_NONE, &CD3DX12_RESOURCE_DESC::Buffer(uploadBufferSize), D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(uploadHeap.GetAddressOf())));
+
+		//UpdateSubresources(uploadCommandList.Get(), m_Texture.Get(), uploadHeap.Get(), 0, 0, static_cast<UINT>(subresources.size()), subresources.data());
+		//uploadCommandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_Texture.Get(), D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
+
+		//D3D12_SHADER_RESOURCE_VIEW_DESC textureRingDesc = {};
+		//D3D12_RESOURCE_DESC desc = m_Texture->GetDesc();
+
+		//textureRingDesc.Format = desc.Format;
+		//textureRingDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+
+		//if (desc.DepthOrArraySize > 1)
+		//{
+		//	textureRingDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2DARRAY;
+		//	textureRingDesc.Texture2DArray.MipLevels = (!desc.MipLevels) ? -1 : desc.MipLevels;
+		//	textureRingDesc.Texture2DArray.ArraySize = static_cast<UINT>(desc.DepthOrArraySize);
+		//}
+		//else
+		//{
+		//	textureRingDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+		//	textureRingDesc.Texture2D.MipLevels = (!desc.MipLevels) ? -1 : desc.MipLevels;
+		//}
+
+		//CD3DX12_CPU_DESCRIPTOR_HANDLE cpuTextureRingHandle(m_CbvSrvUavHeap->GetCPUDescriptorHandleForHeapStart(), (2 * 3 + 2 * 3), m_cbvDescriptorSize);	// texture
+		//d3dDevice->CreateShaderResourceView(m_Texture.Get(), &textureRingDesc, cpuTextureRingHandle);
+
+		//// Close the command list and execute it to begin the vertex/index buffer copy into the GPU's default heap.
+		//DX::ThrowIfFailed(uploadCommandList->Close());
+		//ID3D12CommandList* ppCommandLists[] = { uploadCommandList.Get() };
+		//m_deviceResources->GetCommandQueue()->ExecuteCommandLists(_countof(ppCommandLists), ppCommandLists);
+
+		////// Wait for the command list to finish executing; the vertex/index buffers need to be uploaded to the GPU before the upload resources go out of scope.
+		////m_deviceResources->WaitForGpu();
+	});
 
 
 
@@ -284,7 +347,7 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		// Create a descriptor heap for the constant buffers.
 		{
 			D3D12_DESCRIPTOR_HEAP_DESC heapDesc = {};
-			heapDesc.NumDescriptors = DX::c_frameCount;
+			heapDesc.NumDescriptors = CBV_TOTAL_NUMBER_OF_DESCRIPTORS;
 			heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 			// This flag indicates that this descriptor heap can be bound to the pipeline and that descriptors contained in it can be referenced by a root table.
 			heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
@@ -337,22 +400,32 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		//m_indexBufferView.SizeInBytes = sizeof(cubeIndices);
 		//m_indexBufferView.Format = DXGI_FORMAT_R16_UINT;
 
-		// Wait for the command list to finish executing; the vertex/index buffers need to be uploaded to the GPU before the upload resources go out of scope.
-		m_deviceResources->WaitForGpu();
-
-
 		// imgui
-		D3D12_DESCRIPTOR_HEAP_DESC desc = {};
-		desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-		desc.NumDescriptors = 1;
-		desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-		m_deviceResources->GetD3DDevice()->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&g_pd3dSrvDescHeap));
 
-		ImGui_ImplDX12_Init(NULL, DX::c_frameCount, m_deviceResources->GetD3DDevice(), g_pd3dSrvDescHeap.Get()->GetCPUDescriptorHandleForHeapStart(), g_pd3dSrvDescHeap.Get()->GetGPUDescriptorHandleForHeapStart());
+		// do not create special DescriptorHeap, use global single one
+		//D3D12_DESCRIPTOR_HEAP_DESC desc = {};
+		//desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+		//desc.NumDescriptors = 1;
+		//desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+		//m_deviceResources->GetD3DDevice()->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&g_pd3dSrvDescHeap));
+
+		ImGui_ImplDX12_Init(NULL, DX::c_frameCount, m_deviceResources->GetD3DDevice(),
+
+			CD3DX12_CPU_DESCRIPTOR_HANDLE(m_cbvHeap->GetCPUDescriptorHandleForHeapStart(), CBV_IMGUI, m_cbvDescriptorSize),
+			CD3DX12_GPU_DESCRIPTOR_HANDLE( m_cbvHeap->GetGPUDescriptorHandleForHeapStart() , CBV_IMGUI, m_cbvDescriptorSize)
+
+			//g_pd3dSrvDescHeap.Get()->GetCPUDescriptorHandleForHeapStart(),
+			//g_pd3dSrvDescHeap.Get()->GetGPUDescriptorHandleForHeapStart()
+		);
 
 	});
 
-	createAssetsTask.then([this]() {
+	// finally wait for all tasks
+	(createTextureTask && createAssetsTask).then([this]() {
+
+		// Wait for the command list to finish executing; the vertex/index buffers need to be uploaded to the GPU before the upload resources go out of scope.
+		m_deviceResources->WaitForGpu();
+
 		m_loadingComplete = true;
 	});
 }
@@ -483,6 +556,13 @@ void Sample3DSceneRenderer::StopTracking()
 	m_tracking = false;
 }
 
+
+
+
+
+
+
+
 // Renders one frame using the vertex and pixel shaders.
 bool Sample3DSceneRenderer::Render()
 {
@@ -514,9 +594,7 @@ bool Sample3DSceneRenderer::Render()
 		m_commandList->RSSetScissorRects(1, &m_scissorRect);
 
 		// Indicate this resource will be in use as a render target.
-		CD3DX12_RESOURCE_BARRIER renderTargetResourceBarrier =
-			CD3DX12_RESOURCE_BARRIER::Transition(m_deviceResources->GetRenderTarget(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
-		m_commandList->ResourceBarrier(1, &renderTargetResourceBarrier);
+		m_commandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_deviceResources->GetRenderTarget(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
 
 		// Record drawing commands.
 		D3D12_CPU_DESCRIPTOR_HANDLE renderTargetView = m_deviceResources->GetRenderTargetView();
@@ -554,7 +632,9 @@ bool Sample3DSceneRenderer::Render()
 			//ImGui::ColorEdit3("clear color", (float*)&clear_col);
 		}
 
-		m_commandList.Get()->SetDescriptorHeaps(1, g_pd3dSrvDescHeap.GetAddressOf());
+		// set by m_commandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+//		m_commandList.Get()->SetDescriptorHeaps(1, g_pd3dSrvDescHeap.GetAddressOf());
+
 		ImGui::Render();
 
 		// Indicate that the render target will now be used to present when the command list is done executing.

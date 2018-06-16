@@ -30,10 +30,6 @@ public:
 	void AddColoredRectToList(const WindowRect& _WindowRect, DirectX::XMFLOAT4 _Color);	// add widget to render
 	void DisplayNumber(const int _NumberToDisplay);	// display this number in the debug window
 
-
-
-
-
 private:
 	void LoadState();
 	void Rotate(float radians);
@@ -49,7 +45,19 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>	m_commandList;
 	Microsoft::WRL::ComPtr<ID3D12RootSignature>			m_rootSignature;
 	Microsoft::WRL::ComPtr<ID3D12PipelineState>			m_pipelineState;
+
+	
+	// single global CBV heap: constants + imgui + texture
+	enum CBV_HEAP_STRUCTURE
+	{
+		CBV_CONSTANTS = 0,
+		CBV_IMGUI = CBV_CONSTANTS + DX::c_frameCount,
+		CBV_TEXTURE,
+		CBV_TOTAL_NUMBER_OF_DESCRIPTORS,
+	};
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>		m_cbvHeap;
+
+
 	Microsoft::WRL::ComPtr<ID3D12Resource>				m_vertexBuffer;
 	Microsoft::WRL::ComPtr<ID3D12Resource>				m_indexBuffer;
 	Microsoft::WRL::ComPtr<ID3D12Resource>				m_constantBuffer;
@@ -71,8 +79,9 @@ private:
 	float	m_angle;
 	bool	m_tracking;
 
-	// imgui
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>        g_pd3dSrvDescHeap;
+	// textures
+	Microsoft::WRL::ComPtr<ID3D12Resource>				m_Texture;
+
 
 	// vertex data
 	VertexPositionColor	*m_Vertices;
